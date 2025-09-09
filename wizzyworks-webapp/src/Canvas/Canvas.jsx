@@ -36,9 +36,16 @@ export default function Canvas() {
     };
 
     const clearCanvas = () => {
-        console.log('here');
         const ctx = canvasRef.current.getContext('2d');
-        ctx.clearRect(0, 0, canvasRef.width, canvasRef.height);
+        ctx.beginPath();
+        ctx.rect(-3, -3, canvasRef.current.width + 10, canvasRef.current.height + 10);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.stroke();
+    };
+
+    const sendDrawing = () => {
+        console.log("Sending drawing")
     };
 
     // Write down how we are using AI
@@ -52,6 +59,8 @@ export default function Canvas() {
                 onMouseUp={stopDrawing}
                 onMouseLeave={stopDrawing}
             />
+
+            <button onClick={sendDrawing}>Send Drawing</button>
             <button onClick={clearCanvas}>Clear Canvas</button>
         </>
 
