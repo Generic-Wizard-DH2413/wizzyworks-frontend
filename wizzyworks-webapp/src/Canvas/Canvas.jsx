@@ -44,8 +44,32 @@ export default function Canvas() {
         ctx.stroke();
     };
 
+    // https://stackoverflow.com/questions/44806870/saving-canvas-to-json-and-loading-json-to-canvas
+    // https://stackoverflow.com/questions/25125967/store-canvas-coordinates-of-drawing
     const sendDrawing = () => {
-        console.log("Sending drawing")
+        console.log("Sending drawing");
+        const ctx = canvasRef.current.getContext('2d');
+        var imageData = ctx.getImageData(0, 0, canvasRef.current.width, canvasRef.current.height)
+
+        console.log(imageData.data)
+        console.log(imageData.data[0])
+        console.log(imageData.data[1])
+        console.log(imageData.data[2])
+        console.log(imageData.data[3])
+        // let canvasContents = canvasRef.current.toDataURL();
+        // let data = { image: canvasContents, data: Date.now() }
+        // let string = JSON.stringify(data);
+
+        // var file = new Blob([string], {
+        //     type: 'application/json'
+        // });
+
+        // var a = document.createElement('a');
+        // a.href = URL.createObjectURL(file);
+        // a.download = 'data.json';
+        // document.body.appendChild(a);
+        // a.click();
+        // document.body.removeChild(a);
     };
 
     // Write down how we are using AI
