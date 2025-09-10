@@ -3,10 +3,13 @@ import { useRef, useEffect, useState } from "react";
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/canvas
 // https://dev.to/javascriptacademy/create-a-drawing-app-using-javascript-and-canvas-2an1
 
-export default function Canvas() {
+export default function Canvas({ onSend }) {
     const canvasRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
-
+    const [position, setPosition] = useState([]);
+    // TODO Generate ARUCO code - Server side
+    // Create JSON and add 
+    // Normalize the data
     useEffect(() => {
         const canvas = canvasRef.current;
         canvas.width = window.innerWidth * 0.8;
@@ -29,6 +32,8 @@ export default function Canvas() {
         const ctx = canvasRef.current.getContext("2d");
         ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
         ctx.stroke();
+        setPosition([...position, [e.nativeEvent.offsetX, e.nativeEvent.offsetY]]);
+
     };
 
     const stopDrawing = () => {
@@ -48,14 +53,16 @@ export default function Canvas() {
     // https://stackoverflow.com/questions/25125967/store-canvas-coordinates-of-drawing
     const sendDrawing = () => {
         console.log("Sending drawing");
-        const ctx = canvasRef.current.getContext('2d');
-        var imageData = ctx.getImageData(0, 0, canvasRef.current.width, canvasRef.current.height)
+        onSend(position)
+        console.log(position);
+        // const ctx = canvasRef.current.getContext('2d');
+        // var imageData = ctx.getImageData(0, 0, canvasRef.current.width, canvasRef.current.height)
 
-        console.log(imageData.data)
-        console.log(imageData.data[0])
-        console.log(imageData.data[1])
-        console.log(imageData.data[2])
-        console.log(imageData.data[3])
+        // console.log(imageData.data)
+        // console.log(imageData.data[0])
+        // console.log(imageData.data[1])
+        // console.log(imageData.data[2])
+        // console.log(imageData.data[3])
         // let canvasContents = canvasRef.current.toDataURL();
         // let data = { image: canvasContents, data: Date.now() }
         // let string = JSON.stringify(data);
