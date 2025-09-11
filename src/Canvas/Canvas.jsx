@@ -1,13 +1,9 @@
 import { useRef, useEffect, useState } from "react";
-// https://www.youtube.com/watch?v=tev71VzEJos&t=402s&ab_channel=frontend-coder
-// https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/canvas
-// https://dev.to/javascriptacademy/create-a-drawing-app-using-javascript-and-canvas-2an1
 
 export default function Canvas({ onSend }) {
     const canvasRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [position, setPosition] = useState([]);
-    // TODO Generate ARUCO ID - Server side
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -19,6 +15,7 @@ export default function Canvas({ onSend }) {
         ctx.strokeStyle = "#000000";
     }, []);
 
+    // --- Mouse Events ---
     const startDrawing = (e) => {
         const ctx = canvasRef.current.getContext("2d");
         ctx.beginPath();
@@ -31,72 +28,91 @@ export default function Canvas({ onSend }) {
         const ctx = canvasRef.current.getContext("2d");
         ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
         ctx.stroke();
-        // Saves and normalizes
-        setPosition([...position, [e.nativeEvent.offsetX / canvasRef.current.width, e.nativeEvent.offsetY / canvasRef.current.height]]);
-
+        setPosition([
+            ...position,
+            [
+                e.nativeEvent.offsetX / canvasRef.current.width,
+                e.nativeEvent.offsetY / canvasRef.current.height,
+            ],
+        ]);
     };
 
-    const stopDrawing = () => {
-        setIsDrawing(false);
+    const stopDrawing = () => setIsDrawing(false);
+
+    // --- Touch Events ---
+    const getTouchPos = (canvas, touch) => {
+        const rect = canvas.getBoundingClientRect();
+        return {
+            x: touch.clientX - rect.left,
+            y: touch.clientY - rect.top,
+        };
     };
+
+    const handleTouchStart = (e) => {
+        e.preventDefault(); // stop page scroll
+        const touch = e.touches[0];
+        const pos = getTouchPos(canvasRef.current, touch);
+        const ctx = canvasRef.current.getContext("2d");
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+        setIsDrawing(true);
+    };
+
+    const handleTouchMove = (e) => {
+        if (!isDrawing) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        const pos = getTouchPos(canvasRef.current, touch);
+        const ctx = canvasRef.current.getContext("2d");
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        setPosition([
+            ...position,
+            [pos.x / canvasRef.current.width, pos.y / canvasRef.current.height],
+        ]);
+    };
+
+    const handleTouchEnd = () => setIsDrawing(false);
 
     const clearCanvas = () => {
-        const ctx = canvasRef.current.getContext('2d');
+        const ctx = canvasRef.current.getContext("2d");
         ctx.beginPath();
-        ctx.rect(-3, -3, canvasRef.current.width + 10, canvasRef.current.height + 10);
-        ctx.fillStyle = 'white';
+        ctx.rect(
+            -3,
+            -3,
+            canvasRef.current.width + 10,
+            canvasRef.current.height + 10
+        );
+        ctx.fillStyle = "white";
         ctx.fill();
         ctx.stroke();
-
-        // Reset list
         setPosition([]);
     };
 
-    // https://stackoverflow.com/questions/44806870/saving-canvas-to-json-and-loading-json-to-canvas
-    // https://stackoverflow.com/questions/25125967/store-canvas-coordinates-of-drawing
     const sendDrawing = () => {
         console.log("Sending drawing");
         onSend(position);
         console.log(position);
-        // const ctx = canvasRef.current.getContext('2d');
-        // var imageData = ctx.getImageData(0, 0, canvasRef.current.width, canvasRef.current.height)
-
-        // console.log(imageData.data)
-        // console.log(imageData.data[0])
-        // console.log(imageData.data[1])
-        // console.log(imageData.data[2])
-        // console.log(imageData.data[3])
-        // let canvasContents = canvasRef.current.toDataURL();
-        // let data = { image: canvasContents, data: Date.now() }
-        // let string = JSON.stringify(data);
-
-        // var file = new Blob([string], {
-        //     type: 'application/json'
-        // });
-
-        // var a = document.createElement('a');
-        // a.href = URL.createObjectURL(file);
-        // a.download = 'data.json';
-        // document.body.appendChild(a);
-        // a.click();
-        // document.body.removeChild(a);
     };
 
-    // Write down how we are using AI
     return (
         <>
             <canvas
                 ref={canvasRef}
-                onMouseDown={startDrawing}
                 className="canvas-element"
+                // mouse
+                onMouseDown={startDrawing}
                 onMouseMove={draw}
                 onMouseUp={stopDrawing}
                 onMouseLeave={stopDrawing}
+                // touch
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
             />
 
             <button onClick={sendDrawing}>Send Drawing</button>
             <button onClick={clearCanvas}>Clear Canvas</button>
         </>
-
     );
 }
