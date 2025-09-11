@@ -7,9 +7,8 @@ export default function Canvas({ onSend }) {
     const canvasRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [position, setPosition] = useState([]);
-    // TODO Generate ARUCO code - Server side
-    // Create JSON and add 
-    // Normalize the data
+    // TODO Generate ARUCO ID - Server side
+
     useEffect(() => {
         const canvas = canvasRef.current;
         canvas.width = window.innerWidth * 0.8;
@@ -32,7 +31,8 @@ export default function Canvas({ onSend }) {
         const ctx = canvasRef.current.getContext("2d");
         ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
         ctx.stroke();
-        setPosition([...position, [e.nativeEvent.offsetX, e.nativeEvent.offsetY]]);
+        // Saves and normalizes
+        setPosition([...position, [e.nativeEvent.offsetX / canvasRef.current.width, e.nativeEvent.offsetY / canvasRef.current.height]]);
 
     };
 
@@ -47,13 +47,16 @@ export default function Canvas({ onSend }) {
         ctx.fillStyle = 'white';
         ctx.fill();
         ctx.stroke();
+
+        // Reset list
+        setPosition([]);
     };
 
     // https://stackoverflow.com/questions/44806870/saving-canvas-to-json-and-loading-json-to-canvas
     // https://stackoverflow.com/questions/25125967/store-canvas-coordinates-of-drawing
     const sendDrawing = () => {
         console.log("Sending drawing");
-        onSend(position)
+        onSend(position);
         console.log(position);
         // const ctx = canvasRef.current.getContext('2d');
         // var imageData = ctx.getImageData(0, 0, canvasRef.current.width, canvasRef.current.height)
