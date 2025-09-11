@@ -7,7 +7,7 @@ export default function Canvas({ onSend }) {
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        canvas.width = window.innerWidth * 0.8;
+        canvas.width = window.innerWidth;
         canvas.height = window.innerHeight * 0.8;
         const ctx = canvas.getContext("2d");
         ctx.lineCap = "round";
