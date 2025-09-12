@@ -31,8 +31,8 @@ export default function Canvas({ onSend }) {
         setPosition([
             ...position,
             [
-                e.nativeEvent.offsetX / canvasRef.current.width,
-                e.nativeEvent.offsetY / canvasRef.current.height,
+                (e.nativeEvent.offsetX / canvasRef.current.width) * 2 - 1,
+                (e.nativeEvent.offsetY / canvasRef.current.height) * 2 - 1,
             ],
         ]);
     };
@@ -68,7 +68,7 @@ export default function Canvas({ onSend }) {
         ctx.stroke();
         setPosition([
             ...position,
-            [pos.x / canvasRef.current.width, pos.y / canvasRef.current.height],
+            [(pos.x / canvasRef.current.width) * 2 - 1, (pos.y / canvasRef.current.height) * 2 - 1],
         ]);
     };
 
