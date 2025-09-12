@@ -7,12 +7,12 @@ import { useEffect, useState } from 'react';
 // https://medium.com/@chaman388/websockets-in-reactjs-a-practical-guide-with-real-world-examples-2efe483ee150
 function App() {
   const [ws, setWs] = useState(null);
-  const [id, setId] = useState(1); //TODO Change back to null
+  const [id, setId] = useState(null); //TODO Change back to null
   const [showArUco, setShowArUco] = useState(false);
   const [shouldLaunch, setShouldLaunch] = useState(false);
 
   useEffect(() => {
-    const websocket = new WebSocket("ws://130.229.164.26:8765");
+    const websocket = new WebSocket("ws://130.229.156.85:8765");
     setWs(websocket);
 
     websocket.onopen = () => {
@@ -31,8 +31,9 @@ function App() {
         console.log('Received:', data);
         
         // TODO Set ID
-        if (data.id !== undefined) {
-          setId(data.id);
+        console.log('ID from server:', data.data.id);
+        if (data.data.id !== undefined) {
+          setId(data.data.id);
         }
 
         // TODO Implement launch (ready connection from server)
