@@ -32,9 +32,10 @@ export default function Canvas({ onSend }) {
             ...position,
             [
                 (e.nativeEvent.offsetX / canvasRef.current.width) * 2 - 1,
-                (e.nativeEvent.offsetY / canvasRef.current.height) * 2 - 1,
+                (1 - (e.nativeEvent.offsetY / canvasRef.current.height) * 2),
             ],
         ]);
+        console.log(position)
     };
 
     const stopDrawing = () => setIsDrawing(false);
@@ -68,7 +69,10 @@ export default function Canvas({ onSend }) {
         ctx.stroke();
         setPosition([
             ...position,
-            [(pos.x / canvasRef.current.width) * 2 - 1, (pos.y / canvasRef.current.height) * 2 - 1],
+            [
+                (pos.x / canvasRef.current.width) * 2 - 1,
+                (1 - pos.y / canvasRef.current.height) * 2
+            ],
         ]);
     };
 
