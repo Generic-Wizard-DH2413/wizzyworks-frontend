@@ -18,18 +18,18 @@ function App() {
     websocket.onopen = () => {
       console.log('Connected to WebSocket server');
       // Send initial connection message with origin info
-      websocket.send(JSON.stringify({ 
-        type: "connection", 
+      websocket.send(JSON.stringify({
+        type: "connection",
         origin: window.location.origin,
-        userAgent: navigator.userAgent 
+        userAgent: navigator.userAgent
       }));
     };
-    
+
     websocket.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
         console.log('Received:', data);
-        
+
         // TODO Set ID
         console.log('ID from server:', data.data.id);
         if (data.data.id !== undefined) {
@@ -46,11 +46,11 @@ function App() {
         console.log('Raw message:', event.data);
       }
     };
-    
+
     websocket.onerror = (error) => {
       console.error('WebSocket error:', error);
     };
-    
+
     // TODO Fix the disconnect logic
     // websocket.onclose = () => console.log('Disconnected from WebSocket server');
     // return () => websocket.close();
