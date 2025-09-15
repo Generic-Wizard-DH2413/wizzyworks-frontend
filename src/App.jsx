@@ -12,7 +12,7 @@ function App() {
   const [shouldLaunch, setShouldLaunch] = useState(false);
 
   useEffect(() => {
-    const websocket = new WebSocket("ws://130.229.156.85:8765");
+    const websocket = new WebSocket("ws://130.229.164.4:8765");
     setWs(websocket);
 
     websocket.onopen = () => {
