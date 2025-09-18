@@ -10,8 +10,6 @@ import { Routes, Route } from "react-router-dom";
 function App() {
   const [ws, setWs] = useState(null);
   const [id, setId] = useState(null); //TODO Change back to null
-  const [showArUco, setShowArUco] = useState(false);
-  const [shouldLaunch, setShouldLaunch] = useState(false);
 
   useEffect(() => {
     const websocket = new WebSocket("ws://130.229.156.85:8765");
@@ -40,8 +38,7 @@ function App() {
 
         // TODO Implement launch (ready connection from server)
         if (data.shouldLaunch) {
-          setShouldLaunch(true);
-          setShowArUco(false);
+          // TODO Switch on launch
         }
       } catch (error) {
         console.error('Error parsing WebSocket message:', error);
@@ -58,13 +55,11 @@ function App() {
     // return () => websocket.close();
   }, []);
 
-  // TODO I know this is ugly, should probably fix this conditional later.
   return (
     <Routes>
       <Route index element={<Information />} />
       <Route path="/innerlayer" element={
         <Canvas onSend={(position) => {
-          setShowArUco(true);
           if (ws && ws.readyState === WebSocket.OPEN) {
             ws.send(JSON.stringify({ "id": id, "data": position }));
           }
@@ -74,22 +69,6 @@ function App() {
       <Route path="/launch" element={<LaunchScreen />} />
     </Routes>
   )
-
-  // TODO remove variables
-  // if (!shouldLaunch && showArUco) {
-  //   return (
-  //     <>
-
-  //     </>
-  //   )
-  // } else {
-  //   return (
-  //     <>
-
-  //     </>
-  //   )
-  // }
-
 }
 
 export default App
