@@ -1,4 +1,15 @@
 .canvas-element {
+    display: block;
+    width: 95%;
+    margin: auto;
     border: 1px solid black;
     background-color: white; /*Canvas element is transparent by default , fixes darkmode canvas*/
+}
+
+h3 {
+    text-align: center;
+} 
+
+input {
+    margin: 0.6em 1.2em;
 }

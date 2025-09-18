@@ -6,6 +6,7 @@ export default function Canvas({ onSend }) {
     const [isDrawing, setIsDrawing] = useState(false);
     const [position, setPosition] = useState([]);
     const navigate = useNavigate();
+    const [currentColor, setCurrentColor] = useState("#FF0000");
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -14,7 +15,7 @@ export default function Canvas({ onSend }) {
         const ctx = canvas.getContext("2d");
         ctx.lineCap = "round";
         ctx.lineWidth = 3;
-        ctx.strokeStyle = "#000000";
+        ctx.strokeStyle = currentColor
     }, []);
 
     // --- Mouse Events ---
@@ -96,13 +97,16 @@ export default function Canvas({ onSend }) {
     };
 
     const sendDrawing = () => {
+        // TODO Update this
         console.log("Sending drawing");
         onSend(position);
         console.log(position);
     };
 
+
     return (
         <>
+            <h3>Draw your inner shape</h3>
             <canvas
                 ref={canvasRef}
                 className="canvas-element"
@@ -117,10 +121,23 @@ export default function Canvas({ onSend }) {
                 onTouchEnd={handleTouchEnd}
             />
 
-            <button onClick={sendDrawing}>Send Drawing</button>
+            {/* <button onClick={sendDrawing}>Send Drawing</button> */}
             <button onClick={clearCanvas}>Clear Canvas</button>
-            <button onClick={() => navigate('/outerlayer')}>Back</button>
-            <button onClick={() => navigate('/launch')}>Next</button>
+            <input onChange={(e) => {
+                setCurrentColor(e.target.value)
+                const ctx = canvasRef.current.getContext("2d");
+                ctx.strokeStyle = currentColor;
+            }} type="color" id="foreground" name="foreground" value={currentColor} />
+
+            <nav>
+                <button onClick={() => navigate('/outerlayer')}>Back</button>
+                <button onClick={() => {
+                    sendDrawing()
+                    navigate('/launch')
+                }
+                }>Next</button>
+            </nav>
+
         </>
     );
 }
