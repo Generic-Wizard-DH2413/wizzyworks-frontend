@@ -1,8 +1,10 @@
 import Canvas from './Canvas/Canvas';
 import ArUco from './ArUco/ArUco';
 import LaunchScreen from './LaunchScreen/LaunchScreen';
+import Information from './Information/Information'
 import './App.css';
 import { useEffect, useState } from 'react';
+import { Routes, Route } from "react-router";
 
 // https://medium.com/@chaman388/websockets-in-reactjs-a-practical-guide-with-real-world-examples-2efe483ee150
 function App() {
@@ -57,30 +59,34 @@ function App() {
   }, []);
 
   // TODO I know this is ugly, should probably fix this conditional later.
-  if (!showArUco && !shouldLaunch) {
-    return (
-      <>
-        <Canvas onSend={(position) => {
-          setShowArUco(true);
-          if (ws && ws.readyState === WebSocket.OPEN) {
-            ws.send(JSON.stringify({ "id": id, "data": position }));
-          }
-        }} />
-      </>
-    )
-  } else if (!shouldLaunch && showArUco) {
-    return (
-      <>
-        <ArUco arUcoId={id} />
-      </>
-    )
-  } else {
-    return (
-      <>
-        <LaunchScreen />
-      </>
-    )
-  }
+  return (
+    <Routes>
+      <Route index element={<Information />} />
+      <Route path="/innerlayer" element={<Canvas onSend={(position) => {
+        setShowArUco(true);
+        if (ws && ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({ "id": id, "data": position }));
+        }
+      }} />} />
+      <Route path="/marker" element={<ArUco arUcoId={id} />} />
+      <Route path="/launch" element={<LaunchScreen />} />
+    </Routes>
+  )
+
+  // TODO remove variables
+  // if (!shouldLaunch && showArUco) {
+  //   return (
+  //     <>
+
+  //     </>
+  //   )
+  // } else {
+  //   return (
+  //     <>
+
+  //     </>
+  //   )
+  // }
 
 }
 
