@@ -1,9 +1,11 @@
 import { useRef, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Canvas({ onSend }) {
     const canvasRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [position, setPosition] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -117,6 +119,8 @@ export default function Canvas({ onSend }) {
 
             <button onClick={sendDrawing}>Send Drawing</button>
             <button onClick={clearCanvas}>Clear Canvas</button>
+            <button onClick={() => navigate('/outerlayer')}>Back</button>
+            <button onClick={() => navigate('/launch')}>Next</button>
         </>
     );
 }

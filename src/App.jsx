@@ -1,15 +1,15 @@
 import Canvas from './Canvas/Canvas';
 import ArUco from './ArUco/ArUco';
 import LaunchScreen from './LaunchScreen/LaunchScreen';
+import Information from './Information/Information'
 import './App.css';
 import { useEffect, useState } from 'react';
+import { Routes, Route } from "react-router-dom";
 
 // https://medium.com/@chaman388/websockets-in-reactjs-a-practical-guide-with-real-world-examples-2efe483ee150
 function App() {
   const [ws, setWs] = useState(null);
   const [id, setId] = useState(null); //TODO Change back to null
-  const [showArUco, setShowArUco] = useState(false);
-  const [shouldLaunch, setShouldLaunch] = useState(false);
 
   useEffect(() => {
     const websocket = new WebSocket("ws://130.229.164.4:8765");
@@ -38,8 +38,7 @@ function App() {
 
         // TODO Implement launch (ready connection from server)
         if (data.shouldLaunch) {
-          setShouldLaunch(true);
-          setShowArUco(false);
+          // TODO Switch on launch
         }
       } catch (error) {
         console.error('Error parsing WebSocket message:', error);
@@ -56,32 +55,20 @@ function App() {
     // return () => websocket.close();
   }, []);
 
-  // TODO I know this is ugly, should probably fix this conditional later.
-  if (!showArUco && !shouldLaunch) {
-    return (
-      <>
+  return (
+    <Routes>
+      <Route index element={<Information />} />
+      <Route path="/innerlayer" element={
         <Canvas onSend={(position) => {
-          setShowArUco(true);
           if (ws && ws.readyState === WebSocket.OPEN) {
             ws.send(JSON.stringify({ "id": id, "data": position }));
           }
-        }} />
-      </>
-    )
-  } else if (!shouldLaunch && showArUco) {
-    return (
-      <>
-        <ArUco arUcoId={id} />
-      </>
-    )
-  } else {
-    return (
-      <>
-        <LaunchScreen />
-      </>
-    )
-  }
-
+        }} />}
+      />
+      <Route path="/marker" element={<ArUco arUcoId={id} />} />
+      <Route path="/launch" element={<LaunchScreen />} />
+    </Routes>
+  )
 }
 
 export default App
