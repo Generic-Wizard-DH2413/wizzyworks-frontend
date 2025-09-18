@@ -13,3 +13,10 @@ h3 {
 input {
     margin: 0.6em 1.2em;
 }
+
+.canvas-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+}

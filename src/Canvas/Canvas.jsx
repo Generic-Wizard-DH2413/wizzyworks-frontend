@@ -106,7 +106,7 @@ export default function Canvas({ onSend }) {
 
     return (
         <>
-            <h3>Draw your inner shape</h3>
+            <h3>Draw your fireworks inner shape</h3>
             <canvas
                 ref={canvasRef}
                 className="canvas-element"
@@ -121,13 +121,14 @@ export default function Canvas({ onSend }) {
                 onTouchEnd={handleTouchEnd}
             />
 
-            {/* <button onClick={sendDrawing}>Send Drawing</button> */}
-            <button onClick={clearCanvas}>Clear Canvas</button>
-            <input onChange={(e) => {
-                setCurrentColor(e.target.value)
-                const ctx = canvasRef.current.getContext("2d");
-                ctx.strokeStyle = currentColor;
-            }} type="color" id="foreground" name="foreground" value={currentColor} />
+            <div className="canvas-buttons">
+                <button onClick={clearCanvas}>Clear Canvas</button>
+                <input onChange={(e) => {
+                    setCurrentColor(e.target.value)
+                    const ctx = canvasRef.current.getContext("2d");
+                    ctx.strokeStyle = currentColor;
+                }} type="color" id="foreground" name="foreground" value={currentColor} />
+            </div>
 
             <nav>
                 <button onClick={() => navigate('/outerlayer')}>Back</button>

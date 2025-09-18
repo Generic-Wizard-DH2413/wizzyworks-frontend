@@ -5,8 +5,8 @@ export default function Information() {
 
     return (
         <>
-            <h1>Information</h1>
-            <p>Please increase the brightness and turn up the volume for full experience</p>
+            <h1>Build your own firework</h1>
+            <p>Please increase the <i>brightness</i> and turn up the <i>volume</i> for full experience</p>
             <nav className='special-nav'>
                 <button onClick={() => navigate('/innerlayer')}>Next</button>
             </nav>
