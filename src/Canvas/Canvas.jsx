@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+// TODO Save canvas state when user navigates around (Store state in parent?)
+
 export default function Canvas({ onSend }) {
     const canvasRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
@@ -131,7 +133,7 @@ export default function Canvas({ onSend }) {
             </div>
 
             <nav>
-                <button onClick={() => navigate('/outerlayer')}>Back</button>
+                <button onClick={() => navigate('/shapePicker')}>Back</button>
                 <button onClick={() => {
                     sendDrawing()
                     navigate('/launch')

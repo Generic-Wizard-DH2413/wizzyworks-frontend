@@ -8,7 +8,7 @@ export default function Information() {
             <h1>Build your own firework</h1>
             <p>Please increase the <i>brightness</i> and turn up the <i>volume</i> for full experience</p>
             <nav className='special-nav'>
-                <button onClick={() => navigate('/innerlayer')}>Next</button>
+                <button onClick={() => navigate('/shapePicker')}>Next</button>
             </nav>
         </>
     )

@@ -2,6 +2,7 @@ import Canvas from './Canvas/Canvas';
 import ArUco from './ArUco/ArUco';
 import LaunchScreen from './LaunchScreen/LaunchScreen';
 import Information from './Information/Information'
+import ShapePicker from './ShapePicker/ShapePicker';
 import './App.css';
 import { useEffect, useState } from 'react';
 import { Routes, Route } from "react-router-dom";
@@ -58,6 +59,7 @@ function App() {
   return (
     <Routes>
       <Route index element={<Information />} />
+      <Route path="/shapePicker" element={<ShapePicker />} />
       <Route path="/innerlayer" element={
         <Canvas onSend={(position) => {
           if (ws && ws.readyState === WebSocket.OPEN) {
