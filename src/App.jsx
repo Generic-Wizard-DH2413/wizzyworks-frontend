@@ -4,7 +4,7 @@ import LaunchScreen from './LaunchScreen/LaunchScreen';
 import Information from './Information/Information'
 import './App.css';
 import { useEffect, useState } from 'react';
-import { Routes, Route } from "react-router";
+import { Routes, Route } from "react-router-dom";
 
 // https://medium.com/@chaman388/websockets-in-reactjs-a-practical-guide-with-real-world-examples-2efe483ee150
 function App() {
@@ -62,12 +62,14 @@ function App() {
   return (
     <Routes>
       <Route index element={<Information />} />
-      <Route path="/innerlayer" element={<Canvas onSend={(position) => {
-        setShowArUco(true);
-        if (ws && ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify({ "id": id, "data": position }));
-        }
-      }} />} />
+      <Route path="/innerlayer" element={
+        <Canvas onSend={(position) => {
+          setShowArUco(true);
+          if (ws && ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({ "id": id, "data": position }));
+          }
+        }} />}
+      />
       <Route path="/marker" element={<ArUco arUcoId={id} />} />
       <Route path="/launch" element={<LaunchScreen />} />
     </Routes>
