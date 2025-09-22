@@ -14,11 +14,11 @@ export default function ShapePicker() {
                 <directionalLight position={[5, 10, 5]} intensity={1} />
                 <FireworkSystem />
                 <mesh rotation-x={-Math.PI / 2} position={[0, -0.01, 0]}>
-                    <planeGeometry args={[50, 50]} />
+                    <planeGeometry args={[100, 50]} />
                     <meshStandardMaterial color="black" />
                 </mesh>
-                <mesh position={[-1, -1, -1]}>
-                    <planeGeometry args={[50, 50]} />
+                <mesh position={[-1, -1, -1]}> {/* Background plane */}
+                    <planeGeometry args={[300, 50]} />
                     <meshStandardMaterial color="black" />
                 </mesh>
                 <OrbitControls enableZoom={false} enablePan={false} /> {/* Handles zoom and stuff */}

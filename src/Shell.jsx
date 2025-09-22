@@ -20,7 +20,7 @@ export default function Shell({ shell, gravity, onExplode }) {
     return (
         <mesh ref={meshRef}>
             <sphereGeometry args={[0.6, 16, 16]} />
-            <meshStandardMaterial color="orange" emissive="red" />
+            <meshStandardMaterial color="orange" emissive="red" shininess={100} />
         </mesh>
     );
 }
