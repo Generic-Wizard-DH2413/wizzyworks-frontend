@@ -10,7 +10,7 @@ function createShell() {
 function createFragment(origin, baseVel) {
     return {
         pos: origin.clone(),
-        vel: baseVel.clone().add(new THREE.Vector3((Math.random() - 0.5) * 4, 6, (Math.random() - 0.5) * 4)),
+        vel: baseVel.clone().add(new THREE.Vector3((Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10)),
         c: 0.02,
     };
 }
@@ -27,6 +27,10 @@ export default function FireworkSystem() {
     const handleExplode = (shell) => {
         setShells([]); // remove shell
         const newFrags = [createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel),
+        createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel),
+        createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel),
+        createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel),
+        createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel),
         createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel),
         ];
         setFragments(newFrags);

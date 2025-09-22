@@ -9,7 +9,7 @@ export default function ShapePicker() {
 
     return (
         <>
-            <Canvas style={{ width: "100%", height: "300px" }} camera={{ position: [0, 5, 25], fov: 60 }}>
+            <Canvas style={{ width: "100%", height: "50%" }} camera={{ position: [0, 5, 25], fov: 60 }}>
                 <ambientLight intensity={0.5} />
                 <directionalLight position={[5, 10, 5]} intensity={1} />
                 <FireworkSystem />
