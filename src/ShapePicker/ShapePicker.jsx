@@ -13,6 +13,14 @@ export default function ShapePicker({ onSaveDataShape }) {
         onSaveDataShape(shape);
     }
 
+    const setSelectedShape = (target) => {
+        setShape(target.alt);
+        let currentSelected = document.getElementsByClassName("selected")[0];
+        if (currentSelected)
+            currentSelected.classList.remove("selected");
+        target.classList.add("selected");
+    }
+
     return (
         <>
             <h3>Pick your firework shape</h3>
@@ -33,16 +41,16 @@ export default function ShapePicker({ onSaveDataShape }) {
 
             <section className="picker-container">
                 <div className="picker-item">
-                    <img onClick={(e) => setShape(e.target.alt)} className="picker-img" src={`./star.png`} alt="star" />
+                    <img onClick={(e) => setSelectedShape(e.target)} className="picker-img" src={`./star.png`} alt="star" />
                 </div>
                 <div>
-                    <img onClick={(e) => setShape(e.target.alt)} className="picker-img" src={`./square.png`} alt='square' />
+                    <img onClick={(e) => setSelectedShape(e.target)} className="picker-img" src={`./square.png`} alt='square' />
                 </div>
                 <div>
-                    <img onClick={(e) => setShape(e.target.alt)} className="picker-img" src={`./circle.png`} alt='circle' />
+                    <img onClick={(e) => setSelectedShape(e.target)} className="picker-img" src={`./circle.png`} alt='circle' />
                 </div>
                 <div>
-                    <img onClick={(e) => setShape(e.target.alt)} className="picker-img" src={`./circle.png`} alt="circle" />
+                    <img onClick={(e) => setSelectedShape(e.target)} className="picker-img" src={`./circle.png`} alt="circle" />
                 </div>
             </section>
 
