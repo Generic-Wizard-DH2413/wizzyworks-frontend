@@ -10,7 +10,9 @@ import { Routes, Route } from "react-router-dom";
 // https://medium.com/@chaman388/websockets-in-reactjs-a-practical-guide-with-real-world-examples-2efe483ee150
 function App() {
   const [ws, setWs] = useState(null);
-  const [id, setId] = useState(null); //TODO Change back to null
+  const [id, setId] = useState(null);
+  const [fireworkDataShape, setFireworkDataShape] = useState(null)
+  const [fireworkDataURL, setFireworkDataURL] = useState(null);
 
   useEffect(() => {
     const websocket = new WebSocket("ws://130.229.164.4:8765");
@@ -51,6 +53,13 @@ function App() {
       console.error('WebSocket error:', error);
     };
 
+    // TODO IMPLEMENT SAVE FUNCTION
+    /*
+    if (ws && ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({ "id": id, "data": position }));
+          }
+    */
+
     // TODO Fix the disconnect logic
     // websocket.onclose = () => console.log('Disconnected from WebSocket server');
     // return () => websocket.close();
@@ -59,12 +68,16 @@ function App() {
   return (
     <Routes>
       <Route index element={<Information />} />
-      <Route path="/shapePicker" element={<ShapePicker />} />
+      <Route path="/shapePicker" element={<ShapePicker onSaveDataShape={(dataShape) => {
+        console.log(dataShape)
+        setFireworkDataShape(dataShape);
+      }} />}
+      />
       <Route path="/innerlayer" element={
-        <Canvas onSend={(position) => {
-          if (ws && ws.readyState === WebSocket.OPEN) {
-            ws.send(JSON.stringify({ "id": id, "data": position }));
-          }
+        <Canvas onSaveDataURL={(dataURL) => {
+          console.log(dataURL)
+          // TODO Change to set data instead of sending.
+          setFireworkDataURL(dataURL);
         }} />}
       />
       <Route path="/marker" element={<ArUco arUcoId={id} />} />

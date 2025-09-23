@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 // TODO Save canvas state when user navigates around (Store state in parent?)
 
-export default function Canvas({ onSend }) {
+export default function Canvas({ onSaveDataURL }) {
     const canvasRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [position, setPosition] = useState([]);
@@ -18,6 +18,8 @@ export default function Canvas({ onSend }) {
         ctx.lineCap = "round";
         ctx.lineWidth = 3;
         ctx.strokeStyle = currentColor
+
+        // TODO Check if canvas is in local storage and load the data.
     }, []);
 
     // --- Mouse Events ---
@@ -98,11 +100,15 @@ export default function Canvas({ onSend }) {
         setPosition([]);
     };
 
+
     const sendDrawing = () => {
-        // TODO Update this
+        // TODO Maybe rename to save drawing? 
+        // TODO clear local storage?
+        const ctx = canvasRef.current.getContext("2d");
+        let canvasDataURL = canvasRef.current.toDataURL()
         console.log("Sending drawing");
-        onSend(position);
-        console.log(position);
+        console.log(canvasDataURL)
+        onSaveDataURL(canvasDataURL);
     };
 
 
@@ -133,7 +139,11 @@ export default function Canvas({ onSend }) {
             </div>
 
             <nav>
-                <button onClick={() => navigate('/shapePicker')}>Back</button>
+                <button onClick={() => {
+                    const ctx = canvasRef.current.getContext("2d");
+                    ctx.save();
+                    navigate('/shapePicker');
+                }}>Back</button>
                 <button onClick={() => {
                     sendDrawing()
                     navigate('/launch')
