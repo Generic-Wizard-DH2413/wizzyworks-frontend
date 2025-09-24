@@ -53,12 +53,12 @@ function App() {
       console.error('WebSocket error:', error);
     };
 
-    // TODO IMPLEMENT SAVE FUNCTION
-    /*
-    if (ws && ws.readyState === WebSocket.OPEN) {
-            ws.send(JSON.stringify({ "id": id, "data": position }));
-          }
-    */
+    const sendFireworkData = () => {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        // TODO Add color.
+        ws.send(JSON.stringify({ "id": id, "data": { "outerLayer": fireworkDataShape, "innerLayer": fireworkDataURL } }));
+      }
+    }
 
     // TODO Fix the disconnect logic
     // websocket.onclose = () => console.log('Disconnected from WebSocket server');

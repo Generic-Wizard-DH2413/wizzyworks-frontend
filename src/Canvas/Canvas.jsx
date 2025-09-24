@@ -2,7 +2,14 @@ import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // TODO Save canvas state when user navigates around (Store state in parent?)
-
+// Change to black background on canvas. Make it a square.
+// Send data to server first, then get confirmation for launch screen.
+// What is priority?
+/*
+    Fix the TODO
+    Make fuse in blender - Impement in three.js
+    Check with Harry P on Godot part.
+*/
 export default function Canvas({ onSaveDataURL }) {
     const canvasRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);

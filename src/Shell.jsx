@@ -11,7 +11,6 @@ export default function Shell({ shell, gravity, onExplode }) {
         if (meshRef.current) {
             meshRef.current.position.copy(shell.pos);
         }
-        console.log(shell.vel.y)
         if (shell.vel.y < 6) {
             onExplode(shell);
         }
