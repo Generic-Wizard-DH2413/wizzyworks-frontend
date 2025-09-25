@@ -9,6 +9,7 @@ import { Routes, Route } from "react-router-dom";
 
 // https://medium.com/@chaman388/websockets-in-reactjs-a-practical-guide-with-real-world-examples-2efe483ee150
 function App() {
+  const ENABLE_WS = false;
   const [ws, setWs] = useState(null);
   const [id, setId] = useState(null);
   const [fireworkDataShape, setFireworkDataShape] = useState(null)
@@ -17,6 +18,7 @@ function App() {
   const [fireworkDataShapeSecondColor, setFireworkDataShapeSecondColor] = useState([0, 0, 0]);
 
   useEffect(() => {
+    if (!ENABLE_WS) return;
     const websocket = new WebSocket("ws://130.229.164.4:8765");
     setWs(websocket);
 
@@ -72,7 +74,7 @@ function App() {
     // TODO Fix the disconnect logic
     // websocket.onclose = () => console.log('Disconnected from WebSocket server');
     // return () => websocket.close();
-  }, []);
+  }, [ENABLE_WS]);
 
   const hexStringToNormalizedRGB = (hexString) => {
     hexString = hexString.replace("#", "");
