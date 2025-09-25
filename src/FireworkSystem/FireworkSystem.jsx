@@ -15,7 +15,7 @@ function createFragment(origin, baseVel) {
     };
 }
 
-export default function FireworkSystem() {
+export default function FireworkSystem({ fireworkColor }) {
     const gravity = new THREE.Vector3(0, -9.81, 0);
     const [shells, setShells] = useState([]);
     const [fragments, setFragments] = useState([]);
@@ -39,10 +39,10 @@ export default function FireworkSystem() {
     return (
         <>
             {shells.map((s, i) => (
-                <Shell key={`shell-${i}`} shell={s} gravity={gravity} onExplode={handleExplode} />
+                <Shell shellColor={fireworkColor} key={`shell-${i}`} shell={s} gravity={gravity} onExplode={handleExplode} />
             ))}
             {fragments.map((f, i) => (
-                <Fragment key={`frag-${i}`} frag={f} gravity={gravity} />
+                <Fragment fragmentColor={fireworkColor} key={`frag-${i}`} frag={f} gravity={gravity} />
             ))}
         </>
     );

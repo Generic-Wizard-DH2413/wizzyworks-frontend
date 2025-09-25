@@ -8,6 +8,7 @@ import { useState } from 'react';
 export default function ShapePicker({ onSaveDataShape }) {
     const navigate = useNavigate();
     const [shape, setShape] = useState("square")
+    const [currentColor, setCurrentColor] = useState("#00FF00");
 
     const sendData = () => {
         onSaveDataShape(shape);
@@ -27,7 +28,7 @@ export default function ShapePicker({ onSaveDataShape }) {
             <Canvas style={{ width: "100%", height: "50%" }} camera={{ position: [0, 5, 25], fov: 60 }}>
                 <ambientLight intensity={0.5} />
                 <directionalLight position={[5, 10, 5]} intensity={1} />
-                <FireworkSystem />
+                <FireworkSystem fireworkColor={currentColor} />
                 <mesh rotation-x={-Math.PI / 2} position={[0, -0.01, 0]}>
                     <planeGeometry args={[100, 50]} />
                     <meshStandardMaterial color="black" />
@@ -38,6 +39,11 @@ export default function ShapePicker({ onSaveDataShape }) {
                 </mesh>
                 <OrbitControls enableZoom={false} enablePan={false} /> {/* Handles zoom and stuff */}
             </Canvas>
+            <input onChange={(e) => {
+                setCurrentColor(e.target.value)
+                // const ctx = canvasRef.current.getContext("2d");
+                // ctx.strokeStyle = currentColor;
+            }} type="color" id="foreground" name="foreground" value={currentColor} />
 
             <section className="picker-container">
                 <div className="picker-item">

@@ -13,6 +13,8 @@ function App() {
   const [id, setId] = useState(null);
   const [fireworkDataShape, setFireworkDataShape] = useState(null)
   const [fireworkDataURL, setFireworkDataURL] = useState(null);
+  const [fireworkDataShapeColor, setFireworkDataShapeColor] = useState([0, 0, 0]);
+  const [fireworkDataShapeSecondColor, setFireworkDataShapeSecondColor] = useState([0, 0, 0]);
 
   useEffect(() => {
     const websocket = new WebSocket("ws://130.229.164.4:8765");
@@ -55,8 +57,15 @@ function App() {
 
     const sendFireworkData = () => {
       if (ws && ws.readyState === WebSocket.OPEN) {
-        // TODO Add color.
-        ws.send(JSON.stringify({ "id": id, "data": { "outerLayer": fireworkDataShape, "innerLayer": fireworkDataURL } }));
+        ws.send(JSON.stringify({
+          "id": id,
+          "data": {
+            "outer_layer": fireworkDataShape,
+            "outer_layer_color": hexStringToNormalizedRGB(fireworkDataShapeColor),
+            "outer_layer_second_color": hexStringToNormalizedRGB(fireworkDataShapeSecondColor),
+            "inner_layer": fireworkDataURL
+          }
+        }));
       }
     }
 
@@ -64,6 +73,16 @@ function App() {
     // websocket.onclose = () => console.log('Disconnected from WebSocket server');
     // return () => websocket.close();
   }, []);
+
+  const hexStringToNormalizedRGB = (hexString) => {
+    hexString = hexString.replace("#", "");
+
+    let r = parseInt(hexString.slice(0, 2), 16) / 255;
+    let g = parseInt(hexString.slice(2, 4), 16) / 255;
+    let b = parseInt(hexString.slice(4, 6), 16) / 255;
+
+    return [r, g, b];
+  }
 
   return (
     <Routes>
@@ -75,8 +94,6 @@ function App() {
       />
       <Route path="/innerlayer" element={
         <Canvas onSaveDataURL={(dataURL) => {
-          console.log(dataURL)
-          // TODO Change to set data instead of sending.
           setFireworkDataURL(dataURL);
         }} />}
       />

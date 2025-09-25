@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { rk4Step } from "./rk4";
 
-export default function Fragment({ frag, gravity }) {
+export default function Fragment({ fragmentColor, frag, gravity }) {
     const meshRef = useRef();
 
     useFrame((_, delta) => {
@@ -15,7 +15,7 @@ export default function Fragment({ frag, gravity }) {
     return (
         <mesh ref={meshRef}>
             <sphereGeometry args={[0.3, 12, 12]} />
-            <meshStandardMaterial color="yellow" emissive="orange" />
+            <meshStandardMaterial color={fragmentColor} emissive={fragmentColor} />
         </mesh>
     );
 }
