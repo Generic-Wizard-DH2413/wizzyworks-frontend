@@ -15,35 +15,61 @@ function createFragment(origin, baseVel) {
     };
 }
 
-export default function FireworkSystem({ fireworkColor }) {
+export default function FireworkSystem({ fireworkColor, }) {
     const gravity = new THREE.Vector3(0, -9.81, 0);
     const [shells, setShells] = useState([]);
     const [fragments, setFragments] = useState([]);
 
-    useEffect(() => {
+    const fire = (type = "normal") => {
+        // TODO use type for different fireworks
+        setFragments([]); // clear old fragments
         setShells([createShell()]);
+    };
+
+    useEffect(() => {
+        fire(); // fire once at start
+
+        // I don't know how to handle this better. 
+        const handler = (e) => {
+            const { type } = e.detail;
+            fire(type);
+        };
+        window.addEventListener("refire", handler);
+        return () => window.removeEventListener("refire", handler)
     }, []);
 
+
+
     const handleExplode = (shell) => {
-        setShells([]); // remove shell
-        const newFrags = [createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel),
-        createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel),
-        createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel),
-        createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel),
-        createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel),
-        createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel), createFragment(shell.pos, shell.vel),
-        ];
+        setShells([]);
+        const newFrags = Array.from({ length: 50 }, () =>
+            createFragment(shell.pos, shell.vel)
+        );
         setFragments(newFrags);
     };
 
     return (
         <>
+
+
             {shells.map((s, i) => (
-                <Shell shellColor={fireworkColor} key={`shell-${i}`} shell={s} gravity={gravity} onExplode={handleExplode} />
+                <Shell
+                    shellColor={fireworkColor}
+                    key={`shell-${i}`}
+                    shell={s}
+                    gravity={gravity}
+                    onExplode={handleExplode}
+                />
             ))}
             {fragments.map((f, i) => (
-                <Fragment fragmentColor={fireworkColor} key={`frag-${i}`} frag={f} gravity={gravity} />
+                <Fragment
+                    fragmentColor={fireworkColor}
+                    key={`frag-${i}`}
+                    frag={f}
+                    gravity={gravity}
+                />
             ))}
+
         </>
     );
 }

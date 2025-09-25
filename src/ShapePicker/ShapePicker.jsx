@@ -28,7 +28,9 @@ export default function ShapePicker({ onSaveDataShape }) {
             <Canvas style={{ width: "100%", height: "50%" }} camera={{ position: [0, 5, 25], fov: 60 }}>
                 <ambientLight intensity={0.5} />
                 <directionalLight position={[5, 10, 5]} intensity={1} />
-                <FireworkSystem fireworkColor={currentColor} />
+                <FireworkSystem fireworkColor={currentColor} onFireFirework={() => {
+
+                }} />
                 <mesh rotation-x={-Math.PI / 2} position={[0, -0.01, 0]}>
                     <planeGeometry args={[100, 50]} />
                     <meshStandardMaterial color="black" />
@@ -39,6 +41,17 @@ export default function ShapePicker({ onSaveDataShape }) {
                 </mesh>
                 <OrbitControls enableZoom={false} enablePan={false} /> {/* Handles zoom and stuff */}
             </Canvas>
+            <button
+                onClick={() => {
+                    window.dispatchEvent(
+                        new CustomEvent("refire", {
+                            detail: { type: "normal" },
+                        })
+                    );
+                }
+                }>
+
+            </button>
             <input onChange={(e) => {
                 setCurrentColor(e.target.value)
                 // const ctx = canvasRef.current.getContext("2d");
@@ -47,16 +60,44 @@ export default function ShapePicker({ onSaveDataShape }) {
 
             <section className="picker-container">
                 <div className="picker-item">
-                    <img onClick={(e) => setSelectedShape(e.target)} className="picker-img" src={`./star.png`} alt="star" />
+                    <img onClick={(e) => {
+                        setSelectedShape(e.target)
+                        window.dispatchEvent(
+                            new CustomEvent("refire", {
+                                detail: { type: "normal" },
+                            })
+                        );
+                    }} className="picker-img" src={`./star.png`} alt="star" />
                 </div>
                 <div>
-                    <img onClick={(e) => setSelectedShape(e.target)} className="picker-img" src={`./square.png`} alt='square' />
+                    <img onClick={(e) => {
+                        setSelectedShape(e.target)
+                        window.dispatchEvent(
+                            new CustomEvent("refire", {
+                                detail: { type: "normal" },
+                            })
+                        );
+                    }} className="picker-img" src={`./square.png`} alt='square' />
                 </div>
                 <div>
-                    <img onClick={(e) => setSelectedShape(e.target)} className="picker-img" src={`./circle.png`} alt='circle' />
+                    <img onClick={(e) => {
+                        setSelectedShape(e.target)
+                        window.dispatchEvent(
+                            new CustomEvent("refire", {
+                                detail: { type: "normal" },
+                            })
+                        );
+                    }} className="picker-img" src={`./circle.png`} alt='circle' />
                 </div>
                 <div>
-                    <img onClick={(e) => setSelectedShape(e.target)} className="picker-img" src={`./circle.png`} alt="circle" />
+                    <img onClick={(e) => {
+                        setSelectedShape(e.target)
+                        window.dispatchEvent(
+                            new CustomEvent("refire", {
+                                detail: { type: "normal" },
+                            })
+                        );
+                    }} className="picker-img" src={`./circle.png`} alt="circle" />
                 </div>
             </section>
 
