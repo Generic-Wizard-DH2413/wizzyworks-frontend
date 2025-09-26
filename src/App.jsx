@@ -5,10 +5,11 @@ import Information from './Information/Information'
 import ShapePicker from './ShapePicker/ShapePicker';
 import './App.css';
 import { useEffect, useState } from 'react';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 // https://medium.com/@chaman388/websockets-in-reactjs-a-practical-guide-with-real-world-examples-2efe483ee150
 function App() {
+  const navigate = useNavigate();
   const ENABLE_WS = false;
   const [ws, setWs] = useState(null);
   const [id, setId] = useState(null);
@@ -16,6 +17,7 @@ function App() {
   const [fireworkDataURL, setFireworkDataURL] = useState(null);
   const [fireworkDataShapeColor, setFireworkDataShapeColor] = useState([0, 0, 0]);
   const [fireworkDataShapeSecondColor, setFireworkDataShapeSecondColor] = useState([0, 0, 0]);
+  const [canLaunch, setCanLaunch] = useState(false);
 
   useEffect(() => {
     if (!ENABLE_WS) return;
@@ -37,16 +39,15 @@ function App() {
         const data = JSON.parse(event.data);
         console.log('Received:', data);
 
-        // TODO Set ID
         console.log('ID from server:', data.data.id);
         if (data.data.id !== undefined) {
           setId(data.data.id);
         }
 
-        // TODO Implement launch (ready connection from server)
-        if (data.shouldLaunch) {
-          // TODO Switch on launch
+        if (data.data.id !== undefined) { // READY TO LAUNCH
+          setCanLaunch(true);
         }
+
       } catch (error) {
         console.error('Error parsing WebSocket message:', error);
         console.log('Raw message:', event.data);
@@ -57,24 +58,26 @@ function App() {
       console.error('WebSocket error:', error);
     };
 
-    const sendFireworkData = () => {
-      if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({
-          "id": id,
-          "data": {
-            "outer_layer": fireworkDataShape,
-            "outer_layer_color": hexStringToNormalizedRGB(fireworkDataShapeColor),
-            "outer_layer_second_color": hexStringToNormalizedRGB(fireworkDataShapeSecondColor),
-            "inner_layer": fireworkDataURL
-          }
-        }));
-      }
-    }
+
 
     // TODO Fix the disconnect logic
     // websocket.onclose = () => console.log('Disconnected from WebSocket server');
     // return () => websocket.close();
   }, [ENABLE_WS]);
+
+  const sendFireworkData = () => {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({
+        "id": id,
+        "data": {
+          "outer_layer": fireworkDataShape,
+          "outer_layer_color": hexStringToNormalizedRGB(fireworkDataShapeColor),
+          "outer_layer_second_color": hexStringToNormalizedRGB(fireworkDataShapeSecondColor),
+          "inner_layer": fireworkDataURL
+        }
+      }));
+    }
+  }
 
   const hexStringToNormalizedRGB = (hexString) => {
     hexString = hexString.replace("#", "");
@@ -89,9 +92,9 @@ function App() {
   return (
     <Routes>
       <Route index element={<Information />} />
-      <Route path="/shapePicker" element={<ShapePicker onSaveDataShape={(dataShape) => {
-        console.log(dataShape)
+      <Route path="/shapePicker" element={<ShapePicker onSaveDataShape={(dataShape, dataShapeColor) => {
         setFireworkDataShape(dataShape);
+        setFireworkDataShapeColor(dataShapeColor)
       }} />}
       />
       <Route path="/innerlayer" element={
@@ -100,7 +103,10 @@ function App() {
         }} />}
       />
       <Route path="/marker" element={<ArUco arUcoId={id} />} />
-      <Route path="/launch" element={<LaunchScreen />} />
+      <Route path="/launch" element={<LaunchScreen onSendLaunchData={() => {
+        console.log("Send Launch Data")
+        sendFireworkData();
+      }} />} />
     </Routes>
   )
 }

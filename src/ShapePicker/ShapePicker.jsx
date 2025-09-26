@@ -11,7 +11,8 @@ export default function ShapePicker({ onSaveDataShape }) {
     const [currentColor, setCurrentColor] = useState("#00FF00");
 
     const sendData = () => {
-        onSaveDataShape(shape);
+        onSaveDataShape(shape, currentColor);
+
     }
 
     const setSelectedShape = (target) => {
