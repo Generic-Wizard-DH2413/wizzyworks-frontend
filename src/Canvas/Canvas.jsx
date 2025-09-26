@@ -101,7 +101,7 @@ export default function Canvas({ onSaveDataURL }) {
             canvasRef.current.width + 10,
             canvasRef.current.height + 10
         );
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "rgb(26, 26, 26)";
         ctx.fill();
         ctx.stroke();
         setPosition([]);

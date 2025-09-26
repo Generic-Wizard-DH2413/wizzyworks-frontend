@@ -16,3 +16,10 @@
 .selected {
     border: 1px solid black;
 }
+
+.shapepicker-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-direction: row;
+}

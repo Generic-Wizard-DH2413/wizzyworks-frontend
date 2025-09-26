@@ -7,6 +7,7 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from "react-router-dom";
 
+// TODO Add darkmode
 // https://medium.com/@chaman388/websockets-in-reactjs-a-practical-guide-with-real-world-examples-2efe483ee150
 function App() {
   const navigate = useNavigate();
@@ -106,7 +107,7 @@ function App() {
       <Route path="/launch" element={<LaunchScreen onSendLaunchData={() => {
         console.log("Send Launch Data")
         sendFireworkData();
-      }} />} />
+      }} canLaunch={canLaunch} />} />
     </Routes>
   )
 }

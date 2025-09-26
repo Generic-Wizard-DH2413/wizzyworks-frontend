@@ -25,24 +25,24 @@ export default function ShapePicker({ onSaveDataShape }) {
 
     return (
         <>
-            <h3>Pick your firework shape</h3>
+            <h1>Pick your firework shape</h1>
             <Canvas style={{ width: "100%", height: "50%" }} camera={{ position: [0, 5, 25], fov: 60 }}>
                 <ambientLight intensity={0.5} />
                 <directionalLight position={[5, 10, 5]} intensity={1} />
                 <FireworkSystem fireworkColor={currentColor} onFireFirework={() => {
 
                 }} />
-                <mesh rotation-x={-Math.PI / 2} position={[0, -0.01, 0]}>
-                    <planeGeometry args={[100, 50]} />
-                    <meshStandardMaterial color="black" />
+                <mesh rotation-x={-Math.PI / 2} position={[0, -8, 0]}>
+                    <planeGeometry args={[100, 100]} />
+                    <meshStandardMaterial color="rgba(155, 155, 155, 1)" />
                 </mesh>
-                <mesh position={[-1, -1, -1]}> {/* Background plane */}
-                    <planeGeometry args={[300, 50]} />
-                    <meshStandardMaterial color="black" />
+                <mesh position={[-1, 0, -100]}> {/* Background plane */}
+                    <planeGeometry args={[350, 100]} />
+                    <meshStandardMaterial color="rgba(26, 61, 113, 1)" />
                 </mesh>
                 <OrbitControls enableZoom={false} enablePan={false} /> {/* Handles zoom and stuff */}
             </Canvas>
-            <button
+            {/* <button
                 onClick={() => {
                     window.dispatchEvent(
                         new CustomEvent("refire", {
@@ -52,12 +52,14 @@ export default function ShapePicker({ onSaveDataShape }) {
                 }
                 }>
 
-            </button>
-            <input onChange={(e) => {
-                setCurrentColor(e.target.value)
-                // const ctx = canvasRef.current.getContext("2d");
-                // ctx.strokeStyle = currentColor;
-            }} type="color" id="foreground" name="foreground" value={currentColor} />
+            </button> */}
+            < div className='shapepicker-buttons'>
+                <input onChange={(e) => {
+                    setCurrentColor(e.target.value)
+                    // const ctx = canvasRef.current.getContext("2d");
+                    // ctx.strokeStyle = currentColor;
+                }} type="color" id="foreground" name="foreground" value={currentColor} />
+            </ div>
 
             <section className="picker-container">
                 <div className="picker-item">
