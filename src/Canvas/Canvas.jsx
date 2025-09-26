@@ -19,8 +19,15 @@ export default function Canvas({ onSaveDataURL }) {
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight * 0.8;
+        // canvas.width = window.innerWidth; // Old way
+        // canvas.height = window.innerHeight * 0.8;
+        if (window.innerWidth < window.innerHeight) {
+            canvas.width = window.innerWidth * 0.8;
+            canvas.height = window.innerWidth * 0.8;
+        } else {
+            canvas.width = window.innerHeight * 0.8;
+            canvas.height = window.innerHeight * 0.8;
+        }
         const ctx = canvas.getContext("2d");
         ctx.lineCap = "round";
         ctx.lineWidth = 3;

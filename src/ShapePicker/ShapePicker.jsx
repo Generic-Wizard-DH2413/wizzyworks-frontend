@@ -25,7 +25,7 @@ export default function ShapePicker({ onSaveDataShape }) {
 
     return (
         <>
-            <h1>Pick your firework shape</h1>
+            <h3>Pick your firework shape</h3>
             <Canvas style={{ width: "100%", height: "50%" }} camera={{ position: [0, 5, 25], fov: 60 }}>
                 <ambientLight intensity={0.5} />
                 <directionalLight position={[5, 10, 5]} intensity={1} />
