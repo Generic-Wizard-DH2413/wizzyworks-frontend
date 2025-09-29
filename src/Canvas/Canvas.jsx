@@ -21,13 +21,19 @@ export default function Canvas({ onSaveDataURL }) {
         const canvas = canvasRef.current;
         // canvas.width = window.innerWidth; // Old way
         // canvas.height = window.innerHeight * 0.8;
+        let canvasSize;
         if (window.innerWidth < window.innerHeight) {
-            canvas.width = window.innerWidth * 0.8;
-            canvas.height = window.innerWidth * 0.8;
+            canvasSize = window.innerWidth * 0.8;
         } else {
-            canvas.width = window.innerHeight * 0.8;
-            canvas.height = window.innerHeight * 0.8;
+            canvasSize = window.innerHeight * 0.8;
         }
+        
+        // Set both internal canvas dimensions and CSS dimensions to the same value
+        canvas.width = canvasSize;
+        canvas.height = canvasSize;
+        canvas.style.width = canvasSize + 'px';
+        canvas.style.height = canvasSize + 'px';
+        
         const ctx = canvas.getContext("2d");
         ctx.lineCap = "round";
         ctx.lineWidth = 3;
@@ -146,9 +152,10 @@ export default function Canvas({ onSaveDataURL }) {
             <div className="canvas-buttons">
                 <button onClick={clearCanvas}>Clear Canvas</button>
                 <input onChange={(e) => {
-                    setCurrentColor(e.target.value)
+                    const newColor = e.target.value;
+                    setCurrentColor(newColor);
                     const ctx = canvasRef.current.getContext("2d");
-                    ctx.strokeStyle = currentColor;
+                    ctx.strokeStyle = newColor;
                 }} type="color" id="foreground" name="foreground" value={currentColor} />
             </div>
 

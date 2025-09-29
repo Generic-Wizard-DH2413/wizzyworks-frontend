@@ -4,7 +4,6 @@ html, body {
 }
 .canvas-element {
     display: block;
-    width: 95%;
     margin: auto;
     border: 1px solid rgb(229, 229, 229);
     background-color: rgb(26, 26, 26); /*Canvas element is transparent by default , fixes darkmode canvas*/
