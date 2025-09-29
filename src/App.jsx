@@ -11,18 +11,19 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 // https://medium.com/@chaman388/websockets-in-reactjs-a-practical-guide-with-real-world-examples-2efe483ee150
 function App() {
   const navigate = useNavigate();
-  const ENABLE_WS = false;
+  const ENABLE_WS = true;
   const [ws, setWs] = useState(null);
   const [id, setId] = useState(null);
   const [fireworkDataShape, setFireworkDataShape] = useState(null)
   const [fireworkDataURL, setFireworkDataURL] = useState(null);
-  const [fireworkDataShapeColor, setFireworkDataShapeColor] = useState([0, 0, 0]);
-  const [fireworkDataShapeSecondColor, setFireworkDataShapeSecondColor] = useState([0, 0, 0]);
+  const [fireworkDataShapeColor, setFireworkDataShapeColor] = useState("#FF00FF");
+  const [fireworkDataShapeSecondColor, setFireworkDataShapeSecondColor] = useState("#FF00FF");
   const [canLaunch, setCanLaunch] = useState(false);
 
   useEffect(() => {
+
     if (!ENABLE_WS) return;
-    const websocket = new WebSocket("ws://130.229.164.4:8765");
+    const websocket = new WebSocket("ws://130.229.135.87:8765");
     setWs(websocket);
 
     websocket.onopen = () => {
@@ -38,15 +39,21 @@ function App() {
     websocket.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
-        console.log('Received:', data);
-
+        console.log(
+          "%c Received:" + data,
+          "color: #00ff00; background: black; font-family: monospace; font-size: 14px; padding: 2px 6px;"
+        );
+        console.log("")
         console.log('ID from server:', data.data.id);
         if (data.data.id !== undefined) {
           setId(data.data.id);
         }
 
-        if (data.data.id !== undefined) { // READY TO LAUNCH
-          setCanLaunch(true);
+        if (data.data.status !== undefined) { // READY TO LAUNCH
+          console.log()
+          if (data.data.status == "ready") {
+            setCanLaunch(true);
+          }
         }
 
       } catch (error) {
@@ -68,7 +75,7 @@ function App() {
 
   const sendFireworkData = () => {
     if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({
+      let jsondata = JSON.stringify({
         "id": id,
         "data": {
           "outer_layer": fireworkDataShape,
@@ -76,13 +83,15 @@ function App() {
           "outer_layer_second_color": hexStringToNormalizedRGB(fireworkDataShapeSecondColor),
           "inner_layer": fireworkDataURL
         }
-      }));
+      })
+      ws.send(jsondata);
+      console.log("sent data to server", jsondata);
     }
   }
 
   const hexStringToNormalizedRGB = (hexString) => {
     hexString = hexString.replace("#", "");
-
+    console.log(hexString);
     let r = parseInt(hexString.slice(0, 2), 16) / 255;
     let g = parseInt(hexString.slice(2, 4), 16) / 255;
     let b = parseInt(hexString.slice(4, 6), 16) / 255;
