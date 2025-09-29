@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useAppNavigation } from '../hooks/useAppNavigation';
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import FireworkSystem from '../FireworkSystem/FireworkSystem';
@@ -6,7 +6,7 @@ import './ShapePicker.css';
 import { useState } from 'react';
 
 export default function ShapePicker({ onSaveDataShape }) {
-    const navigate = useNavigate();
+    const { navigateTo } = useAppNavigation();
     const [shape, setShape] = useState("square")
     const [currentColor, setCurrentColor] = useState("#00FF00");
 
@@ -108,7 +108,7 @@ export default function ShapePicker({ onSaveDataShape }) {
             <nav className='special-nav'>
                 <button onClick={() => {
                     sendData();
-                    navigate('/innerlayer')
+                    navigateTo('/innerlayer')
                 }
                 }>Next</button>
             </nav>

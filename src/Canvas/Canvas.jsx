@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useAppNavigation } from '../hooks/useAppNavigation';
 
 // TODO Save canvas state when user navigates around (Store state in parent?)
 // Change to black background on canvas. Make it a square.
@@ -14,7 +14,7 @@ export default function Canvas({ onSaveDataURL }) {
     const canvasRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [position, setPosition] = useState([]);
-    const navigate = useNavigate();
+    const { navigateTo } = useAppNavigation();
     const [currentColor, setCurrentColor] = useState("#FF0000");
 
     useEffect(() => {
@@ -163,11 +163,11 @@ export default function Canvas({ onSaveDataURL }) {
                 <button onClick={() => {
                     const ctx = canvasRef.current.getContext("2d");
                     ctx.save();
-                    navigate('/shapePicker');
+                    navigateTo('/shapePicker');
                 }}>Back</button>
                 <button onClick={() => {
                     sendDrawing()
-                    navigate('/launch')
+                    navigateTo('/launch')
                 }
                 }>Next</button>
             </nav>

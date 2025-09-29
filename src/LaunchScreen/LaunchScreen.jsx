@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useAppNavigation } from "../hooks/useAppNavigation";
 
 export default function LaunchScreen({ onSendLaunchData, canLaunch }) {
-    const navigate = useNavigate();
+    const { navigateTo } = useAppNavigation();
     const [count, setCount] = useState(3);
     const intervalRef = useRef(null);
 
@@ -19,7 +19,7 @@ export default function LaunchScreen({ onSendLaunchData, canLaunch }) {
                 if (prevCount === 1) {
                     clearInterval(intervalRef.current);
                     intervalRef.current = null;
-                    navigate('/marker');
+                    navigateTo('/marker');
                     return 0;
                 }
                 return prevCount - 1;

@@ -1,15 +1,15 @@
 import './Information.css';
-import { useNavigate } from 'react-router-dom';
+import { useAppNavigation } from '../hooks/useAppNavigation';
 
 export default function Information() {
-    const navigate = useNavigate();
+    const { navigateTo } = useAppNavigation();
 
     return (
         <>
             <h1>Build your own firework &#127878;</h1>
             <h3>Please increase the <b>brightness</b> and turn up the <b>volume</b> for full experience</h3>
             <nav className='special-nav'>
-                <button onClick={() => navigate('/shapePicker')}>Next</button>
+                <button onClick={() => navigateTo('/shapePicker')}>Next</button>
             </nav>
         </>
     )

@@ -5,13 +5,17 @@ import Information from './Information/Information'
 import ShapePicker from './ShapePicker/ShapePicker';
 import './App.css';
 import { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { useRefreshRedirect } from './hooks/useRefreshRedirect';
 
 // TODO Add darkmode
 // https://medium.com/@chaman388/websockets-in-reactjs-a-practical-guide-with-real-world-examples-2efe483ee150
 function App() {
   const navigate = useNavigate();
   const ENABLE_WS = true;
+  
+  // Handle refresh redirect to index page
+  useRefreshRedirect();
   const [ws, setWs] = useState(null);
   const [id, setId] = useState(null);
   const [fireworkDataShape, setFireworkDataShape] = useState(null)
@@ -23,7 +27,7 @@ function App() {
   useEffect(() => {
 
     if (!ENABLE_WS) return;
-    const websocket = new WebSocket("ws://130.229.135.87:8765");
+    const websocket = new WebSocket("ws://localhost:8765");
     setWs(websocket);
 
     websocket.onopen = () => {

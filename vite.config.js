@@ -8,5 +8,17 @@ export default defineConfig({
     host: true, // Allow external connections
     port: 5173,
     cors: true, // Enable CORS
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
+  },
+  // Configure history fallback for SPA routing
+  preview: {
+    port: 5173,
+    host: true,
   }
 })
