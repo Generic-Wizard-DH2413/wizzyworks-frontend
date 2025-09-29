@@ -104,24 +104,28 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route index element={<Information />} />
-      <Route path="/shapePicker" element={<ShapePicker onSaveDataShape={(dataShape, dataShapeColor) => {
-        setFireworkDataShape(dataShape);
-        setFireworkDataShapeColor(dataShapeColor)
-      }} />}
-      />
-      <Route path="/innerlayer" element={
-        <Canvas onSaveDataURL={(dataURL) => {
-          setFireworkDataURL(dataURL);
-        }} />}
-      />
-      <Route path="/marker" element={<ArUco arUcoId={id} />} />
-      <Route path="/launch" element={<LaunchScreen onSendLaunchData={() => {
-        console.log("Send Launch Data")
-        sendFireworkData();
-      }} canLaunch={canLaunch} />} />
-    </Routes>
+    <div className="min-h-screen bg-zinc-900 text-white">
+      <div className="container mx-auto px-4 py-8 pb-20">
+        <Routes>
+          <Route index element={<Information />} />
+          <Route path="/shapePicker" element={<ShapePicker onSaveDataShape={(dataShape, dataShapeColor) => {
+            setFireworkDataShape(dataShape);
+            setFireworkDataShapeColor(dataShapeColor)
+          }} />}
+          />
+          <Route path="/innerlayer" element={
+            <Canvas onSaveDataURL={(dataURL) => {
+              setFireworkDataURL(dataURL);
+            }} />}
+          />
+          <Route path="/marker" element={<ArUco arUcoId={id} />} />
+          <Route path="/launch" element={<LaunchScreen onSendLaunchData={() => {
+            console.log("Send Launch Data")
+            sendFireworkData();
+          }} canLaunch={canLaunch} />} />
+        </Routes>
+      </div>
+    </div>
   )
 }
 

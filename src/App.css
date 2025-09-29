@@ -17,6 +17,4 @@ h3, h1, p {
     text-align: center;
 } 
 
-button {
-  color: red;
-}
+/* Button colors are now handled by Tailwind CSS classes */

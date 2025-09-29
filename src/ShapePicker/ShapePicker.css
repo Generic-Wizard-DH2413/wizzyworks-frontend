@@ -1,25 +1,7 @@
-.picker-container {
-    display: flex;
-    flex-direction: row;
-    overflow-x: scroll;
-}
-.picker-item > img {
-    width: 100px;
-    height: auto;
-}
-
-.picker-img {
-    width: 100px;
-    height: auto;
-}
-
+/* Custom styles for selected shape */
 .selected {
-    border: 1px solid black;
-}
-
-.shapepicker-buttons {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    flex-direction: row;
+    border-color: rgb(249 115 22) !important;
+    border-width: 3px !important;
+    box-shadow: 0 0 20px rgba(249, 115, 22, 0.5) !important;
+    transform: scale(1.1) !important;
 }
