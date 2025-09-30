@@ -14,7 +14,7 @@ import { usePreventBackButton } from './hooks/usePreventBackButton';
 function App() {
   const navigate = useNavigate();
   const ENABLE_WS = true;
-  
+
   // Handle refresh redirect to index page
   useRefreshRedirect();
   
@@ -134,7 +134,7 @@ function App() {
           <Route path="/launch" element={<LaunchScreen onSendLaunchData={() => {
             console.log("Send Launch Data")
             sendFireworkData();
-          }} canLaunch={canLaunch} />} />
+          }} canLaunch={canLaunch} arUcoId={id} />} />
         </Routes>
       </div>
     </div>

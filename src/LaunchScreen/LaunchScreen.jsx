@@ -1,10 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { useAppNavigation } from "../hooks/useAppNavigation";
 
-export default function LaunchScreen({ onSendLaunchData, canLaunch }) {
+export default function LaunchScreen({ onSendLaunchData, canLaunch, arUcoId }) {
     const { navigateTo } = useAppNavigation();
     const [count, setCount] = useState(3);
     const intervalRef = useRef(null);
+    const videoRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(true);
+    const [showMarker, setShowMarker] = useState(false);
 
     useEffect(() => {
         onSendLaunchData();
@@ -27,16 +30,43 @@ export default function LaunchScreen({ onSendLaunchData, canLaunch }) {
         }, 1000);
     };
 
+    const handlePlay = () => {
+        if (videoRef.current) {
+            setTimeout(() => {
+                setShowMarker(false);
+                videoRef.current.play();
+
+            }, 2000)
+            setShowMarker(true);
+        }
+    };
+
     if (canLaunch) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[80vh] text-center space-y-8">
-                <div className="text-8xl md:text-9xl font-bold bg-gradient-to-r from-orange-400 via-yellow-500 to-red-500 bg-clip-text text-transparent animate-pulse">
-                    {count}
-                </div>
-                <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-8 border border-zinc-700">
-                    <button 
+                <video
+                    ref={videoRef}
+                    src="/Firework_With_Sound.mp4"
+                    width="640"
+                    height="360"
+                    playsInline
+                    webkit-playsinline="true"
+                    muted={false}
+                    controls={false}
+                />
+                {showMarker && <div className="bg-white rounded-3xl p-8 shadow-2xl border-4 border-orange-500/30" style={{ position: "absolute" }}>
+                    <img
+                        src={`/4x4_1000-${arUcoId}.svg`}
+                        className="w-48 h-48 md:w-64 md:h-64"
+                        alt={`ArUco marker ${arUcoId}`}
+                    />
+                </div>}
+                {isVisible && <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-8 border border-zinc-700" style={{ position: "absolute" }}>
+                    <button
                         onClick={() => {
-                            startLaunch();
+                            handlePlay();
+                            setIsVisible(false);
+                            // Something else to time?
                         }}
                         className="bg-orange-500 hover:bg-orange-600 text-white font-medium text-xl py-6 px-12 rounded-full 
                                  shadow-2xl transform transition-all duration-200 hover:scale-110 active:scale-95 
@@ -44,7 +74,7 @@ export default function LaunchScreen({ onSendLaunchData, canLaunch }) {
                     >
                         🚀 LAUNCH 🚀
                     </button>
-                </div>
+                </div>}
             </div>
         )
     }
