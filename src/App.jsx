@@ -122,7 +122,7 @@ function App() {
           <Route path="/launch" element={<LaunchScreen onSendLaunchData={() => {
             console.log("Send Launch Data")
             sendFireworkData();
-          }} canLaunch={true} arUcoId={id} />} />
+          }} canLaunch={canLaunch} arUcoId={id} />} />
         </Routes>
       </div>
     </div>
