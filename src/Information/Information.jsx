@@ -5,7 +5,7 @@ export default function Information() {
     const { navigateTo } = useAppNavigation();
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-[80vh] text-center space-y-6">
+        <div className="flex flex-col items-center justify-center min-h-[80vh] text-center space-y-6 px-4 py-8 pb-20">
             <div className="space-y-4">
                 <h1 className="text-4xl md:text-5xl font-bold">
                     <span className="bg-gradient-to-r from-orange-400 via-orange-500 to-yellow-500 bg-clip-text text-transparent">

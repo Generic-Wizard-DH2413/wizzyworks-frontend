@@ -39,7 +39,7 @@ function App() {
   useEffect(() => {
 
     if (!ENABLE_WS) return;
-    const websocket = new WebSocket("ws://localhost:8765");
+    const websocket = new WebSocket("ws://192.168.3.7:8765");
     setWs(websocket);
 
     websocket.onopen = () => {
@@ -117,7 +117,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-zinc-900 text-white">
-      <div className="container mx-auto px-4 py-8 pb-20">
+      <div className="container mx-auto">
         <Routes>
           <Route index element={<Information />} />
           <Route path="/shapePicker" element={<ShapePicker onSaveDataShape={(dataShape, dataShapeColor) => {
