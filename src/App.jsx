@@ -13,7 +13,7 @@ import { useRefreshRedirect } from './hooks/useRefreshRedirect';
 function App() {
   const navigate = useNavigate();
   const ENABLE_WS = true;
-  
+
   // Handle refresh redirect to index page
   useRefreshRedirect();
   const [ws, setWs] = useState(null);
@@ -122,7 +122,7 @@ function App() {
           <Route path="/launch" element={<LaunchScreen onSendLaunchData={() => {
             console.log("Send Launch Data")
             sendFireworkData();
-          }} canLaunch={canLaunch} />} />
+          }} canLaunch={true} arUcoId={id} />} />
         </Routes>
       </div>
     </div>
