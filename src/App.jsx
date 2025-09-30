@@ -7,6 +7,7 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useRefreshRedirect } from './hooks/useRefreshRedirect';
+import { usePreventBackButton } from './hooks/usePreventBackButton';
 
 // TODO Add darkmode
 // https://medium.com/@chaman388/websockets-in-reactjs-a-practical-guide-with-real-world-examples-2efe483ee150
@@ -16,6 +17,17 @@ function App() {
   
   // Handle refresh redirect to index page
   useRefreshRedirect();
+  
+  // Prevent browser back button navigation
+  usePreventBackButton(
+    true, // Enable back button prevention
+    () => {
+      // Optional callback when back is attempted
+      console.log('User attempted to navigate back - prevented');
+    },
+    false // Set to true if you want to show confirmation dialog
+  );
+  
   const [ws, setWs] = useState(null);
   const [id, setId] = useState(null);
   const [fireworkDataShape, setFireworkDataShape] = useState(null)
