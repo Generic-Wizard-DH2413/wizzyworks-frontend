@@ -39,7 +39,20 @@ function App() {
   useEffect(() => {
 
     if (!ENABLE_WS) return;
-    const websocket = new WebSocket(import.meta.env.VITE_WEBSOCKET_URL);
+    
+    // Debug environment variables
+    console.log('Environment variables:', {
+      VITE_WEBSOCKET_URL: import.meta.env.VITE_WEBSOCKET_URL,
+      all_env: import.meta.env
+    });
+    
+    const websocketUrl = import.meta.env.VITE_WEBSOCKET_URL || "ws://localhost:8765";
+    
+    if (!import.meta.env.VITE_WEBSOCKET_URL) {
+      console.warn('VITE_WEBSOCKET_URL not found, using fallback URL');
+    }
+    
+    const websocket = new WebSocket(websocketUrl);
     setWs(websocket);
 
     websocket.onopen = () => {
