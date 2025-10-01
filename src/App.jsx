@@ -39,7 +39,7 @@ function App() {
   useEffect(() => {
 
     if (!ENABLE_WS) return;
-    const websocket = new WebSocket("ws://192.168.3.7:8765");
+    const websocket = new WebSocket(import.meta.env.VITE_WEBSOCKET_URL);
     setWs(websocket);
 
     websocket.onopen = () => {
