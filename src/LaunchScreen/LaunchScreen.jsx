@@ -96,7 +96,7 @@ export default function LaunchScreen({ onSendLaunchData, canLaunch, arUcoId }) {
     }
     else {
         return (
-            <div className="flex flex-col items-center justify-center min-h-[80vh] text-center space-y-6">
+            <div className="flex flex-col items-center justify-center min-h-[80vh] text-center space-y-6  px-4 py-8 pb-20">
                 <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-8 border border-zinc-700">
                     <h1 className="text-2xl md:text-3xl font-bold text-white mb-4">
                         📱 Place the phone in the launch area

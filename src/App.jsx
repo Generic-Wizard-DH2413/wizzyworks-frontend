@@ -41,10 +41,10 @@ function App() {
     if (!ENABLE_WS) return;
     
     // Debug environment variables
-    console.log('Environment variables:', {
-      VITE_WEBSOCKET_URL: import.meta.env.VITE_WEBSOCKET_URL,
-      all_env: import.meta.env
-    });
+    // console.log('Environment variables:', {
+    //   VITE_WEBSOCKET_URL: import.meta.env.VITE_WEBSOCKET_URL,
+    //   all_env: import.meta.env
+    // });
     
     const websocketUrl = import.meta.env.VITE_WEBSOCKET_URL || "ws://localhost:8765";
     
