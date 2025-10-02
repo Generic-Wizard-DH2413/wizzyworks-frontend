@@ -1,7 +1,7 @@
 // https://codesandbox.io/p/sandbox/fireworks-km2wzy?file=%2Fsrc%2FFirework.tsx%3A14%2C6
 import { useState, useEffect } from "react";
 import * as THREE from "three";
-import Shell from "../../Shell";
+import Shell from "./Shell";
 import Fragment from "./Fragment";
 
 function createShell() {

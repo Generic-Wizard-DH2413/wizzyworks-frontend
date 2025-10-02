@@ -1,10 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { useAppNavigation } from "@/hooks/useAppNavigation";
 
 export default function LaunchScreen({ onSendLaunchData, canLaunch, arUcoId }) {
-    const { navigateTo } = useAppNavigation();
-    const [count, setCount] = useState(3);
-    const intervalRef = useRef(null);
     const videoRef = useRef(null);
     const [isVisible, setIsVisible] = useState(true);
     const [showMarker, setShowMarker] = useState(false);
