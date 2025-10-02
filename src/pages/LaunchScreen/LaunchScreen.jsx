@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useAppNavigation } from "../hooks/useAppNavigation";
+import { useAppNavigation } from "@/hooks/useAppNavigation";
 
 export default function LaunchScreen({ onSendLaunchData, canLaunch, arUcoId }) {
     const { navigateTo } = useAppNavigation();

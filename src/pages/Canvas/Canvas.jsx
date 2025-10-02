@@ -1,5 +1,6 @@
+import './Canvas.css';
 import { useRef, useEffect, useState } from "react";
-import { useAppNavigation } from '../hooks/useAppNavigation';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 
 // TODO Save canvas state when user navigates around (Store state in parent?)
 // Change to black background on canvas. Make it a square.

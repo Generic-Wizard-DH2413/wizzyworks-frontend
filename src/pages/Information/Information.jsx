@@ -1,5 +1,5 @@
 import './Information.css';
-import { useAppNavigation } from '../hooks/useAppNavigation';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 
 export default function Information() {
     const { navigateTo } = useAppNavigation();

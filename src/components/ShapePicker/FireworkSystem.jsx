@@ -1,8 +1,8 @@
 // https://codesandbox.io/p/sandbox/fireworks-km2wzy?file=%2Fsrc%2FFirework.tsx%3A14%2C6
 import { useState, useEffect } from "react";
 import * as THREE from "three";
-import Shell from "../Shell";
-import Fragment from "../Fragment";
+import Shell from "../../Shell";
+import Fragment from "./Fragment";
 
 function createShell() {
     return { pos: new THREE.Vector3(0, 1, 0), vel: new THREE.Vector3(0, 12, 0), c: 0.02 };

@@ -1,8 +1,8 @@
-import Canvas from './Canvas/Canvas';
-import ArUco from './ArUco/ArUco';
-import LaunchScreen from './LaunchScreen/LaunchScreen';
-import Information from './Information/Information'
-import ShapePicker from './ShapePicker/ShapePicker';
+import ArUco from './pages/ArUco/ArUco';
+import LaunchScreen from './pages/LaunchScreen/LaunchScreen';
+import Information from './pages/Information/Information'
+import ShapePicker from './pages/ShapePicker/ShapePicker';
+import Canvas from './pages/Canvas/Canvas';
 import './App.css';
 import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";

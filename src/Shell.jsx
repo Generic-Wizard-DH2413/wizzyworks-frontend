@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { rk4Step } from "./rk4";
+import { rk4Step } from "./utils/rk4";
 
 export default function Shell({ shellColor, shell, gravity, onExplode }) {
     const meshRef = useRef();

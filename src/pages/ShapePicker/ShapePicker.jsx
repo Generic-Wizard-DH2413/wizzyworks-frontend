@@ -1,7 +1,7 @@
-import { useAppNavigation } from '../hooks/useAppNavigation';
+import { useAppNavigation } from "@/hooks/useAppNavigation";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import FireworkSystem from '../FireworkSystem/FireworkSystem';
+import FireworkSystem from '@/components/ShapePicker/FireworkSystem';
 import './ShapePicker.css';
 import { useState } from 'react';
 

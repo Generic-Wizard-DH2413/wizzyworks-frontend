@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { rk4Step } from "./rk4";
+import { rk4Step } from "../../utils/rk4";
 
 export default function Fragment({ fragmentColor, frag, gravity }) {
     const meshRef = useRef();
