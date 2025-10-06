@@ -4,6 +4,8 @@ import Information from './pages/Information/Information'
 import ShapePicker from './pages/ShapePicker/ShapePicker';
 import Canvas from './pages/Canvas/Canvas';
 import './App.css';
+import FireworkBox from './pages/FireworkBox/FireworkBox'; //new
+
 import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useRefreshRedirect } from './hooks/useRefreshRedirect';
@@ -28,6 +30,8 @@ function App() {
     false // Set to true if you want to show confirmation dialog
   );
   
+  //component local state (application)
+  //re-render of a component when a state-setters are called
   const [ws, setWs] = useState(null);
   const [id, setId] = useState(null);
   const [fireworkDataShape, setFireworkDataShape] = useState(null)
@@ -35,6 +39,67 @@ function App() {
   const [fireworkDataShapeColor, setFireworkDataShapeColor] = useState("#FF00FF");
   const [fireworkDataShapeSecondColor, setFireworkDataShapeSecondColor] = useState("#FF00FF");
   const [canLaunch, setCanLaunch] = useState(false);
+/*@@@@@@@@@@@@@@@@@@@@@@@@ NEW START @@@@@@@@@@@@@@@@@@@@@@@@*/
+  const slotsAmount = 9; // fixed for now (you can make this dynamic later)
+  // Each slot is either null (empty), true (reserved/used), or an object (final design)
+  const [slots, setSlots] = useState(() => Array(slotsAmount).fill(null));
+  // Which slot we’re editing in the design page
+  const [selectedSlotIdx, setSelectedSlotIdx] = useState(null);
+
+  // Edit handler invoked from FireworkBox (by clicking a specific slot or "Add")
+  //will set(update) both slots and selectedSlotIdx and navigate to Design
+  const handleEditSlot = (idx) => {
+    setSlots(prev => {
+      const next = [...prev]; //copy
+      // Mark as used if empty (no placeholder object; just true)
+      if (!next[idx]) next[idx] = true; //if empty, fill it
+      return next;
+    });
+    setSelectedSlotIdx(idx);
+    navigate('/design');
+  };
+
+  //TODO
+  // When FireworkBox is finished (you decide what "finish" means in your flow)
+  const handleFinishBox = (finalSlots) => {
+    // e.g., send to backend, or go to a summary page
+    console.log('Finish FireworkBox:', finalSlots);
+    // navigate('/summary');
+  };
+
+  // When DesignProcess completes a design
+  //update slots and navigate back to fireworkBox
+  const handleDesignDone = (design) => {
+    if (selectedSlotIdx == null) {
+      // No active slot; just go back
+      navigate('/fireworkBox');
+      console.log('no slotIdxset');
+
+      return;
+    }
+    setSlots(prev => {
+      const next = [...prev];
+      // Store the real design object at that index
+      next[selectedSlotIdx] = design; // { type, colors, burstSize } or your shape
+      return next;
+    });
+    navigate('/fireworkBox');
+  };
+
+   //Design cancel returns to box and undo any changes
+  const handleDesignCancel = () => {
+    setSlots(prev => {
+      const next = [...prev];
+      // Store the real design object at that index
+      next[selectedSlotIdx] = null; // { type, colors, burstSize } or your shape
+      return next;
+    });
+    setSelectedSlotIdx(null);
+    navigate('/fireworkBox');
+  };
+
+/*@@@@@@@@@@@@@@@@@@@@@@@@ NEW END @@@@@@@@@@@@@@@@@@@@@@@@*/
+
 
   useEffect(() => {
 
@@ -127,15 +192,41 @@ function App() {
 
     return [r, g, b];
   }
-
+  //TODO
+  /*
+ <Route path="/design" element={ //new
+              <DesignProcess
+                selectedSlotIdx={selectedSlotIdx}
+                slots={slots}
+                setSlots={setSlots}
+                onCancel={handleDesignCancel}
+                onDone={handleDesignDone}
+              />
+               }
+            />
+  */
   return (
     <div className="min-h-screen bg-zinc-900 text-white">
       <div className="container mx-auto">
         <Routes>
           <Route index element={<Information />} />
-          <Route path="/shapePicker" element={<ShapePicker onSaveDataShape={(dataShape, dataShapeColor) => {
-            setFireworkDataShape(dataShape);
-            setFireworkDataShapeColor(dataShapeColor)
+          
+          <Route path="/fireworkBox" element={ //new
+            <FireworkBox
+            slotsAmount={slotsAmount}
+            slots={slots}
+            setSlots={setSlots}
+            onEditSlot={handleEditSlot}
+            onFinish={handleFinishBox}
+            />
+            } 
+          />
+
+         
+          
+          <Route path="/shapePicker" element={<ShapePicker onSaveDataShape={(dataShape, dataShapeColor) => { //props down
+            setFireworkDataShape(dataShape); //pass setter
+            setFireworkDataShapeColor(dataShapeColor) //pass setter
           }} />}
           />
           <Route path="/innerlayer" element={
