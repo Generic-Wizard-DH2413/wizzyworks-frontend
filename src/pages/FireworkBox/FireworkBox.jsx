@@ -1,50 +1,43 @@
-import { useState } from 'react';
-import { useAppNavigation } from "@/hooks/useAppNavigation";
+//TODO: add pics of types for alr set fw
 
 export default function FireworkBox({ //props
     slotsAmount,
     slots,        // lifted state
-    setSlots,     // lifted setter
-    onEditSlot,   // parent callback to open editor for a specific index
-    onFinish,     // parent callback when finishing the whole box
+    handleClearSlot,     
+    handleBoxCancel,
+    handleEditSlot
 }) {
-    const { navigateTo } = useAppNavigation();
 
     // Count how many are done (non-null)
     const fwDoneCount = slots.filter(Boolean).length;     // true or object counts as done
     const remaining   = slotsAmount - fwDoneCount;
 
     // Take the first empty slot and start editing it
-    const addOne = () => {
+    const onAddOne = () => {
         const idx = slots.findIndex(s => s == null);
         if (idx === -1) return; // all full
-        onEditSlot(idx);        // parent marks used + navigates to /design
+        handleEditSlot(idx);        // parent marks used + navigates to /design
     };
 
-    const clearSlot = (idx) => {
-        setSlots(prev => {
-        const next = [...prev];
-        next[idx] = null;
-        return next;
-        });
+    const onClearSlot = (idx) => {
+        handleClearSlot(idx);
     };
 
-    const handleSlotClick = (idx) => {
+    const onSlotClick = (idx) => {
         // Always edit exactly this slot
-        onEditSlot(idx); // App.jsx will ensure it's marked used if empty, then navigate
+        handleEditSlot(idx); // App.jsx will ensure it's marked used if empty, then navigate
     };
 
 
-    const handleBoxCancel = () => {
-        setSlots(Array(slotsAmount).fill(null));
-        navigateTo('/')
+    const onBoxCancel = () => {
+        handleBoxCancel();
     }
 
     return (
         <div className="min-h-screen bg-white text-black p-6 md:p-10">
         {/* Top bar */}
         <div className="flex items-center justify-between text-xl font-medium mb-10">
-            <button className="active:opacity-70" onClick={handleBoxCancel}>Cancel</button>
+            <button className="active:opacity-70" onClick={onBoxCancel}>Cancel</button>
             <button className="active:opacity-70" onClick={() => onFinish(slots)}>Finish</button>
         </div>
 
@@ -66,7 +59,7 @@ export default function FireworkBox({ //props
                     {/* Delete button (only when filled) */}
                     {filled && (
                     <button
-                        onClick={(e) => { e.stopPropagation(); clearSlot(i); }}
+                        onClick={(e) => { e.stopPropagation(); onClearSlot(i); }}
                         aria-label="Delete firework"
                         title="Delete firework"
                         className="absolute -top-1 -right-1 z-10 h-6 w-6 rounded-full bg-black/80 text-white text-sm leading-6 text-center"
@@ -76,7 +69,7 @@ export default function FireworkBox({ //props
                     )}
                     {/* This button is not called (stopProp) if its already filled (then we just get x instead)*/}
                     <button
-                    onClick={() => handleSlotClick(i)}
+                    onClick={() => onSlotClick(i)}
                     className={[
                         'w-full aspect-square rounded-full',
                         'transition-transform active:scale-95',
@@ -97,7 +90,7 @@ export default function FireworkBox({ //props
         {/* Add button + remaining */}
         <div className="mt-12">
             <button
-            onClick={addOne}
+            onClick={onAddOne}
             disabled={remaining === 0}
             className="mx-auto block text-lg disabled:opacity-40 active:opacity-80"
             >
