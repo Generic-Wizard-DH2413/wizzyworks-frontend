@@ -56,7 +56,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
       setStep("draw");
     } else {
       const design = { 
-        type: selectedType.name,
+        type: selectedType,
         color1,
         burstSize };
       handleDesignDone(design);
@@ -66,7 +66,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
   // --- Draw step ---
   const handleDrawDone = () => {
     const design = {
-      type: selectedType.name,
+      type: selectedType,
       color1,
       burstSize,
       drawing: "placeholder",
@@ -87,12 +87,12 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
 
       {step === "settings" && (
         <SettingsDesign
-          color1={color1}
-          setColor1={setColor1}
-          burstSize={burstSize}
-          setBurstSize={setBurstSize}
-          onCancel={handleDesignCancel}
-          onSettingsDone={handleSettingsDone}
+            color1={color1}
+            setColor1={setColor1}
+            burstSize={burstSize}
+            setBurstSize={setBurstSize}
+            onCancel={handleDesignCancel}
+            onSettingsDone={handleSettingsDone}
         />
       )}
 

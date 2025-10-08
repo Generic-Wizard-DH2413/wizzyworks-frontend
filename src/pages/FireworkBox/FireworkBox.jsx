@@ -54,6 +54,8 @@ export default function FireworkBox({ //props
             <div className="grid grid-cols-3 gap-4 md:gap-6">
             {slots.map((s, i) => {
                 const filled = s !== null;
+                const imgSrc = filled ? s.type?.img : null;
+
                 return (
                 <div key={i} className="relative">
                     {/* Delete button (only when filled) */}
@@ -67,20 +69,26 @@ export default function FireworkBox({ //props
                         ×
                     </button>
                     )}
-                    {/* This button is not called (stopProp) if its already filled (then we just get x instead)*/}
+                    {/* This button is always here (x or no x button)*/}
                     <button
-                    onClick={() => onSlotClick(i)}
-                    className={[
-                        'w-full aspect-square rounded-full',
-                        'transition-transform active:scale-95',
-                        'border-2',
-                        filled
-                        ? 'bg-white/80 border-white'
-                        : 'bg-white/60 border-white/80',
-                    ].join(' ')}
-                    aria-label={filled ? 'Edit firework' : 'Create firework'}
-                    title={filled ? 'Edit firework' : 'Create firework'}
-                    />
+                        onClick={() => onSlotClick(i)}
+                        className={[
+                        'relative w-full aspect-square rounded-full border-2 transition-transform active:scale-95',
+                        filled ? 'border-white' : 'border-white/80 bg-white/60',
+                        ].join(' ')}
+                        aria-label={filled ? 'Edit firework' : 'Create firework'}
+                        title={filled ? 'Edit firework' : 'Create firework'}
+                    >
+                        {imgSrc ? (
+                        <img
+                            src={imgSrc}
+                            alt={s.type?.name ?? 'Firework'}
+                            className="absolute inset-0 w-full h-full rounded-full object-cover"
+                            loading="lazy"
+                            draggable={false}
+                        />
+                        ) : null}
+                    </button>
                 </div>
                 );
             })}
