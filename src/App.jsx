@@ -35,7 +35,7 @@ function App() {
   //component local state (application)
   //re-render of a component when a state-setters are called
   const [ws, setWs] = useState(null);
-  const [id, setId] = useState(null);
+  const [id, setId] = useState(null); //ArUco id
   const [fireworkDataShape, setFireworkDataShape] = useState(null)
   const [fireworkDataURL, setFireworkDataURL] = useState(null);
   const [fireworkDataShapeColor, setFireworkDataShapeColor] = useState("#FF00FF");
@@ -189,10 +189,12 @@ function App() {
             }} />}
           />
           <Route path="/marker" element={<ArUco arUcoId={id} />} />
+          
           <Route path="/launch" element={<LaunchScreen onSendLaunchData={() => {
             console.log("Send Launch Data")
             sendFireworkData();
-          }} canLaunch={canLaunch} arUcoId={id} />} />
+          }} canLaunch={canLaunch /*from on msg*/} arUcoId={id /*from on msg*/} />} 
+          /> 
         </Routes>
       </div>
     </div>

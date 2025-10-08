@@ -5,7 +5,8 @@ export default function FireworkBox({ //props
     slots,        // lifted state
     handleClearSlot,     
     handleBoxCancel,
-    handleEditSlot
+    handleEditSlot,
+    handleFinishBox
 }) {
 
     // Count how many are done (non-null)
@@ -33,12 +34,16 @@ export default function FireworkBox({ //props
         handleBoxCancel();
     }
 
+    const onFinishBox = () => {
+        handleFinishBox();
+    }
+
     return (
         <div className="min-h-screen bg-white text-black p-6 md:p-10">
         {/* Top bar */}
         <div className="flex items-center justify-between text-xl font-medium mb-10">
             <button className="active:opacity-70" onClick={onBoxCancel}>Cancel</button>
-            <button className="active:opacity-70" onClick={() => onFinish(slots)}>Finish</button>
+            <button className="active:opacity-70" onClick={() => onFinishBox(slots)}>Finish</button>
         </div>
 
         {/* Title + counters */}

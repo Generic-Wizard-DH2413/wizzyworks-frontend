@@ -1,4 +1,5 @@
 //TODO, add vids showcasing each type
+//TODO, normalizing the burst size
 
 export default function SettingsDesign({
   color1,

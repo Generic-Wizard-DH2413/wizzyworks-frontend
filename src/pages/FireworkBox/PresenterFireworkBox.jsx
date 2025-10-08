@@ -26,8 +26,8 @@ export default function FireworkBoxPresenter({slotsAmount, slots, setSlots, sele
     }
 
     const handleFinishBox = () => {
-        console.log('Finish FireworkBox:', slots);
-        // navigate('/summary');
+        
+        navigateTo('/launch');
     };
 
     
@@ -37,5 +37,6 @@ export default function FireworkBoxPresenter({slotsAmount, slots, setSlots, sele
                 handleClearSlot={handleClearSlot}
                 handleBoxCancel={handleBoxCancel}
                 handleEditSlot={handleEditSlot}
+                handleFinishBox={handleFinishBox}
                 />;
 }
