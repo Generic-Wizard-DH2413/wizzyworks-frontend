@@ -22,7 +22,7 @@ export default function Information() {
             
             <nav className="fixed bottom-6 right-6">
                 <button 
-                    onClick={() => navigateTo('/shapePicker')}
+                    onClick={() => navigateTo('/fireworkBox')}
                     className="bg-orange-500 hover:bg-orange-600 text-white font-medium text-lg py-4 px-8 rounded-full 
                              shadow-lg transform transition-all duration-200 hover:scale-105 active:scale-95 
                              border border-orange-400/30"
