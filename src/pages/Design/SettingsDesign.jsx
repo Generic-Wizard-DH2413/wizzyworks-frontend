@@ -11,6 +11,8 @@ export default function SettingsDesign({
   setSpecialFxStr,
   onCancel,
   onSettingsDone,
+  boolCol2,
+  boolSfx
 }) {
 
   const colorVariants = {
@@ -27,6 +29,7 @@ export default function SettingsDesign({
   const colorItems = Object.keys(colorVariants).map((key, _) => <button onClick={()=>{console.log(key); setColor1(key)}} className={colorVariants[key]}> </button>);
 
   return (
+    <>
     <div className="p-4">
       <div className="flex justify-between mb-4">
         <button onClick={onCancel}>Cancel</button>
@@ -35,6 +38,7 @@ export default function SettingsDesign({
       <h1 className="text-xl font-bold mb-2">Adjust Settings</h1>
 
       <label className="block mb-4">
+        <span>Main Firework Color:</span>
         <div className="grid grid-cols-3 gap-4">
 
           {colorItems}
@@ -49,6 +53,16 @@ export default function SettingsDesign({
         </div>
         
       </label>
+
+        {boolCol2 === true && (
+        <label className="block mb-4">
+        <span>Secondary Firework Color:</span>
+        <div className="grid grid-cols-3 gap-4">
+          {colorItems}
+        </div>
+        
+      </label>
+        )}
 
       <label className="block mb-4">
         <span>Burst size:</span>
@@ -70,16 +84,19 @@ export default function SettingsDesign({
           onChange={(e) => setLaunchSpeed(Number(e.target.value))}
         />
       </label>
-      <label className="block mb-4">
-        <span>Special Effects Amount:</span>
-        <input
-          type="range"
-          min="10"
-          max="100"
-          value={specialFxStr}
-          onChange={(e) => setSpecialFxStr(Number(e.target.value))}
-        />
-      </label>
+      {boolSfx === true && (
+        <label className="block mb-4">
+            <span>Special Effects Amount:</span>
+            <input
+            type="range"
+            min="10"
+            max="100"
+            value={specialFxStr}
+            onChange={(e) => setSpecialFxStr(Number(e.target.value))}
+            />
+        </label>
+        )}
+      
       <button 
                         onClick={()=>{}}
                         className="bg-orange-500/80 hover:bg-orange-500 text-white font-medium text-base py-2 px-6 rounded-xl 
@@ -88,5 +105,6 @@ export default function SettingsDesign({
                         Clear Canvas
                     </button>
     </div>
+    </>
   );
 }

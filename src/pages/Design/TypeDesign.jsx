@@ -6,9 +6,9 @@ import fwType3Img from '@/assets/fireworkTypes/fwType3.png';
 
 export default function TypeDesign({ onCancel, onTypeDone }) {
   const fireworkTypes = [
-    { name: "Sphere Burst", boolDraw: true, img: fwType1Img  },
-    { name: "Long Hang Waterfall", boolDraw: false, img: fwType2Img  },
-    { name: "Bold Dahlia", boolDraw: true, img: fwType3Img  },
+    { name: "Sphere Burst", boolDraw: false, img: fwType1Img, boolCol2: true, boolSfx: true  },
+    { name: "Long Hang Waterfall", boolDraw: false, img: fwType2Img,boolCol2: false, boolSfx: false  },
+    { name: "Bold Dahlia", boolDraw: true, img: fwType3Img,boolCol2: false, boolSfx: true  },
   ];
 
   return (

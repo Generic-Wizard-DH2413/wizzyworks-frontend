@@ -113,6 +113,8 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
             setSpecialFxStr={setSpecialFxStr}
             onCancel={handleDesignCancel}
             onSettingsDone={handleSettingsDone}
+            boolCol2={selectedType.boolCol2} //only show params if selected fwType supports it
+            boolSfx={selectedType.boolSfx}
         />
       )}
 
