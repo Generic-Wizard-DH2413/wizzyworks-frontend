@@ -6,11 +6,17 @@ import { useAppNavigation } from "@/hooks/useAppNavigation";
 
 
 export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
-  const [step, setStep] = useState("type"); // "type" | "settings" | "draw"
-  const [selectedType, setSelectedType] = useState(null);
-  const [color1, setColor1] = useState("#ff0000");
-  const [burstSize, setBurstSize] = useState(55);
-  const { navigateTo } = useAppNavigation();
+    const [step, setStep] = useState("type"); // "type" | "settings" | "draw"
+    //settings with default vals (some settingParams are only tweakable for some fwTypes)
+    const [selectedType, setSelectedType] = useState(null);
+    const [color1, setColor1] = useState("#ff0000");
+    const [color2, setColor2] = useState("#ff0000"); //fwType allows changing or not
+    const [burstSize, setBurstSize] = useState(55);
+    const [launchSpeed, setLaunchSpeed] = useState(55); 
+    const [specialFxStr, setSpecialFxStr] = useState(55); //fwType allows changing or not
+    const [drawing, setDrawing] = useState(null);
+
+    const { navigateTo } = useAppNavigation();
 
 
 
@@ -31,7 +37,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
   const handleDesignDone = (design) => {
     if (selectedSlotIdx == null) {
       // No active slot; just go back; defence mechanism
-      navigate('/fireworkBox');
+      navigateTo('/fireworkBox');
       console.log('no slotIdxset');
       return;
     } //real stuff:
@@ -58,7 +64,12 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
       const design = { 
         type: selectedType,
         color1,
-        burstSize };
+        color2,
+        burstSize,
+        launchSpeed,
+        specialFxStr,
+        drawing
+        };
       handleDesignDone(design);
     }
   };
@@ -66,10 +77,13 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
   // --- Draw step ---
   const handleDrawDone = () => {
     const design = {
-      type: selectedType,
-      color1,
-      burstSize,
-      drawing: "placeholder",
+        type: selectedType,
+        color1,
+        color2,
+        burstSize,
+        launchSpeed,
+        specialFxStr,
+        drawing
     };
     handleDesignDone(design);
   };
@@ -89,8 +103,14 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
         <SettingsDesign
             color1={color1}
             setColor1={setColor1}
+            color2={color2}
+            setColor2={setColor2}
             burstSize={burstSize}
             setBurstSize={setBurstSize}
+            launchSpeed={launchSpeed}
+            setLaunchSpeed={setLaunchSpeed}
+            specialFxStr={specialFxStr}
+            setSpecialFxStr={setSpecialFxStr}
             onCancel={handleDesignCancel}
             onSettingsDone={handleSettingsDone}
         />
@@ -100,6 +120,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
         <DrawDesign
           onCancel={handleDesignCancel}
           onDrawDone={handleDrawDone}
+          setDrawing={setDrawing}
         />
       )}
     </>
