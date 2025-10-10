@@ -120,7 +120,7 @@ function App() {
     // websocket.onclose = () => console.log('Disconnected from WebSocket server');
     // return () => websocket.close();
   }, [ENABLE_WS]);
-
+/* OLD VER
   const sendFireworkData = () => {
     if (ws && ws.readyState === WebSocket.OPEN) {
       let jsondata = JSON.stringify({
@@ -135,17 +135,63 @@ function App() {
       ws.send(jsondata);
       console.log("sent data to server", jsondata);
     }
-  }
+  }*/
 
   const hexStringToNormalizedRGB = (hexString) => {
     hexString = hexString.replace("#", "");
-    console.log(hexString);
     let r = parseInt(hexString.slice(0, 2), 16) / 255;
     let g = parseInt(hexString.slice(2, 4), 16) / 255;
     let b = parseInt(hexString.slice(4, 6), 16) / 255;
 
     return [r, g, b];
   }
+
+  const clamp01 = (x) => Math.min(Math.max(x, 0), 1);
+  const normalizeSettings = (value, min = 10, max = 100) => {
+    return clamp01((value - min) / (max - min));
+  }
+
+  const buildJSONFireworkFromSlot = (slot, idx) => {
+    const { type, color1, color2, burstSize, drawing } = slot;
+
+    return {
+      //same JSON names as before
+      outer_layer: type.name, // previously known as fireworkDataShape
+      outer_layer_color: hexStringToNormalizedRGB(color1), // prev fireworkDataShapeColor
+      //outer_layer_second_color: hexStringToNormalizedRGB(color2), //!curr not passed inside Design page (prev fireworkDataShapeSecondColor)
+      outer_layer_size: normalizeSettings(burstSize), // new field; default 0.5 if missing
+      inner_layer: drawing, // prev fireworkDataURL
+      // (Optional but handy for the server/debugging), curr not passed inside Design page
+      //slot_index: idx,
+    };
+  };
+
+  const sendFireworkData = () => {
+     // Concat only the filled slots and turn into JSON format
+    const fireworks = slots
+      .map((slot, idx) => (slot ? buildJSONFireworkFromSlot(slot, idx) : null))
+      .filter(Boolean);
+      
+    const payload = { id, fireworks }; //{ id, fireworks: [ { ... }, { ... } ] }
+    console.log('payload looks like:')
+    console.log(payload);
+    
+    if (!ws || ws.readyState !== WebSocket.OPEN) {
+        console.warn("WS not open; skipping send");
+        return;
+      }
+     
+    try {
+        ws.send(JSON.stringify(payload));
+        console.log("Sent fireworks payload:", payload);
+      } catch (err) {
+        console.error("Failed to send fireworks payload:", err);
+      }
+  }
+
+
+  
+
   
   return (
     <div className="min-h-screen bg-zinc-900 text-white">
@@ -192,7 +238,7 @@ function App() {
           
           <Route path="/launch" element={<LaunchScreen onSendLaunchData={() => {
             console.log("Send Launch Data")
-            sendFireworkData();
+            sendFireworkData(); //send data upon entering launch screen
           }} canLaunch={canLaunch /*from on msg*/} arUcoId={id /*from on msg*/} />} 
           /> 
         </Routes>

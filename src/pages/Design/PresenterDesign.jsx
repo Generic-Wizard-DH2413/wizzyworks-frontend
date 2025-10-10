@@ -9,7 +9,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
   const [step, setStep] = useState("type"); // "type" | "settings" | "draw"
   const [selectedType, setSelectedType] = useState(null);
   const [color1, setColor1] = useState("#ff0000");
-  const [burstSize, setBurstSize] = useState(50);
+  const [burstSize, setBurstSize] = useState(55);
   const { navigateTo } = useAppNavigation();
 
 

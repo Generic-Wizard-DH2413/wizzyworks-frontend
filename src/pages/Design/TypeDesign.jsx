@@ -1,6 +1,8 @@
+//TODO, add an effect amount param which is only held by some types (AKA amountOfShit param)
 import fwType1Img from '@/assets/fireworkTypes/fwType1.png';
 import fwType2Img from '@/assets/fireworkTypes/fwType2.png';
 import fwType3Img from '@/assets/fireworkTypes/fwType3.png';
+
 
 export default function TypeDesign({ onCancel, onTypeDone }) {
   const fireworkTypes = [
