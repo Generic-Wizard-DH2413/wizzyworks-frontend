@@ -1,4 +1,4 @@
-//TODO, add imgs showcasing each type (dependent on col1)
+import { useState } from "react";
 
 export default function SettingsDesign({
   color1,
@@ -42,13 +42,14 @@ export default function SettingsDesign({
     import.meta.url
   ).href;
 
+  const [showCol2, setShowCol2] = useState(false); //Diff fr boolCol2, this is local UI state expand/collapse secondary col choices
+
 
 
 
   return (
     <>
     <div className="p-4">
-    <div className="min-h-screen overflow-y-auto p-4">  {/* ⬅️ allow scroll */}
     
       <div className="flex justify-between mb-4">
         <button onClick={onCancel}>Cancel</button>
@@ -57,10 +58,10 @@ export default function SettingsDesign({
       
 {/*Firework Preview*/}
       <div
-        className="w-full max-w-md mx-auto rounded-xl border-4"
+        className="w-full max-w-md mx-auto rounded-xl border-6"
         style={{ borderColor: color2 ?? '#00000011' }}  // (see #3 below)
       >
-        <div className="items-center relative w-full" style={{ paddingTop: '5%' }}>
+        <div className="relative w-full" >
         <img
           src={imgPath}
           alt={`Preview of type ${fwTypeIdx} color ${colIdx}`}
@@ -90,10 +91,24 @@ export default function SettingsDesign({
 
         {boolCol2 === true && (
         <label className="block mb-4">
-        <span>Secondary Firework Color:</span>
+{/*Color2 choices expandable via a parent button*/}
+
+        <button
+            type="button"
+            onClick={() => setShowCol2((v) => !v)}
+            aria-expanded={showCol2}
+            className=" flex items-center justify-between bg-gray-100 hover:bg-gray-200 text-gray-900 px-4 py-2 rounded-lg transition"
+          >
+            <span className="font-medium">Set Secondary Color</span>
+            <span className={`transition-transform ${showCol2 ? 'rotate-180' : ''}`}>▾</span>
+          </button>
+        {showCol2 && (<div style={{ height: 10 }} />)}
+        {showCol2 && (
+        
         <div className="grid grid-cols-3 gap-4">
           {colorItems2}
         </div>
+        )}
         
       </label>
         )}
@@ -138,7 +153,6 @@ export default function SettingsDesign({
                     >
                         Clear Canvas
                     </button>
-    </div> {/*<-allow scroll*/}
     </div>
     </>
   );

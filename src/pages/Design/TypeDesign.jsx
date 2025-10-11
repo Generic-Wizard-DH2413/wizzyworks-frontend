@@ -1,4 +1,4 @@
-//TODO, add an effect amount param which is only held by some types (AKA amountOfShit param)
+//TODO, update so the pic corresponds to the correct type (ok) but also the correct chosen color (fwTypeXcY)
 import fwType1Img from '@/assets/fireworkTypes/fwType1c1.png';
 import fwType2Img from '@/assets/fireworkTypes/fwType2c1.png';
 import fwType3Img from '@/assets/fireworkTypes/fwType3c1.png';

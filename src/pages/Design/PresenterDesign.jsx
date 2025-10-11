@@ -26,7 +26,12 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
     //setStep('type'); //will cause some glitch
     setSelectedType(null);
     setColor1("#ff0000");
-    setBurstSize(50);
+    setColor2("#ffffff");
+    setBurstSize(55);
+    setLaunchSpeed(55);
+    setSpecialFxStr(55);
+    setDrawing(null);
+
     navigateTo('/fireworkBox');
 
   };
