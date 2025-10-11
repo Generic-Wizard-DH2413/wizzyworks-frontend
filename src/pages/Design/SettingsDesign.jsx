@@ -3,6 +3,8 @@
 export default function SettingsDesign({
   color1,
   setColor1,
+  color2,
+  setColor2,
   burstSize,
   setBurstSize,
   launchSpeed,
@@ -12,7 +14,8 @@ export default function SettingsDesign({
   onCancel,
   onSettingsDone,
   boolCol2,
-  boolSfx
+  boolSfx,
+  fwTypeIdx 
 }) {
 
   const colorVariants = {
@@ -27,16 +30,47 @@ export default function SettingsDesign({
         "#FC8EAC": "bg-[#FC8EAC] rounded-md h-10 hover:bg-[#d86a8a]",
       };
   const colorItems = Object.keys(colorVariants).map((key, _) => <button onClick={()=>{console.log(key); setColor1(key)}} className={colorVariants[key]}> </button>);
+  const colorItems2 = Object.keys(colorVariants).map((key, _) => <button onClick={()=>{console.log(key); setColor2(key)}} className={colorVariants[key]}> </button>);
+
+  //compute preview img path dynamically
+  const colorKeys = Object.keys(colorVariants);
+  console.log(colorKeys)
+  const colIdx = colorKeys.indexOf(color1) + 1; //get colIdx of current selected color,,+1 bcus imgname are 1 idx'ed
+  console.log(colIdx)
+  const imgPath = new URL(
+    `../../assets/fireworkTypes/fwType${fwTypeIdx}c${colIdx}.png`,
+    import.meta.url
+  ).href;
+
+
+
 
   return (
     <>
     <div className="p-4">
+    <div className="min-h-screen overflow-y-auto p-4">  {/* ⬅️ allow scroll */}
+    
       <div className="flex justify-between mb-4">
         <button onClick={onCancel}>Cancel</button>
         <button onClick={onSettingsDone}>Done</button>
       </div>
-      <h1 className="text-xl font-bold mb-2">Adjust Settings</h1>
+      
+{/*Firework Preview*/}
+      <div
+        className="w-full max-w-md mx-auto rounded-xl border-4"
+        style={{ borderColor: color2 ?? '#00000011' }}  // (see #3 below)
+      >
+        <div className="items-center relative w-full" style={{ paddingTop: '5%' }}>
+        <img
+          src={imgPath}
+          alt={`Preview of type ${fwTypeIdx} color ${colIdx}`}
+          className="object-contain max-h-full max-w-full"
+        />
+        </div>
+      </div>
 
+      <h1 className="text-xl font-bold mb-2">Adjust Settings</h1>
+{/*Color1 */}
       <label className="block mb-4">
         <span>Main Firework Color:</span>
         <div className="grid grid-cols-3 gap-4">
@@ -51,14 +85,14 @@ export default function SettingsDesign({
                     className="ml-2"
                   />*/}
         </div>
-        
       </label>
+{/*Color2 conditionally rendered*/}
 
         {boolCol2 === true && (
         <label className="block mb-4">
         <span>Secondary Firework Color:</span>
         <div className="grid grid-cols-3 gap-4">
-          {colorItems}
+          {colorItems2}
         </div>
         
       </label>
@@ -104,6 +138,7 @@ export default function SettingsDesign({
                     >
                         Clear Canvas
                     </button>
+    </div> {/*<-allow scroll*/}
     </div>
     </>
   );

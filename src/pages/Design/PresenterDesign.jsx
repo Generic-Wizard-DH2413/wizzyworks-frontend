@@ -9,8 +9,8 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
     const [step, setStep] = useState("type"); // "type" | "settings" | "draw"
     //settings with default vals (some settingParams are only tweakable for some fwTypes)
     const [selectedType, setSelectedType] = useState(null);
-    const [color1, setColor1] = useState("#ff0000");
-    const [color2, setColor2] = useState("#ff0000"); //fwType allows changing or not
+    const [color1, setColor1] = useState("#FF0000");
+    const [color2, setColor2] = useState("#FFFFFF"); //fwType allows changing or not
     const [burstSize, setBurstSize] = useState(55);
     const [launchSpeed, setLaunchSpeed] = useState(55); 
     const [specialFxStr, setSpecialFxStr] = useState(55); //fwType allows changing or not
@@ -23,7 +23,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
   // --- handleDesignCancel ---
    //clear slot and undo any Design changes and return to box
   const handleDesignCancel = () => {
-    setStep('type');
+    //setStep('type'); //will cause some glitch
     setSelectedType(null);
     setColor1("#ff0000");
     setBurstSize(50);
@@ -115,6 +115,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
             onSettingsDone={handleSettingsDone}
             boolCol2={selectedType.boolCol2} //only show params if selected fwType supports it
             boolSfx={selectedType.boolSfx}
+            fwTypeIdx={selectedType.idx} 
         />
       )}
 

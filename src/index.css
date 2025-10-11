@@ -48,3 +48,15 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.5);
 }
+
+/*From GPT*/ 
+/* Scroll safety */
+html, body, #root {
+  min-height: 100%;
+}
+
+body {
+  overflow-y: scroll;
+  /*-webkit-overflow-scrolling: touch; *//* smoother scrolling on iOS */
+}
+/*GPT end*/ 

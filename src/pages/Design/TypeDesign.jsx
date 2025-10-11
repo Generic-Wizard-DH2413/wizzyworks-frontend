@@ -1,14 +1,14 @@
 //TODO, add an effect amount param which is only held by some types (AKA amountOfShit param)
-import fwType1Img from '@/assets/fireworkTypes/fwType1.png';
-import fwType2Img from '@/assets/fireworkTypes/fwType2.png';
-import fwType3Img from '@/assets/fireworkTypes/fwType3.png';
+import fwType1Img from '@/assets/fireworkTypes/fwType1c1.png';
+import fwType2Img from '@/assets/fireworkTypes/fwType2c1.png';
+import fwType3Img from '@/assets/fireworkTypes/fwType3c1.png';
 
 
 export default function TypeDesign({ onCancel, onTypeDone }) {
   const fireworkTypes = [
-    { name: "Sphere Burst", boolDraw: false, img: fwType1Img, boolCol2: true, boolSfx: true  },
-    { name: "Long Hang Waterfall", boolDraw: false, img: fwType2Img,boolCol2: false, boolSfx: false  },
-    { name: "Bold Dahlia", boolDraw: true, img: fwType3Img,boolCol2: false, boolSfx: true  },
+    { idx:1, name: "Sphere Burst", boolDraw: false, img: fwType1Img, boolCol2: true, boolSfx: true  },
+    { idx:2,name: "Long Hang Waterfall", boolDraw: false, img: fwType2Img,boolCol2: false, boolSfx: false  },
+    { idx:3,name: "Bold Dahlia", boolDraw: true, img: fwType3Img,boolCol2: false, boolSfx: true  },
   ];
 
   return (
