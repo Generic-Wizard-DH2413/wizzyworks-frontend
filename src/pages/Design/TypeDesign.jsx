@@ -23,7 +23,7 @@ export default function TypeDesign({ onCancel, onTypeDone }) {
           <button
             key={i}
             onClick={() => onTypeDone(fw)}
-            className="flex flex-col items-center bg-gray-100 rounded-md p-2 transition-transform active:scale-95 hover:opacity-90"
+            className="flex flex-col items-center bg-zinc-800 rounded-md p-2 transition-transform active:scale-95 hover:opacity-90"
           >
             <div className="w-full aspect-square flex items-center justify-center overflow-hidden">
               <img
@@ -32,7 +32,7 @@ export default function TypeDesign({ onCancel, onTypeDone }) {
                 className="object-contain max-h-full max-w-full"
               />
             </div>
-            <span className="mt-2 text-sm font-medium text-gray-800">
+            <span className="mt-2 text-sm font-medium text-white">
               {fw.name}
             </span>
           </button>

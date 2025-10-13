@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 //TODO: add pics of types for alr set fw
 
 export default function FireworkBox({ //props
@@ -11,7 +12,13 @@ export default function FireworkBox({ //props
 
     // Count how many are done (non-null)
     const fwDoneCount = slots.filter(Boolean).length;     // true or object counts as done
-    const remaining   = slotsAmount - fwDoneCount;
+    const [remaining, setRemaining] = useState(slotsAmount - fwDoneCount);
+
+    useEffect(() => {
+    var fwdc = slots.filter(Boolean).length;     // true or object counts as done
+    setRemaining(slotsAmount - fwdc);
+    },[slots])
+    
 
     // Take the first empty slot and start editing it
     const onAddOne = () => {
@@ -29,7 +36,6 @@ export default function FireworkBox({ //props
         handleEditSlot(idx); // App.jsx will ensure it's marked used if empty, then navigate
     };
 
-
     const onBoxCancel = () => {
         handleBoxCancel();
     }
@@ -39,7 +45,7 @@ export default function FireworkBox({ //props
     }
 
     return (
-        <div className="min-h-screen bg-white text-black p-6 md:p-10">
+        <div className="min-h-screen p-6 md:p-10">
         {/* Top bar */}
         <div className="flex items-center justify-between text-xl font-medium mb-10">
             <button className="active:opacity-70" onClick={onBoxCancel}>Cancel</button>
@@ -50,13 +56,13 @@ export default function FireworkBox({ //props
         <h1 className="text-2xl md:text-3xl font-extrabold mb-2">
             {slotsAmount} Pack Firework Box
         </h1>
-        <p className="text-sm text-gray-600 mb-4">
+        <p className="text-lg text-gray-300 mb-4">
             {fwDoneCount} done • {remaining} left
         </p>
 
         {/* Box */}
-        <div className="bg-zinc-700 rounded-md p-4 md:p-6 w-full max-w-[520px]">
-            <div className="grid grid-cols-3 gap-4 md:gap-6">
+        <div className="bg-zinc-800 rounded-md p-4 md:p-6 w-full max-w-[520px] border-5 border-zinc-700 ">
+            <div className="grid grid-cols-3 gap-2 md:gap-6">
             {slots.map((s, i) => {
                 const filled = s !== null;
                 const imgSrc = filled ? s.type?.img : null;
@@ -78,8 +84,8 @@ export default function FireworkBox({ //props
                     <button
                         onClick={() => onSlotClick(i)}
                         className={[
-                        'relative w-full aspect-square rounded-full border-2 transition-transform active:scale-95',
-                        filled ? 'border-white' : 'border-white/80 bg-white/60',
+                        'relative w-full aspect-square rounded-full border-4 transition-transform active:scale-95',
+                        filled ? 'border-orange-500/50' : 'border-zinc-500 bg-zinc-900',
                         ].join(' ')}
                         aria-label={filled ? 'Edit firework' : 'Create firework'}
                         title={filled ? 'Edit firework' : 'Create firework'}
@@ -101,11 +107,13 @@ export default function FireworkBox({ //props
         </div>
 
         {/* Add button + remaining */}
-        <div className="mt-12">
+        <div className="flex justify-center mt-12">
+
             <button
             onClick={onAddOne}
-            disabled={remaining === 0}
-            className="mx-auto block text-lg disabled:opacity-40 active:opacity-80"
+            disabled={remaining == 0}
+            className="bg-orange-500/80 hover:bg-orange-500 text-white font-medium text-base py-2 px-6 rounded-xl 
+                                 transition-all duration-200 hover:scale-105 active:scale-95 border border-orange-400/30"
             >
             Add another firework!
             </button>
