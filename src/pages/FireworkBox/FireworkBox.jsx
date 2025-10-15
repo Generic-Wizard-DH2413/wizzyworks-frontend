@@ -65,7 +65,7 @@ export default function FireworkBox({ //props
             <div className="grid grid-cols-3 gap-2 md:gap-6">
             {slots.map((s, i) => {
                 const filled = s !== null;
-                const imgSrc = filled ? s.type?.img : null;
+                const imgSrc = filled ? s.imgPath : null;
 
                 return (
                 <div key={i} className="relative">

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function SettingsDesign({
   color1,
@@ -15,7 +15,8 @@ export default function SettingsDesign({
   onSettingsDone,
   boolCol2,
   boolSfx,
-  fwTypeIdx 
+  fwTypeIdx,
+  setImgPath
 }) {
 
   const [focusedKey, setFocusedKey] = useState("#FF0000");
@@ -32,7 +33,7 @@ export default function SettingsDesign({
         "#FC8EAC": "bg-[#FC8EAC] rounded-md h-10",
       };
 
-  const colorItems = Object.keys(colorVariants).map((key, _) => <button onClick={()=>{setColor1(key);}} className={color1 == key? colorVariants[key] + " ring-4 ring-zinc-200" : colorVariants[key]}> </button>);
+  const colorItems = Object.keys(colorVariants).map((key, _) => <button onClick={()=>{setColor1(key)}} className={color1 == key? colorVariants[key] + " ring-4 ring-zinc-200" : colorVariants[key]}> </button>);
   const colorItems2 = Object.keys(colorVariants).map((key, _) => <button onClick={()=>{setColor2(key)}} className={color2 == key? colorVariants[key] + " ring-4 ring-zinc-200" : colorVariants[key]}> </button>);
 
   //compute preview img path dynamically
@@ -45,7 +46,9 @@ export default function SettingsDesign({
     import.meta.url
   ).href;
 
-  
+  useEffect(() => {
+    setImgPath(imgPath);
+  });
 
   const [showCol2, setShowCol2] = useState(false); //Diff fr boolCol2, this is local UI state expand/collapse secondary col choices
 
@@ -60,14 +63,14 @@ export default function SettingsDesign({
       
 {/*Firework Preview*/}
       <div
-        className="w-full max-w-md mx-auto rounded-xl border-6"
+        className="w-full max-w-8/10 mx-auto rounded-xl border-6"
         style={{ borderColor: color2 ?? '#00000011' }}  // (see #3 below)
       >
         <div className="relative w-full" >
         <img
           src={imgPath}
           alt={`Preview of type ${fwTypeIdx} color ${colIdx}`}
-          className="object-contain max-h-full max-w-full"
+          className="object-contain h-full w-full"
         />
         </div>
       </div>

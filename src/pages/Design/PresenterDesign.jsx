@@ -15,7 +15,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
     const [launchSpeed, setLaunchSpeed] = useState(55); 
     const [specialFxStr, setSpecialFxStr] = useState(55); //fwType allows changing or not
     const [drawing, setDrawing] = useState(null);
-
+    const [imgPath, setImgPath] = useState(null);
     const { navigateTo } = useAppNavigation();
 
 
@@ -73,7 +73,8 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
         burstSize,
         launchSpeed,
         specialFxStr,
-        drawing
+        drawing,
+        imgPath
         };
       handleDesignDone(design);
     }
@@ -88,7 +89,8 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
         burstSize,
         launchSpeed,
         specialFxStr,
-        drawing
+        drawing,
+        imgPath
     };
     handleDesignDone(design);
   };
@@ -121,6 +123,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
             boolCol2={selectedType.boolCol2} //only show params if selected fwType supports it
             boolSfx={selectedType.boolSfx}
             fwTypeIdx={selectedType.idx} 
+            setImgPath={setImgPath}
         />
       )}
 
