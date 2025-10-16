@@ -13,7 +13,8 @@ import { useAppNavigation } from '@/hooks/useAppNavigation';
 export default function DrawDesign({
     onCancel,
     onDrawDone,
-    setDrawing
+    setDrawing,
+    drawing
 }) {
     const canvasRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
@@ -93,6 +94,13 @@ export default function DrawDesign({
         ctx.strokeStyle = currentColor;
     }, [currentColor]);
 
+    // complets drawing when updated
+    useEffect(() => {
+    if (drawing) {
+        onDrawDone();
+    }
+    }, [drawing]);
+
     // --- Mouse Events ---
     const startDrawing = (e) => {
         e.preventDefault();
@@ -115,7 +123,6 @@ export default function DrawDesign({
                 (1 - (e.nativeEvent.offsetY / canvasRef.current.height) * 2),
             ],
         ]);
-        console.log(position)
     };
 
     const stopDrawing = () => setIsDrawing(false);
@@ -181,7 +188,7 @@ export default function DrawDesign({
         let canvasDataURL = canvasRef.current.toDataURL()
         console.log("Sending drawing");
         console.log(canvasDataURL)
-        onSaveDataURL(canvasDataURL);
+        setDrawing(canvasDataURL)
     };
 
     return (
@@ -190,7 +197,7 @@ export default function DrawDesign({
     
             <div className="flex justify-between mb-4">
                 <button onClick={onCancel}>Cancel</button>
-                <button onClick={onDrawDone}>Done</button>
+                <button onClick={sendDrawing}>Done</button>
             </div>
       
             <div className="text-center">

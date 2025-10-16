@@ -82,6 +82,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
 
   // --- Draw step ---
   const handleDrawDone = () => {
+    
     const design = {
         type: selectedType,
         color1,
@@ -132,6 +133,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
           onCancel={handleDesignCancel}
           onDrawDone={handleDrawDone}
           setDrawing={setDrawing}
+          drawing={drawing}
         />
       )}
     </>
