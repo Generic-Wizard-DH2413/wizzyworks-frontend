@@ -19,18 +19,16 @@ export default function SettingsDesign({
   setImgPath
 }) {
 
-  const [focusedKey, setFocusedKey] = useState("#FF0000");
-
   const colorVariants = {
-        "#FF0000": "bg-[#FF0000] rounded-md h-10",
-        "#FF9220": "bg-[#FF9220] rounded-md h-10",
-        "#FFc71d": "bg-[#FFc71d] rounded-md h-10",
-        "#bfff00": "bg-[#bfff00] rounded-md h-10",
-        "#00d062": "bg-[#00d062] rounded-md h-10",
-        "#5bbce4": "bg-[#5bbce4] rounded-md h-10",
-        "#5A70CD": "bg-[#5A70CD] rounded-md h-10",
-        "#A35ACD": "bg-[#A35ACD] rounded-md h-10",
-        "#FC8EAC": "bg-[#FC8EAC] rounded-md h-10",
+        "#FF0000": "bg-[#FF0000] rounded-md h-8",
+        "#FF9220": "bg-[#FF9220] rounded-md h-8",
+        "#FFc71d": "bg-[#FFc71d] rounded-md h-8",
+        "#bfff00": "bg-[#bfff00] rounded-md h-8",
+        "#00d062": "bg-[#00d062] rounded-md h-8",
+        "#5bbce4": "bg-[#5bbce4] rounded-md h-8",
+        "#5A70CD": "bg-[#5A70CD] rounded-md h-8",
+        "#A35ACD": "bg-[#A35ACD] rounded-md h-8",
+        "#FC8EAC": "bg-[#FC8EAC] rounded-md h-8",
       };
 
   const colorItems = Object.keys(colorVariants).map((key, _) => <button onClick={()=>{setColor1(key)}} className={color1 == key? colorVariants[key] + " ring-4 ring-zinc-200" : colorVariants[key]}> </button>);
@@ -54,11 +52,11 @@ export default function SettingsDesign({
 
   return (
     <>
-    <div className="p-4">
+    <div className="p-4 touch-pan-y overflow-auto">
     
       <div className="flex justify-between mb-4">
         <button onClick={onCancel}>Cancel</button>
-        <button onClick={onSettingsDone}>Done</button>
+        <button onClick={onSettingsDone}>Next</button>
       </div>
       
 {/*Firework Preview*/}
@@ -101,7 +99,6 @@ export default function SettingsDesign({
         <button
             type="button"
             onClick={() => setShowCol2((v) => !v)}
-            onMouseDown={(e) => e.preventDefault()}
             aria-expanded={showCol2}
             className=" flex items-center justify-center w-100 h-5 bg-zinc-700 text-gray-900 px-2 py-1 rounded-lg transition"
           >
@@ -122,37 +119,37 @@ export default function SettingsDesign({
       <h1 className="text-xl font-bold mb-2">Additional Settings</h1>
 
       <label className="flex items-center block mb-4">
-        <span>Burst size:</span>
+        <span  className="w-50">Burst size</span>
         <input
           type="range"
           min="10"
           max="100"
           value={burstSize}
           onChange={(e) => setBurstSize(Number(e.target.value))}
-          className="range accent-orange-500" 
+          className="range range-xl accent-orange-500 w-full h-3" 
         />
       </label>
-      <label className="flex items-center gap-2 mb-4">
-        <span>Launch Speed:</span>
+      <label className="flex items-center block mb-4">
+        <span  className="w-50">Launch Speed</span>
         <input
           type="range"
           min="10"
           max="100"
           value={launchSpeed}
           onChange={(e) => setLaunchSpeed(Number(e.target.value))}
-          className="range accent-orange-500" 
+          className="range range-xl accent-orange-500 w-full rounded-lg " 
         />
       </label>
       {boolSfx === true && (
         <label className="flex items-center block mb-4">
-            <span>Special Effects Amount:</span>
+            <span className="w-50">Special Effects Amount</span>
             <input
             type="range"
             min="10"
             max="100"
             value={specialFxStr}
             onChange={(e) => setSpecialFxStr(Number(e.target.value))}
-            className="range accent-orange-500" 
+            className="range range-xl accent-orange-500 w-full h-3" 
             />
         </label>
         )}

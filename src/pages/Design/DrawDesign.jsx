@@ -23,15 +23,15 @@ export default function DrawDesign({
     const [currentColor, setCurrentColor] = useState("#FF0000");
 
     const colorVariants = {
-        "#FF0000": "bg-[#FF0000] rounded-md h-10",
-        "#FF9220": "bg-[#FF9220] rounded-md h-10",
-        "#FFc71d": "bg-[#FFc71d] rounded-md h-10",
-        "#bfff00": "bg-[#bfff00] rounded-md h-10",
-        "#00d062": "bg-[#00d062] rounded-md h-10",
-        "#5bbce4": "bg-[#5bbce4] rounded-md h-10",
-        "#5A70CD": "bg-[#5A70CD] rounded-md h-10",
-        "#A35ACD": "bg-[#A35ACD] rounded-md h-10",
-        "#FC8EAC": "bg-[#FC8EAC] rounded-md h-10",
+        "#FF0000": "bg-[#FF0000] rounded-md h-8",
+        "#FF9220": "bg-[#FF9220] rounded-md h-8",
+        "#FFc71d": "bg-[#FFc71d] rounded-md h-8",
+        "#bfff00": "bg-[#bfff00] rounded-md h-8",
+        "#00d062": "bg-[#00d062] rounded-md h-8",
+        "#5bbce4": "bg-[#5bbce4] rounded-md h-8",
+        "#5A70CD": "bg-[#5A70CD] rounded-md h-8",
+        "#A35ACD": "bg-[#A35ACD] rounded-md h-8",
+        "#FC8EAC": "bg-[#FC8EAC] rounded-md h-8",
       };
   const colorItems = Object.keys(colorVariants).map((key, _) => <button onClick={()=>{console.log(key); setCurrentColor(key)}} className={currentColor == key? colorVariants[key] + " ring-4 ring-zinc-200" : colorVariants[key]}> </button>);
 
@@ -193,20 +193,27 @@ export default function DrawDesign({
 
     return (
 
-        <div className="flex flex-col space-y-4 px-4 py-8 pb-20">
+        <div className="flex flex-col space-y-2 px-4 py-4 pb-20">
     
-            <div className="flex justify-between mb-4">
+            <div className="flex justify-between mb-3">
                 <button onClick={onCancel}>Cancel</button>
                 <button onClick={sendDrawing}>Done</button>
             </div>
       
             <div className="text-center">
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">Draw your firework!</h3>
-                <div className="w-16 h-1 bg-gradient-to-r from-orange-400 to-yellow-500 mx-auto rounded-full"></div>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">Optional: Draw your firework!</h3>
             </div>
             
             <div className="flex justify-center">
                 <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-4 border border-zinc-700">
+                <button 
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={clearCanvas}
+                        className="absolute bottom-0 left-0
+                                 active:scale-90 pb-5 pl-5"
+                    >
+                       <img src="src\assets\trash.png" className="w-8 h-8"></img>
+                </button>
                     <canvas
                         ref={canvasRef}
                         className="rounded-xl bg-black border border-zinc-600 shadow-lg"
@@ -225,18 +232,10 @@ export default function DrawDesign({
             </div>
 
             <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-4 border border-zinc-700">
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-3">
 
                             {colorItems}
 
-                <button 
-                        onMouseDown={(e) => e.preventDefault()}
-                        onClick={clearCanvas}
-                        className="col-span-3 bg-orange-500/80 hover:bg-orange-500 text-white font-medium text-base py-2 px-6 rounded-xl 
-                                 transition-all duration-200 hover:scale-105 active:scale-95 border border-orange-400/30"
-                    >
-                        Clear Canvas
-                    </button>
                 </div>
             </div>
         </div>

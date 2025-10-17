@@ -49,7 +49,8 @@ export default function FireworkBox({ //props
         {/* Top bar */}
         <div className="flex items-center justify-between text-xl font-medium mb-10">
             <button className="active:opacity-70" onClick={onBoxCancel}>Cancel</button>
-            <button className="active:opacity-70" onClick={() => onFinishBox(slots)}>Finish</button>
+             {remaining < 9 ?   (<button className="active:opacity-70" onClick={() => onFinishBox(slots)}>Finish</button>):
+                                (<button className="opacity-20" disabled onClick={() => onFinishBox(slots)}>Finish</button>) }
         </div>
 
         {/* Title + counters */}
