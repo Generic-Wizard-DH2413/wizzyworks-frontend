@@ -152,16 +152,17 @@ function App() {
   }
 
   const buildJSONFireworkFromSlot = (slot, idx) => {
-    const { type, color1, color2, burstSize, launchSPeed, specialFxStr, drawing } = slot;
+    const { type, color1, color2, launchSpeed, pathWobble, specialFxStr, drawing } = slot;
 
     return {
       //same JSON names as before
-      outer_layer: type.name, // previously known as fireworkDataShape
+      outer_layer: type.godotName, // previously known as fireworkDataShape
       outer_layer_color: hexStringToNormalizedRGB(color1), // prev fireworkDataShapeColor
       outer_layer_second_color: hexStringToNormalizedRGB(color2), //prev fireworkDataShapeSecondColor
-      outer_layer_size: normalizeSettings(burstSize), // new field; default 0.5 if missing
-      path_speed: normalizeSettings(launchSPeed), // new field; default 0.5 if missing
-      outer_layer_specialFxStr: normalizeSettings(specialFxStr), // new field; default 0.5 if missing
+      //outer_layer_size: normalizeSettings(burstSize), // REMOVED
+      path_speed: normalizeSettings(launchSpeed), // new field; default 0.5 if missing
+      path_wobble: normalizeSettings(pathWobble), // new field; default 0.5 if missing
+      outer_layer_specialfx: normalizeSettings(specialFxStr), // new field; default 0.5 if missing
       inner_layer: drawing, // prev fireworkDataURL
 
       // (Optional but handy for the server/debugging), curr not passed inside Design page

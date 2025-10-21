@@ -5,8 +5,8 @@ export default function SettingsDesign({
   setColor1,
   color2,
   setColor2,
-  burstSize,
-  setBurstSize,
+  launchWobble,
+  setLaunchWobble,
   launchSpeed,
   setLaunchSpeed,
   specialFxStr,
@@ -116,30 +116,8 @@ export default function SettingsDesign({
       </label>
         )}
 
-      <h1 className="text-xl font-bold mb-2">Additional Settings</h1>
+      <h1 className="text-xl font-bold mb-2">Firework Settings</h1>
 
-      <label className="flex items-center block mb-4">
-        <span  className="w-50">Burst size</span>
-        <input
-          type="range"
-          min="10"
-          max="100"
-          value={burstSize}
-          onChange={(e) => setBurstSize(Number(e.target.value))}
-          className="range range-xl accent-orange-500 w-full h-3" 
-        />
-      </label>
-      <label className="flex items-center block mb-4">
-        <span  className="w-50">Launch Speed</span>
-        <input
-          type="range"
-          min="10"
-          max="100"
-          value={launchSpeed}
-          onChange={(e) => setLaunchSpeed(Number(e.target.value))}
-          className="range range-xl accent-orange-500 w-full rounded-lg " 
-        />
-      </label>
       {boolSfx === true && (
         <label className="flex items-center block mb-4">
             <span className="w-50">Special Effects Amount</span>
@@ -153,6 +131,31 @@ export default function SettingsDesign({
             />
         </label>
         )}
+
+      <label className="flex items-center block mb-4">
+        <span  className="w-50">Launch Speed</span>
+        <input
+          type="range"
+          min="10"
+          max="100"
+          value={launchSpeed}
+          onChange={(e) => setLaunchSpeed(Number(e.target.value))}
+          className="range range-xl accent-orange-500 w-full rounded-lg " 
+        />
+      </label>
+      
+        
+        <label className="flex items-center block mb-4">
+        <span  className="w-50">Launch Wobble</span>
+        <input
+          type="range"
+          min="10"
+          max="100"
+          value={launchWobble}
+          onChange={(e) => setLaunchWobble(Number(e.target.value))}
+          className="range range-xl accent-orange-500 w-full h-3" 
+        />
+      </label>
       
     </div>
     </>

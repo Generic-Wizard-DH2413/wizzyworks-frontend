@@ -6,9 +6,12 @@ import fwType3Img from '@/assets/fireworkTypes/fwType3c1.png';
 
 export default function TypeDesign({ onCancel, onTypeDone }) {
   const fireworkTypes = [
-    { idx:1, name: "Sphere Burst", boolDraw: true, img: fwType1Img, boolCol2: true, boolSfx: true  },
-    { idx:2,name: "Long Hang Waterfall", boolDraw: true, img: fwType2Img,boolCol2: false, boolSfx: false  },
-    { idx:3,name: "Bold Dahlia", boolDraw: true, img: fwType3Img,boolCol2: false, boolSfx: true  },
+    { idx:1, name: "Burst Blast", godotName:"sphere_blast", boolDraw: true, img: fwType1Img, boolCol2: true, boolSfx: true  },
+    { idx:2,name: "Willow Fall", godotName:"willow_blast", boolDraw: false, img: fwType2Img,boolCol2: false, boolSfx: true  },
+    { idx:3,name: "Atom Rings", godotName:"saturn_blast", boolDraw: true, img: fwType3Img,boolCol2: false, boolSfx: true  },
+    { idx:4,name: "Cluster Show", godotName:"cluster_blast", boolDraw: true, img: fwType3Img,boolCol2: false, boolSfx: true  },
+    { idx:4,name: "Sparkling Stars", godotName:"another_cluster_blast", boolDraw: true, img: fwType3Img,boolCol2: false, boolSfx: true  },
+
   ];
 
   return (

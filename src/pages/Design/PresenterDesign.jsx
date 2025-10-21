@@ -11,14 +11,13 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
     const [selectedType, setSelectedType] = useState(null);
     const [color1, setColor1] = useState("#FF0000");
     const [color2, setColor2] = useState("#FFFFFF"); //fwType allows changing or not
-    const [burstSize, setBurstSize] = useState(55);
+    //const [burstSize, setBurstSize] = useState(55); //REMOVED
+    const [launchWobble, setLaunchWobble] = useState(55); //new
     const [launchSpeed, setLaunchSpeed] = useState(55); 
     const [specialFxStr, setSpecialFxStr] = useState(55); //fwType allows changing or not
     const [drawing, setDrawing] = useState(null);
     const [imgPath, setImgPath] = useState(null);
     const { navigateTo } = useAppNavigation();
-
-
 
   // --- handleDesignCancel ---
    //clear slot and undo any Design changes and return to box
@@ -27,7 +26,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
     setSelectedType(null);
     setColor1("#ff0000");
     setColor2("#ffffff");
-    setBurstSize(55);
+    setLaunchWobble(55);
     setLaunchSpeed(55);
     setSpecialFxStr(55);
     setDrawing(null);
@@ -49,7 +48,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
     setSlots(prev => {
       const next = [...prev];
       // Store the real design object at selected indx (set in prestenterFireworkBox)
-      next[selectedSlotIdx] = design; // { type, colors, burstSize } or your shape
+      next[selectedSlotIdx] = design; // { type, colors, launchspeed etc } or your shape
       return next;
     });
     navigateTo('/fireworkBox');
@@ -70,7 +69,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
         type: selectedType,
         color1,
         color2,
-        burstSize,
+        launchWobble,
         launchSpeed,
         specialFxStr,
         drawing,
@@ -87,7 +86,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
         type: selectedType,
         color1,
         color2,
-        burstSize,
+        launchWobble,
         launchSpeed,
         specialFxStr,
         drawing,
@@ -113,8 +112,8 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
             setColor1={setColor1}
             color2={color2}
             setColor2={setColor2}
-            burstSize={burstSize}
-            setBurstSize={setBurstSize}
+            launchWobble={launchWobble}
+            setLaunchWobble={setLaunchWobble}
             launchSpeed={launchSpeed}
             setLaunchSpeed={setLaunchSpeed}
             specialFxStr={specialFxStr}
