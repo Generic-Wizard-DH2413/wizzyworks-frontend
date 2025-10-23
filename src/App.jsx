@@ -221,6 +221,10 @@ function App() {
                 setSlots={setSlots}
                 selectedSlotIdx={selectedSlotIdx}
                 setSelectedSlotIdx={setSelectedSlotIdx}
+                onSendLaunchData={() => {
+                  console.log("Send Launch Data")
+                  sendFireworkData(); //send data upon finishing box
+                }}
               />
             }
           />
@@ -249,10 +253,7 @@ function App() {
           />
           <Route path="/marker" element={<ArUco arUcoId={id} />} />
 
-          <Route path="/launch" element={<LaunchScreen onSendLaunchData={() => {
-            console.log("Send Launch Data")
-            sendFireworkData(); //send data upon entering launch screen
-          }} canLaunch={canLaunch /*from on msg*/} shouldLaunch={shouldLaunch} arUcoId={id /*from on msg*/} />}
+          <Route path="/launch" element={<LaunchScreen canLaunch={canLaunch /*from on msg*/} shouldLaunch={shouldLaunch} arUcoId={id /*from on msg*/} />}
           />
         </Routes>
       </div>

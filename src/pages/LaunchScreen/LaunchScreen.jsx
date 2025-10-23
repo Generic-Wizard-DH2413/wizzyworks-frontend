@@ -1,14 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 
-export default function LaunchScreen({ shouldLaunch, onSendLaunchData, canLaunch, arUcoId }) {
+export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
     const videoRef = useRef(null);
     const [isVisible, setIsVisible] = useState(true);
     const [showMarker, setShowMarker] = useState(false);
     const [videoEnded, setVideoEnded] = useState(false);
-
-    useEffect(() => {
-        onSendLaunchData();
-    }, [onSendLaunchData]);
 
     const handlePlay = () => {
         setShowMarker(true);

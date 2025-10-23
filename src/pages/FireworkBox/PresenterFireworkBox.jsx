@@ -3,7 +3,7 @@
 import FireworkBox from '../FireworkBox/FireworkBox';
 import { useAppNavigation } from "@/hooks/useAppNavigation";
 
-export default function FireworkBoxPresenter({slotsAmount, slots, setSlots, selectedSlotIdx, setSelectedSlotIdx }) {
+export default function FireworkBoxPresenter({slotsAmount, slots, setSlots, selectedSlotIdx, setSelectedSlotIdx, onSendLaunchData }) {
     const isComplete = slots.every(Boolean);
     const { navigateTo } = useAppNavigation();
 
@@ -26,7 +26,7 @@ export default function FireworkBoxPresenter({slotsAmount, slots, setSlots, sele
     }
 
     const handleFinishBox = () => {
-        
+        onSendLaunchData();
         navigateTo('/launch');
     };
 
