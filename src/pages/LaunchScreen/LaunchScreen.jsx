@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
-export default function LaunchScreen({ onSendLaunchData, canLaunch, arUcoId }) {
+export default function LaunchScreen({ shouldLaunch, onSendLaunchData, canLaunch, arUcoId }) {
     const videoRef = useRef(null);
     const [isVisible, setIsVisible] = useState(true);
     const [showMarker, setShowMarker] = useState(false);
@@ -11,13 +11,7 @@ export default function LaunchScreen({ onSendLaunchData, canLaunch, arUcoId }) {
     }, [onSendLaunchData]);
 
     const handlePlay = () => {
-        if (videoRef.current) {
-            setTimeout(() => {
-                setShowMarker(false);
-                videoRef.current.play();
-            }, 3000);
-            setShowMarker(true);
-        }
+        setShowMarker(true);
     };
 
     const handleVideoEnd = () => {
@@ -33,7 +27,7 @@ export default function LaunchScreen({ onSendLaunchData, canLaunch, arUcoId }) {
         return (
             <div className="relative min-h-screen">
                 {/* Video section - takes up full space */}
-                {!videoEnded && (
+                {shouldLaunch && !videoEnded && (
                     <video
                         ref={videoRef}
                         src="/Firework_With_Sound.mp4"
@@ -43,9 +37,10 @@ export default function LaunchScreen({ onSendLaunchData, canLaunch, arUcoId }) {
                         muted={false}
                         controls={false}
                         onEnded={handleVideoEnd}
+                        autoPlay={true}
                     />
                 )}
-                {showMarker && (<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl p-8 shadow-2xl border-4 border-orange-500/30 aspect-square" >
+                {!shouldLaunch && showMarker && (<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl p-8 shadow-2xl border-4 border-orange-500/30 aspect-square" >
                     <img
                         src={`/4x4_1000-${arUcoId}.svg`}
                         alt={`ArUco marker ${arUcoId}`}

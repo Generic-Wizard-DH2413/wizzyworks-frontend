@@ -7,7 +7,7 @@ import './App.css';
 import PresenterFireworkBox from './pages/FireworkBox/PresenterFireworkBox'; //new
 import PresenterDesign from './pages/Design/PresenterDesign'; //new
 
-
+/* TODO Press launch (marker will show) → Wait for signal from bridge → When signal is there → remove marker and start start animation.  */
 import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useRefreshRedirect } from './hooks/useRefreshRedirect';
@@ -21,7 +21,7 @@ function App() {
 
   // Handle refresh redirect to index page
   useRefreshRedirect();
-  
+
   // Prevent browser back button navigation
   usePreventBackButton(
     true, // Enable back button prevention
@@ -31,7 +31,7 @@ function App() {
     },
     false // Set to true if you want to show confirmation dialog
   );
-  
+
   //component local state (application)
   //re-render of a component when a state-setters are called
   const [ws, setWs] = useState(null);
@@ -41,36 +41,38 @@ function App() {
   const [fireworkDataShapeColor, setFireworkDataShapeColor] = useState("#FF00FF");
   const [fireworkDataShapeSecondColor, setFireworkDataShapeSecondColor] = useState("#FF00FF");
   const [canLaunch, setCanLaunch] = useState(false);
-/*@@@@@@@@@@@@@@@@@@@@@@@@ NEW START @@@@@@@@@@@@@@@@@@@@@@@@*/
+  const [shouldLaunch, setShouldLaunch] = useState(false);
+
+  /*@@@@@@@@@@@@@@@@@@@@@@@@ NEW START @@@@@@@@@@@@@@@@@@@@@@@@*/
   const slotsAmount = 9; // fixed for now (you can make this dynamic later)
   // Each slot is either null (empty), true (reserved/used), or an object (final design)
   const [slots, setSlots] = useState(() => Array(slotsAmount).fill(null));
   // Which slot we’re editing in the design page
   const [selectedSlotIdx, setSelectedSlotIdx] = useState(null);
 
-  
 
-  
 
-/*@@@@@@@@@@@@@@@@@@@@@@@@ NEW END @@@@@@@@@@@@@@@@@@@@@@@@*/
+
+
+  /*@@@@@@@@@@@@@@@@@@@@@@@@ NEW END @@@@@@@@@@@@@@@@@@@@@@@@*/
 
 
   useEffect(() => {
 
     if (!ENABLE_WS) return;
-    
+
     // Debug environment variables
     // console.log('Environment variables:', {
     //   VITE_WEBSOCKET_URL: import.meta.env.VITE_WEBSOCKET_URL,
     //   all_env: import.meta.env
     // });
-    
+
     const websocketUrl = import.meta.env.VITE_WEBSOCKET_URL || "ws://localhost:8765";
-    
+
     if (!import.meta.env.VITE_WEBSOCKET_URL) {
       console.warn('VITE_WEBSOCKET_URL not found, using fallback URL');
     }
-    
+
     const websocket = new WebSocket(websocketUrl);
     setWs(websocket);
 
@@ -98,9 +100,16 @@ function App() {
         }
 
         if (data.data.status !== undefined) { // READY TO LAUNCH
-          console.log()
           if (data.data.status == "ready") {
+            console.log("Can launch true")
             setCanLaunch(true);
+          }
+        }
+
+        if (data.data.status !== undefined) { // READY TO LAUNCH
+          if (data.data.status == "launch") {
+            console.log("Should launch true")
+            setShouldLaunch(true);
           }
         }
 
@@ -120,22 +129,22 @@ function App() {
     // websocket.onclose = () => console.log('Disconnected from WebSocket server');
     // return () => websocket.close();
   }, [ENABLE_WS]);
-/* OLD VER
-  const sendFireworkData = () => {
-    if (ws && ws.readyState === WebSocket.OPEN) {
-      let jsondata = JSON.stringify({
-        "id": id,
-        "data": {
-          "outer_layer": fireworkDataShape,
-          "outer_layer_color": hexStringToNormalizedRGB(fireworkDataShapeColor),
-          "outer_layer_second_color": hexStringToNormalizedRGB(fireworkDataShapeSecondColor),
-          "inner_layer": fireworkDataURL
-        }
-      })
-      ws.send(jsondata);
-      console.log("sent data to server", jsondata);
-    }
-  }*/
+  /* OLD VER
+    const sendFireworkData = () => {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        let jsondata = JSON.stringify({
+          "id": id,
+          "data": {
+            "outer_layer": fireworkDataShape,
+            "outer_layer_color": hexStringToNormalizedRGB(fireworkDataShapeColor),
+            "outer_layer_second_color": hexStringToNormalizedRGB(fireworkDataShapeSecondColor),
+            "inner_layer": fireworkDataURL
+          }
+        })
+        ws.send(jsondata);
+        console.log("sent data to server", jsondata);
+      }
+    }*/
 
   const hexStringToNormalizedRGB = (hexString) => {
     hexString = hexString.replace("#", "");
@@ -171,38 +180,38 @@ function App() {
   };
 
   const sendFireworkData = () => {
-     // Concat only the filled slots and turn into JSON format
+    // Concat only the filled slots and turn into JSON format
     const fireworks = slots
       .map((slot, idx) => (slot ? buildJSONFireworkFromSlot(slot, idx) : null))
       .filter(Boolean);
-      
+
     const payload = { id, fireworks }; //{ id, fireworks: [ { ... }, { ... } ] }
     console.log('payload looks like:')
     console.log(payload);
-    
+
     if (!ws || ws.readyState !== WebSocket.OPEN) {
-        console.warn("WS not open; skipping send");
-        return;
-      }
-     
+      console.warn("WS not open; skipping send");
+      return;
+    }
+
     try {
-        ws.send(JSON.stringify(payload));
-        console.log("Sent fireworks payload:", payload);
-      } catch (err) {
-        console.error("Failed to send fireworks payload:", err);
-      }
+      ws.send(JSON.stringify(payload));
+      console.log("Sent fireworks payload:", payload);
+    } catch (err) {
+      console.error("Failed to send fireworks payload:", err);
+    }
   }
 
 
-  
 
-  
+
+
   return (
     <div className="min-h-screen bg-zinc-900 text-white">
       <div className="container mx-auto">
         <Routes>
           <Route index element={<Information />} />
-          
+
           <Route
             path="/fireworkBox"
             element={
@@ -226,8 +235,8 @@ function App() {
             }
           />
 
-         
-          
+
+
           <Route path="/shapePicker" element={<ShapePicker onSaveDataShape={(dataShape, dataShapeColor) => { //props down
             setFireworkDataShape(dataShape); //pass setter
             setFireworkDataShapeColor(dataShapeColor) //pass setter
@@ -239,12 +248,12 @@ function App() {
             }} />}
           />
           <Route path="/marker" element={<ArUco arUcoId={id} />} />
-          
+
           <Route path="/launch" element={<LaunchScreen onSendLaunchData={() => {
             console.log("Send Launch Data")
             sendFireworkData(); //send data upon entering launch screen
-          }} canLaunch={canLaunch /*from on msg*/} arUcoId={id /*from on msg*/} />} 
-          /> 
+          }} canLaunch={canLaunch /*from on msg*/} shouldLaunch={shouldLaunch} arUcoId={id /*from on msg*/} />}
+          />
         </Routes>
       </div>
     </div>
