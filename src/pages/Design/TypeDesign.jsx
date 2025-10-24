@@ -1,16 +1,22 @@
 //TODO, update so the pic corresponds to the correct type (ok) but also the correct chosen color (fwTypeXcY)
 import fwType1Img from '@/assets/fireworkTypes/fwType1c1.png';
 import fwType2Img from '@/assets/fireworkTypes/fwType2c1.png';
-import fwType3Img from '@/assets/fireworkTypes/fwType3c1.png';
+//import fwType3Img from '@/assets/fireworkTypes/fwType3c1.png';
+import fwType4Img from '@/assets/fireworkTypes/fwType4c1.png';
+import fwType5Img from '@/assets/fireworkTypes/fwType5c1.png';
+
 
 
 export default function TypeDesign({ onCancel, onTypeDone }) {
   const fireworkTypes = [
-    { idx:1, name: "Burst Blast", godotName:"sphere", boolDraw: true, img: fwType1Img, boolCol2: true, boolSfx: true  },
-    { idx:2,name: "Willow Fall", godotName:"willow", boolDraw: false, img: fwType2Img,boolCol2: false, boolSfx: true  },
-    { idx:3,name: "Atom Rings", godotName:"saturn", boolDraw: true, img: fwType3Img,boolCol2: false, boolSfx: true  },
-    { idx:4,name: "Cluster Show", godotName:"cluster", boolDraw: true, img: fwType3Img,boolCol2: false, boolSfx: true  },
-    { idx:4,name: "Sparkling Stars", godotName:"another_cluster", boolDraw: true, img: fwType3Img,boolCol2: false, boolSfx: true  },
+    { idx:1, name: "Burst Blast", godotName:"sphere", boolDraw: true, img: fwType1Img, boolCol2: false, boolSfx: true  },
+    { idx:2,name: "Willow Fall", godotName:"willow", boolDraw: true, img: fwType2Img,boolCol2: false, boolSfx: true  },
+    { idx:3,name: "Atom Rings", godotName:"saturn", boolDraw: true, img: fwType2Img,boolCol2: false, boolSfx: true  },
+    { idx:4,name: "Cluster Show", godotName:"cluster", boolDraw: true, img: fwType4Img,boolCol2: true, boolSfx: true  },
+    { idx:5,name: "Sparkling Stars", godotName:"another_cluster", boolDraw: true, img: fwType5Img,boolCol2: true, boolSfx: true  },
+    { idx:6,name: "Pistil", godotName:"pistil", boolDraw: true, img: fwType2Img,boolCol2: true, boolSfx: true  },
+    { idx:7,name: "Sparkling Stars", godotName:"another_cluster", boolDraw: true, img: fwType2Img,boolCol2: false, boolSfx: true  },
+    
 
   ];
 

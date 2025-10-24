@@ -67,6 +67,8 @@ export default function FireworkBox({ //props
             {slots.map((s, i) => {
                 const filled = s !== null;
                 const imgSrc = filled ? s.imgPath : null;
+                const imgSrcSecondary = (filled && s.boolColor2) ? s.imgPathSecondary : null;
+
 
                 return (
                 <div key={i} className="relative">
@@ -96,6 +98,15 @@ export default function FireworkBox({ //props
                             src={imgSrc}
                             alt={s.type?.name ?? 'Firework'}
                             className="absolute inset-0 w-full h-full rounded-full object-cover"
+                            loading="lazy"
+                            draggable={false}
+                        />
+                        ) : null}
+                        {imgSrcSecondary ? (
+                        <img
+                            src={imgSrcSecondary}
+                            alt={s.type?.name ?? 'Firework'}
+                            className="relative inset-0 w-full h-full rounded-full object-cover"
                             loading="lazy"
                             draggable={false}
                         />

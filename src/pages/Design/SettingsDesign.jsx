@@ -16,7 +16,8 @@ export default function SettingsDesign({
   boolCol2,
   boolSfx,
   fwTypeIdx,
-  setImgPath
+  setImgPath,
+  setImgPathSecondary,
 }) {
 
   const colorVariants = {
@@ -38,14 +39,27 @@ export default function SettingsDesign({
   const colorKeys = Object.keys(colorVariants);
   //console.log(colorKeys)
   const colIdx = colorKeys.indexOf(color1) + 1; //get colIdx of current selected color,,+1 bcus imgname are 1 idx'ed
+  const colIdx2 = colorKeys.indexOf(color2) + 1; //get colIdx of current selected color,,+1 bcus imgname are 1 idx'ed
+
   //console.log(colIdx)
+
   const imgPath = new URL(
     `../../assets/fireworkTypes/fwType${fwTypeIdx}c${colIdx}.png`,
     import.meta.url
   ).href;
 
+  const imgPathSecondary = new URL(
+    `../../assets/fireworkTypes/fwType${fwTypeIdx}Secondaryc${colIdx2}.png`,
+    import.meta.url
+  ).href;
+
   useEffect(() => {
     setImgPath(imgPath);
+    if(boolCol2){
+      setImgPathSecondary(imgPathSecondary);
+    }else{
+      setImgPathSecondary(null);
+    }
   });
 
   const [showCol2, setShowCol2] = useState(false); //Diff fr boolCol2, this is local UI state expand/collapse secondary col choices
@@ -61,14 +75,20 @@ export default function SettingsDesign({
       
 {/*Firework Preview*/}
       <div
-        className="w-full max-w-8/10 mx-auto rounded-xl border-6"
-        style={{ borderColor: color2 ?? '#00000011' }}  // (see #3 below)
+        className="w-full max-w-8/10 mx-auto rounded-xl"  // (see #3 below)
       >
         <div className="relative w-full" >
+          {boolCol2 === true && imgPathSecondary ? ( 
+            <img
+                src={imgPathSecondary}
+                alt=""
+                className="z-0 top-0 left-0 absolute"
+              />
+            ) : null}
         <img
           src={imgPath}
           alt={`Preview of type ${fwTypeIdx} color ${colIdx}`}
-          className="object-contain h-full w-full"
+          className="object-contain h-full top-0 left-0 w-full z-1 relative"
         />
         </div>
       </div>

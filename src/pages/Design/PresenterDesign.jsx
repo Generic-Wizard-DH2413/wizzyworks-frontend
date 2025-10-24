@@ -10,13 +10,14 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
     //settings with default vals (some settingParams are only tweakable for some fwTypes)
     const [selectedType, setSelectedType] = useState(null);
     const [color1, setColor1] = useState("#FF0000");
-    const [color2, setColor2] = useState("#FFFFFF"); //fwType allows changing or not
+    const [color2, setColor2] = useState("#FF9220"); //fwType allows changing or not
     //const [burstSize, setBurstSize] = useState(55); //REMOVED
     const [launchWobble, setLaunchWobble] = useState(55); //new
     const [launchSpeed, setLaunchSpeed] = useState(55); 
     const [specialFxStr, setSpecialFxStr] = useState(55); //fwType allows changing or not
     const [drawing, setDrawing] = useState(null);
     const [imgPath, setImgPath] = useState(null);
+    const [imgPathSecondary, setImgPathSecondary] = useState(null);
     const { navigateTo } = useAppNavigation();
 
   // --- handleDesignCancel ---
@@ -25,7 +26,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
     //setStep('type'); //will cause some glitch
     setSelectedType(null);
     setColor1("#ff0000");
-    setColor2("#ffffff");
+    setColor2("#FF9220");
     setLaunchWobble(55);
     setLaunchSpeed(55);
     setSpecialFxStr(55);
@@ -73,7 +74,9 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
         launchSpeed,
         specialFxStr,
         drawing,
-        imgPath
+        imgPath,
+        boolCol2,
+        imgPathSecondary
         };
       handleDesignDone(design);
     }
@@ -124,6 +127,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
             boolSfx={selectedType.boolSfx}
             fwTypeIdx={selectedType.idx} 
             setImgPath={setImgPath}
+            setImgPathSecondary={setImgPathSecondary}
         />
       )}
 
