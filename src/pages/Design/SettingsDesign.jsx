@@ -18,6 +18,8 @@ export default function SettingsDesign({
   fwTypeIdx,
   setImgPath,
   setImgPathSecondary,
+  imgPath,
+  imgPathSecondary
 }) {
 
   const colorVariants = {
@@ -32,8 +34,8 @@ export default function SettingsDesign({
         "#FC8EAC": "bg-[#FC8EAC] rounded-md h-8",
       };
 
-  const colorItems = Object.keys(colorVariants).map((key, _) => <button onClick={()=>{setColor1(key)}} className={color1 == key? colorVariants[key] + " ring-4 ring-zinc-200" : colorVariants[key]}> </button>);
-  const colorItems2 = Object.keys(colorVariants).map((key, _) => <button onClick={()=>{setColor2(key)}} className={color2 == key? colorVariants[key] + " ring-4 ring-zinc-200" : colorVariants[key]}> </button>);
+  const colorItems = Object.keys(colorVariants).map((key, _) => <button key={key} onClick={()=>{setColor1(key)}} className={color1 == key? colorVariants[key] + " ring-4 ring-zinc-200" : colorVariants[key]}> </button>);
+  const colorItems2 = Object.keys(colorVariants).map((key, _) => <button key={key} onClick={()=>{setColor2(key)}} className={color2 == key? colorVariants[key] + " ring-4 ring-zinc-200" : colorVariants[key]}> </button>);
 
   //compute preview img path dynamically
   const colorKeys = Object.keys(colorVariants);
@@ -43,24 +45,10 @@ export default function SettingsDesign({
 
   //console.log(colIdx)
 
-  const imgPath = new URL(
-    `../../assets/fireworkTypes/fwType${fwTypeIdx}c${colIdx}.png`,
-    import.meta.url
-  ).href;
-
-  const imgPathSecondary = new URL(
-    `../../assets/fireworkTypes/fwType${fwTypeIdx}Secondaryc${colIdx2}.png`,
-    import.meta.url
-  ).href;
-
   useEffect(() => {
-    setImgPath(imgPath);
-    if(boolCol2){
-      setImgPathSecondary(imgPathSecondary);
-    }else{
-      setImgPathSecondary(null);
-    }
-  });
+
+    console.log(imgPath, imgPathSecondary);
+  }, [imgPath, imgPathSecondary]);
 
   const [showCol2, setShowCol2] = useState(false); //Diff fr boolCol2, this is local UI state expand/collapse secondary col choices
 

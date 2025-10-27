@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TypeDesign from "../Design/TypeDesign";
 import SettingsDesign from "../Design/SettingsDesign";
 import DrawDesign from "../Design/DrawDesign";
@@ -6,6 +6,19 @@ import { useAppNavigation } from "@/hooks/useAppNavigation";
 
 
 export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
+  const colorVariants = {
+      "#FF0000": "bg-[#FF0000] rounded-md h-8",
+      "#FF9220": "bg-[#FF9220] rounded-md h-8",
+      "#FFc71d": "bg-[#FFc71d] rounded-md h-8",
+      "#bfff00": "bg-[#bfff00] rounded-md h-8",
+      "#00d062": "bg-[#00d062] rounded-md h-8",
+      "#5bbce4": "bg-[#5bbce4] rounded-md h-8",
+      "#5A70CD": "bg-[#5A70CD] rounded-md h-8",
+      "#A35ACD": "bg-[#A35ACD] rounded-md h-8",
+      "#FC8EAC": "bg-[#FC8EAC] rounded-md h-8",
+    };
+    const colorKeys = Object.keys(colorVariants);
+
     const [step, setStep] = useState("type"); // "type" | "settings" | "draw"
     //settings with default vals (some settingParams are only tweakable for some fwTypes)
     const [selectedType, setSelectedType] = useState(null);
@@ -19,6 +32,28 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
     const [imgPath, setImgPath] = useState(null);
     const [imgPathSecondary, setImgPathSecondary] = useState(null);
     const { navigateTo } = useAppNavigation();
+
+    useEffect(() => {
+        if (selectedType) {
+            const newImgPath = new URL(
+                `../../assets/fireworkTypes/fwType${selectedType.idx}c${colorKeys.indexOf(color1) + 1}.png`,
+                import.meta.url
+            ).href;
+            setImgPath(newImgPath);
+            console.log("setting imgPath", newImgPath);
+        }
+    }, [selectedType, color1]);
+
+    useEffect(() => {
+        if (selectedType) {
+            const newImgPathSecondary = new URL(
+                `../../assets/fireworkTypes/fwType${selectedType.idx}Secondaryc${colorKeys.indexOf(color2) + 1}.png`,
+                import.meta.url
+            ).href;
+            setImgPathSecondary(newImgPathSecondary);
+            console.log("setting imgPathSecondary", newImgPathSecondary);
+        }
+    }, [selectedType, color2]);
 
   // --- handleDesignCancel ---
    //clear slot and undo any Design changes and return to box
@@ -58,6 +93,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
   // --- Firework type selection ---
   const handleTypeDone = (typeObj) => {
     setSelectedType(typeObj);
+    console.log(typeObj);
     setStep("settings");
   };
 
@@ -65,6 +101,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
   const handleSettingsDone = () => {
     if (selectedType.boolDraw) {
       setStep("draw");
+      console.log("Proceeding to draw step");
     } else {
       const design = { 
         type: selectedType,
@@ -78,6 +115,7 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
         boolCol2,
         imgPathSecondary
         };
+        console.log("Design done without drawing:", design);
       handleDesignDone(design);
     }
   };
@@ -93,7 +131,8 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
         launchSpeed,
         specialFxStr,
         drawing,
-        imgPath
+        imgPath,
+        imgPathSecondary
     };
     handleDesignDone(design);
   };
@@ -128,6 +167,8 @@ export default function PresenterDesign({ setSlots,selectedSlotIdx }) {
             fwTypeIdx={selectedType.idx} 
             setImgPath={setImgPath}
             setImgPathSecondary={setImgPathSecondary}
+            imgPath={imgPath}
+            imgPathSecondary={imgPathSecondary}
         />
       )}
 

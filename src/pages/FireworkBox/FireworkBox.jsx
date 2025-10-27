@@ -67,8 +67,9 @@ export default function FireworkBox({ //props
             {slots.map((s, i) => {
                 const filled = s !== null;
                 const imgSrc = filled ? s.imgPath : null;
-                const imgSrcSecondary = (filled && s.boolColor2) ? s.imgPathSecondary : null;
+                const imgSrcSecondary = filled ? s.imgPathSecondary : null;
 
+                console.log("Rendering slot", i, "filled?", filled, "imgSrc:", imgSrc, "imgSrcSecondary:", imgSrcSecondary);
 
                 return (
                 <div key={i} className="relative">
