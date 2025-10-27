@@ -51,14 +51,19 @@ export default function TypeDesign({ onCancel, onTypeDone }) {
                     className="relative object-contain max-h-full max-w-full"
                   />
                 ) : null}
+                {fw.boolDraw ? (<div
+                className="z-10 h-6 w-6 "
+                ><img src="src\assets\paint.png" className="absolute -bottom-0 -right-0 w-6 h-6"></img></div>):null}
               </div>
               <span className="mt-2 text-sm font-medium text-white">
                 {fw.name}
               </span>
               <span className="text-xs text-gray-400">
-                {fw.boolDraw ? "Includes drawing step" : "No drawing needed"}
+                {fw.boolDraw ? "Paintable" : ""}
               </span>
+              
             </button>
+          
           );
         })}
       </div>

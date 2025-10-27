@@ -1,7 +1,7 @@
 export const FIREWORK_TYPES = [
   {
     idx: 1,
-    name: "Sphere Blast",
+    name: "Sphere",
     godotName: "sphere",
     boolDraw: true,
     boolCol2: false,
@@ -9,23 +9,23 @@ export const FIREWORK_TYPES = [
   },
   {
     idx: 2,
-    name: "Willow Fall",
+    name: "Willow",
     godotName: "willow",
-    boolDraw: true,
+    boolDraw: false,
     boolCol2: false,
     boolSfx: true,
   },
   {
     idx: 3,
-    name: "Saturn Rings",
+    name: "Saturn",
     godotName: "saturn",
     boolDraw: true,
-    boolCol2: false,
+    boolCol2: true,
     boolSfx: true,
   },
   {
     idx: 4,
-    name: "Cluster Show",
+    name: "Cluster",
     godotName: "cluster",
     boolDraw: true,
     boolCol2: true,
@@ -33,7 +33,7 @@ export const FIREWORK_TYPES = [
   },
   {
     idx: 5,
-    name: "Sparkling Stars",
+    name: "Sparkle",
     godotName: "another_cluster",
     boolDraw: true,
     boolCol2: true,
@@ -41,7 +41,7 @@ export const FIREWORK_TYPES = [
   },
   {
     idx: 6,
-    name: "Pistil Burst",
+    name: "Pistil",
     godotName: "pistil",
     boolDraw: false,
     boolCol2: true,
@@ -49,7 +49,7 @@ export const FIREWORK_TYPES = [
   },
   {
     idx: 7,
-    name: "Chrysanthemum Rays",
+    name: "Chrysanth",
     godotName: "chrysanthemum",
     boolDraw: false,
     boolCol2: false,
@@ -65,10 +65,10 @@ export const FIREWORK_TYPES = [
   },
     {
     idx: 9,
-    name: "Fish",
+    name: "Swarm",
     godotName: "fish",
     boolDraw: false,
-    boolCol2: false,
+    boolCol2: true,
     boolSfx: true,
   },
 ];

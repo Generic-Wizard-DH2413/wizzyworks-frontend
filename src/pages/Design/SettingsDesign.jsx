@@ -76,7 +76,7 @@ export default function SettingsDesign({
     <div className="p-4 touch-pan-y overflow-auto">
       <div className="flex justify-between mb-4">
         <button onClick={onCancel}>Cancel</button>
-        <button onClick={onSettingsDone}>Next</button>
+        <button onClick={onSettingsDone}>{draft.type?.boolDraw?("Next"):("Done")}</button>
       </div>
 
       {/* Firework Preview */}
