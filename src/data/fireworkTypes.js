@@ -55,6 +55,22 @@ export const FIREWORK_TYPES = [
     boolCol2: false,
     boolSfx: true,
   },
+  {
+    idx: 8,
+    name: "Tornado",
+    godotName: "tornado",
+    boolDraw: false,
+    boolCol2: false,
+    boolSfx: true,
+  },
+    {
+    idx: 9,
+    name: "Fish",
+    godotName: "fish",
+    boolDraw: false,
+    boolCol2: false,
+    boolSfx: true,
+  },
 ];
 
 export const getFireworkTypeByIdx = (idx) =>
