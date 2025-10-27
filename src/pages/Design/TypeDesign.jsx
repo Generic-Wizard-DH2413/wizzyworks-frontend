@@ -1,24 +1,16 @@
-//TODO, update so the pic corresponds to the correct type (ok) but also the correct chosen color (fwTypeXcY)
-import fwType1Img from '@/assets/fireworkTypes/fwType1c1.png';
-import fwType2Img from '@/assets/fireworkTypes/fwType2c1.png';
-//import fwType3Img from '@/assets/fireworkTypes/fwType3c1.png';
-import fwType4Img from '@/assets/fireworkTypes/fwType4c1.png';
-import fwType5Img from '@/assets/fireworkTypes/fwType5c1.png';
-
-
+import { FIREWORK_TYPES } from "@/data/fireworkTypes";
+import { useFireworkStore } from "@/store/useFireworkStore";
+import {
+  DEFAULT_COLOR_PRIMARY,
+  DEFAULT_COLOR_SECONDARY,
+  buildFireworkImagePath,
+} from "@/utils/fireworkAssets";
 
 export default function TypeDesign({ onCancel, onTypeDone }) {
-  const fireworkTypes = [
-    { idx:1, name: "Sphere Blast", godotName:"sphere", boolDraw: true, img: fwType1Img, boolCol2: false, boolSfx: true  },
-    { idx:2,name: "Willow Fall", godotName:"willow", boolDraw: true, img: fwType2Img,boolCol2: false, boolSfx: true  },
-    { idx:3,name: "Saturn Rings", godotName:"saturn", boolDraw: true, img: fwType2Img,boolCol2: false, boolSfx: true  },
-    { idx:4,name: "Cluster Show", godotName:"cluster", boolDraw: true, img: fwType4Img,boolCol2: true, boolSfx: true  },
-    { idx:5,name: "Sparkling Stars", godotName:"another_cluster", boolDraw: true, img: fwType5Img,boolCol2: true, boolSfx: true  },
-    { idx:6,name: "Pistil Burst", godotName:"pistil", boolDraw: false, img: fwType2Img,boolCol2: true, boolSfx: true  },
-    { idx:7,name: "Chrysanthemum Rays", godotName:"chrysanthemum", boolDraw: false, img: fwType2Img,boolCol2: false, boolSfx: true  },
-    
-
-  ];
+  const draft = useFireworkStore((state) => state.draft);
+  const selectedTypeIdx = draft?.type?.idx ?? null;
+  const primaryColor = draft?.color1 ?? DEFAULT_COLOR_PRIMARY;
+  const secondaryColor = draft?.color2 ?? DEFAULT_COLOR_SECONDARY;
 
   return (
     <div className="p-4">
@@ -28,24 +20,47 @@ export default function TypeDesign({ onCancel, onTypeDone }) {
       <h1 className="text-2xl font-extrabold mb-4">Select a firework type</h1>
 
       <div className="grid grid-cols-3 gap-4">
-        {fireworkTypes.map((fw, i) => (
-          <button
-            key={i}
-            onClick={() => onTypeDone(fw)}
-            className="flex flex-col items-center bg-zinc-800 rounded-md p-2 transition-transform active:scale-95 hover:opacity-90"
-          >
-            <div className="w-full aspect-square flex items-center justify-center overflow-hidden">
-              <img
-                src={fw.img}
-                alt={fw.name}
-                className="object-contain max-h-full max-w-full"
-              />
-            </div>
-            <span className="mt-2 text-sm font-medium text-white">
-              {fw.name}
-            </span>
-          </button>
-        ))}
+        {FIREWORK_TYPES.map((fw) => {
+          const secondaryImg = fw.boolCol2
+            ? buildFireworkImagePath(fw.idx, secondaryColor, "secondary")
+            : null;
+          const primaryImg = buildFireworkImagePath(fw.idx, primaryColor);
+          const isSelected = fw.idx === selectedTypeIdx;
+
+          return (
+            <button
+              key={fw.idx}
+              onClick={() => onTypeDone(fw)}
+              className={[
+                "flex flex-col items-center bg-zinc-800 rounded-md p-2 transition-transform active:scale-95 hover:opacity-90 border-2",
+                isSelected ? "border-orange-500/70" : "border-transparent",
+              ].join(" ")}
+            >
+              <div className="w-full aspect-square flex items-center justify-center overflow-hidden relative">
+                {secondaryImg ? (
+                  <img
+                    src={secondaryImg}
+                    alt=""
+                    className="absolute inset-0 object-contain max-h-full max-w-full"
+                  />
+                ) : null}
+                {primaryImg ? (
+                  <img
+                    src={primaryImg}
+                    alt={fw.name}
+                    className="relative object-contain max-h-full max-w-full"
+                  />
+                ) : null}
+              </div>
+              <span className="mt-2 text-sm font-medium text-white">
+                {fw.name}
+              </span>
+              <span className="text-xs text-gray-400">
+                {fw.boolDraw ? "Includes drawing step" : "No drawing needed"}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

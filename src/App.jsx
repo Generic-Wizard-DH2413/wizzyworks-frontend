@@ -4,11 +4,12 @@ import Information from './pages/Information/Information'
 import ShapePicker from './pages/ShapePicker/ShapePicker';
 import Canvas from './pages/Canvas/Canvas';
 import './App.css';
-import PresenterFireworkBox from './pages/FireworkBox/PresenterFireworkBox'; //new
-import PresenterDesign from './pages/Design/PresenterDesign'; //new
+import FireworkBox from './pages/FireworkBox/FireworkBox';
+import PresenterDesign from './pages/Design/PresenterDesign';
 
 /* TODO Press launch (marker will show) → Wait for signal from bridge → When signal is there → remove marker and start start animation.  */
 import { useEffect, useState } from 'react';
+import { useFireworkStore } from '@/store/useFireworkStore';
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useRefreshRedirect } from './hooks/useRefreshRedirect';
 import { usePreventBackButton } from './hooks/usePreventBackButton';
@@ -44,11 +45,7 @@ function App() {
   const [shouldLaunch, setShouldLaunch] = useState(false);
 
   /*@@@@@@@@@@@@@@@@@@@@@@@@ NEW START @@@@@@@@@@@@@@@@@@@@@@@@*/
-  const slotsAmount = 9; // fixed for now (you can make this dynamic later)
-  // Each slot is either null (empty), true (reserved/used), or an object (final design)
-  const [slots, setSlots] = useState(() => Array(slotsAmount).fill(null));
-  // Which slot we’re editing in the design page
-  const [selectedSlotIdx, setSelectedSlotIdx] = useState(null);
+  const slots = useFireworkStore((state) => state.slots);
 
 
 
@@ -147,6 +144,10 @@ function App() {
     }*/
 
   const hexStringToNormalizedRGB = (hexString) => {
+    if (!hexString) {
+      return null;
+    }
+
     hexString = hexString.replace("#", "");
     let r = parseInt(hexString.slice(0, 2), 16) / 255;
     let g = parseInt(hexString.slice(2, 4), 16) / 255;
@@ -161,7 +162,7 @@ function App() {
   }
 
   const buildJSONFireworkFromSlot = (slot, idx) => {
-    const { type, color1, color2, launchSpeed, pathWobble, specialFxStr, drawing } = slot;
+    const { type, color1, color2, launchSpeed, launchWobble, specialFxStr, drawing } = slot;
 
     return {
       //same JSON names as before
@@ -170,7 +171,7 @@ function App() {
       outer_layer_second_color: hexStringToNormalizedRGB(color2), //prev fireworkDataShapeSecondColor
       //outer_layer_size: normalizeSettings(burstSize), // REMOVED
       path_speed: normalizeSettings(launchSpeed), // new field; default 0.5 if missing
-      path_wobble: normalizeSettings(pathWobble), // new field; default 0.5 if missing
+      path_wobble: normalizeSettings(launchWobble), // new field; default 0.5 if missing
       outer_layer_specialfx: normalizeSettings(specialFxStr), // new field; default 0.5 if missing
       inner_layer: drawing, // prev fireworkDataURL
 
@@ -215,29 +216,15 @@ function App() {
           <Route
             path="/fireworkBox"
             element={
-              <PresenterFireworkBox
-                slotsAmount={9} //set for now
-                slots={slots}
-                setSlots={setSlots}
-                selectedSlotIdx={selectedSlotIdx}
-                setSelectedSlotIdx={setSelectedSlotIdx}
-                onSendLaunchData={() => {
+              <FireworkBox
+                onFinishBox={() => {
                   console.log("Send Launch Data")
-                  sendFireworkData(); //send data upon finishing box
+                  sendFireworkData();
                 }}
               />
             }
           />
-          <Route
-            path="/design"
-            element={
-              <PresenterDesign
-                setSlots={setSlots}
-                selectedSlotIdx={selectedSlotIdx}
-
-              />
-            }
-          />
+          <Route path="/design" element={<PresenterDesign />} />
 
 
 

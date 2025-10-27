@@ -1,5 +1,9 @@
 import { useRef, useEffect, useState } from "react";
-import { useAppNavigation } from '@/hooks/useAppNavigation';
+import {
+    DEFAULT_COLOR_PRIMARY,
+    FIREWORK_COLOR_CLASSES,
+    FIREWORK_COLOR_KEYS,
+} from "@/utils/fireworkAssets";
 
 // TODO Save canvas state when user navigates around (Store state in parent?)
 // Change to black background on canvas. Make it a square.
@@ -13,27 +17,29 @@ import { useAppNavigation } from '@/hooks/useAppNavigation';
 export default function DrawDesign({
     onCancel,
     onDrawDone,
-    setDrawing,
+    onDrawingChange,
     drawing
 }) {
     const canvasRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [position, setPosition] = useState([]);
-    const { navigateTo } = useAppNavigation();
-    const [currentColor, setCurrentColor] = useState("#FF0000");
+    const [currentColor, setCurrentColor] = useState(DEFAULT_COLOR_PRIMARY);
 
-    const colorVariants = {
-        "#FF0000": "bg-[#FF0000] rounded-md h-8",
-        "#FF9220": "bg-[#FF9220] rounded-md h-8",
-        "#FFc71d": "bg-[#FFc71d] rounded-md h-8",
-        "#bfff00": "bg-[#bfff00] rounded-md h-8",
-        "#00d062": "bg-[#00d062] rounded-md h-8",
-        "#5bbce4": "bg-[#5bbce4] rounded-md h-8",
-        "#5A70CD": "bg-[#5A70CD] rounded-md h-8",
-        "#A35ACD": "bg-[#A35ACD] rounded-md h-8",
-        "#FC8EAC": "bg-[#FC8EAC] rounded-md h-8",
-      };
-  const colorItems = Object.keys(colorVariants).map((key, _) => <button onClick={()=>{console.log(key); setCurrentColor(key)}} className={currentColor == key? colorVariants[key] + " ring-4 ring-zinc-200" : colorVariants[key]}> </button>);
+    const colorItems = FIREWORK_COLOR_KEYS.map((color) => (
+        <button
+            key={color}
+            onClick={() => {
+                setCurrentColor(color);
+            }}
+            className={
+                currentColor === color
+                    ? `${FIREWORK_COLOR_CLASSES[color]} ring-4 ring-zinc-200`
+                    : FIREWORK_COLOR_CLASSES[color]
+            }
+        >
+            {" "}
+        </button>
+    ));
 
     // Initialize canvas size and setup - only run once on mount
     useEffect(() => {
@@ -93,13 +99,6 @@ export default function DrawDesign({
         const ctx = canvas.getContext("2d");
         ctx.strokeStyle = currentColor;
     }, [currentColor]);
-
-    // complets drawing when updated
-    useEffect(() => {
-    if (drawing) {
-        onDrawDone();
-    }
-    }, [drawing]);
 
     // --- Mouse Events ---
     const startDrawing = (e) => {
@@ -182,13 +181,14 @@ export default function DrawDesign({
 
 
     const sendDrawing = () => {
-        // TODO Maybe rename to save drawing? 
-        // TODO clear local storage?
-        const ctx = canvasRef.current.getContext("2d");
-        let canvasDataURL = canvasRef.current.toDataURL()
-        console.log("Sending drawing");
-        console.log(canvasDataURL)
-        setDrawing(canvasDataURL)
+        const canvas = canvasRef.current;
+        if (!canvas) {
+            return;
+        }
+
+        const canvasDataURL = canvas.toDataURL();
+        onDrawingChange?.(canvasDataURL);
+        onDrawDone();
     };
 
     return (

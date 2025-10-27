@@ -1,171 +1,177 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+import {
+  FIREWORK_COLOR_CLASSES,
+  FIREWORK_COLOR_KEYS,
+  buildFireworkImagePath,
+} from "@/utils/fireworkAssets";
 
 export default function SettingsDesign({
-  color1,
-  setColor1,
-  color2,
-  setColor2,
-  launchWobble,
-  setLaunchWobble,
-  launchSpeed,
-  setLaunchSpeed,
-  specialFxStr,
-  setSpecialFxStr,
+  draft,
   onCancel,
   onSettingsDone,
-  boolCol2,
-  boolSfx,
-  fwTypeIdx,
-  setImgPath,
-  setImgPathSecondary,
-  imgPath,
-  imgPathSecondary
+  onUpdateDraft,
 }) {
-
-  const colorVariants = {
-        "#FF0000": "bg-[#FF0000] rounded-md h-8",
-        "#FF9220": "bg-[#FF9220] rounded-md h-8",
-        "#FFc71d": "bg-[#FFc71d] rounded-md h-8",
-        "#bfff00": "bg-[#bfff00] rounded-md h-8",
-        "#00d062": "bg-[#00d062] rounded-md h-8",
-        "#5bbce4": "bg-[#5bbce4] rounded-md h-8",
-        "#5A70CD": "bg-[#5A70CD] rounded-md h-8",
-        "#A35ACD": "bg-[#A35ACD] rounded-md h-8",
-        "#FC8EAC": "bg-[#FC8EAC] rounded-md h-8",
-      };
-
-  const colorItems = Object.keys(colorVariants).map((key, _) => <button key={key} onClick={()=>{setColor1(key)}} className={color1 == key? colorVariants[key] + " ring-4 ring-zinc-200" : colorVariants[key]}> </button>);
-  const colorItems2 = Object.keys(colorVariants).map((key, _) => <button key={key} onClick={()=>{setColor2(key)}} className={color2 == key? colorVariants[key] + " ring-4 ring-zinc-200" : colorVariants[key]}> </button>);
-
-  //compute preview img path dynamically
-  const colorKeys = Object.keys(colorVariants);
-  //console.log(colorKeys)
-  const colIdx = colorKeys.indexOf(color1) + 1; //get colIdx of current selected color,,+1 bcus imgname are 1 idx'ed
-  const colIdx2 = colorKeys.indexOf(color2) + 1; //get colIdx of current selected color,,+1 bcus imgname are 1 idx'ed
-
-  //console.log(colIdx)
+  const [showCol2, setShowCol2] = useState(false);
 
   useEffect(() => {
+    if (!draft.type?.boolCol2) {
+      setShowCol2(false);
+    }
+  }, [draft.type?.boolCol2]);
 
-    console.log(imgPath, imgPathSecondary);
-  }, [imgPath, imgPathSecondary]);
+  const colorItems = FIREWORK_COLOR_KEYS.map((color) => (
+    <button
+      key={color}
+      onClick={() => onUpdateDraft({ color1: color })}
+      className={
+        draft.color1 === color
+          ? `${FIREWORK_COLOR_CLASSES[color]} ring-4 ring-zinc-200`
+          : FIREWORK_COLOR_CLASSES[color]
+      }
+    >
+      {" "}
+    </button>
+  ));
 
-  const [showCol2, setShowCol2] = useState(false); //Diff fr boolCol2, this is local UI state expand/collapse secondary col choices
+  const colorItems2 = FIREWORK_COLOR_KEYS.map((color) => (
+    <button
+      key={color}
+      onClick={() => onUpdateDraft({ color2: color })}
+      className={
+        draft.color2 === color
+          ? `${FIREWORK_COLOR_CLASSES[color]} ring-4 ring-zinc-200`
+          : FIREWORK_COLOR_CLASSES[color]
+      }
+    >
+      {" "}
+    </button>
+  ));
+
+  const primaryImg = useMemo(
+    () => buildFireworkImagePath(draft.type?.idx, draft.color1),
+    [draft.type?.idx, draft.color1]
+  );
+
+  const secondaryImg = useMemo(
+    () =>
+      draft.type?.boolCol2
+        ? buildFireworkImagePath(draft.type?.idx, draft.color2, "secondary")
+        : null,
+    [draft.type?.boolCol2, draft.type?.idx, draft.color2]
+  );
+
+  const handleSpecialFxChange = (value) => {
+    onUpdateDraft({ specialFxStr: Number(value) });
+  };
+
+  const handleLaunchSpeedChange = (value) => {
+    onUpdateDraft({ launchSpeed: Number(value) });
+  };
+
+  const handleLaunchWobbleChange = (value) => {
+    onUpdateDraft({ launchWobble: Number(value) });
+  };
 
   return (
-    <>
     <div className="p-4 touch-pan-y overflow-auto">
-    
       <div className="flex justify-between mb-4">
         <button onClick={onCancel}>Cancel</button>
         <button onClick={onSettingsDone}>Next</button>
       </div>
-      
-{/*Firework Preview*/}
-      <div
-        className="w-full max-w-8/10 mx-auto rounded-xl"  // (see #3 below)
-      >
-        <div className="relative w-full" >
-          {boolCol2 === true && imgPathSecondary ? ( 
+
+      {/* Firework Preview */}
+      <div className="w-full max-w-8/10 mx-auto rounded-xl">
+        <div className="relative w-full">
+          {secondaryImg ? (
             <img
-                src={imgPathSecondary}
-                alt=""
-                className="z-0 top-0 left-0 absolute"
-              />
-            ) : null}
-        <img
-          src={imgPath}
-          alt={`Preview of type ${fwTypeIdx} color ${colIdx}`}
-          className="object-contain h-full top-0 left-0 w-full z-1 relative"
-        />
+              src={secondaryImg}
+              alt=""
+              className="z-0 top-0 left-0 absolute"
+            />
+          ) : null}
+          {primaryImg ? (
+            <img
+              src={primaryImg}
+              alt={`Preview of type ${draft.type?.idx}`}
+              className="object-contain h-full top-0 left-0 w-full z-1 relative"
+            />
+          ) : null}
         </div>
       </div>
 
       <h1 className="text-xl font-bold mb-2">Select the primary color</h1>
-{/*Color1 */}
+
       <label className="block mb-4">
-        <div className="grid grid-cols-3 gap-4">
-
-          {colorItems}
-          {/*
-          <span>Color:</span>
-                  <input
-                    type="color"
-                    value={color1}
-                    onChange={(e) => setColor1(e.target.value)}
-                    className="ml-2"
-                  />*/}
-        </div>
+        <div className="grid grid-cols-3 gap-4">{colorItems}</div>
       </label>
-{/*Color2 conditionally rendered*/}
 
-        {boolCol2 === true && (
+      {draft.type?.boolCol2 ? (
         <label className="block mb-4">
-{/*Color2 choices expandable via a parent button*/}
-        <h1 className="text-xl font-bold mb-2">Select the secondary color</h1>
-        <div className=" flex items-center justify-center">
-        <button
-            type="button"
-            onClick={() => setShowCol2((v) => !v)}
-            aria-expanded={showCol2}
-            className=" flex items-center justify-center w-100 h-5 bg-zinc-700 text-gray-900 px-2 py-1 rounded-lg transition"
-          >
-            <span className={`transition-transform ${showCol2 ? 'rotate-180' : ''}`}>▾</span>
-          </button>
+          <h1 className="text-xl font-bold mb-2">
+            Select the secondary color
+          </h1>
+          <div className=" flex items-center justify-center">
+            <button
+              type="button"
+              onClick={() => setShowCol2((value) => !value)}
+              aria-expanded={showCol2}
+              className=" flex items-center justify-center w-100 h-5 bg-zinc-700 text-gray-900 px-2 py-1 rounded-lg transition"
+            >
+              <span
+                className={`transition-transform ${
+                  showCol2 ? "rotate-180" : ""
+                }`}
+              >
+                v
+              </span>
+            </button>
           </div>
-        {showCol2 && (<div style={{ height: 10 }} />)}
-        {showCol2 && (
-        
-        <div className="grid grid-cols-3 gap-4">
-          {colorItems2}
-        </div>
-        )}
-        
-      </label>
-        )}
+          {showCol2 ? <div style={{ height: 10 }} /> : null}
+          {showCol2 ? (
+            <div className="grid grid-cols-3 gap-4">{colorItems2}</div>
+          ) : null}
+        </label>
+      ) : null}
 
       <h1 className="text-xl font-bold mb-2">Firework Settings</h1>
 
-      {boolSfx === true && (
+      {draft.type?.boolSfx ? (
         <label className="flex items-center block mb-4">
-            <span className="w-50">Special Effects Amount</span>
-            <input
+          <span className="w-50">Special Effects Amount</span>
+          <input
             type="range"
             min="10"
             max="100"
-            value={specialFxStr}
-            onChange={(e) => setSpecialFxStr(Number(e.target.value))}
-            className="range range-xl accent-orange-500 w-full h-3" 
-            />
+            value={draft.specialFxStr}
+            onChange={(event) => handleSpecialFxChange(event.target.value)}
+            className="range range-xl accent-orange-500 w-full h-3"
+          />
         </label>
-        )}
+      ) : null}
 
       <label className="flex items-center block mb-4">
-        <span  className="w-50">Launch Speed</span>
+        <span className="w-50">Launch Speed</span>
         <input
           type="range"
           min="10"
           max="100"
-          value={launchSpeed}
-          onChange={(e) => setLaunchSpeed(Number(e.target.value))}
-          className="range range-xl accent-orange-500 w-full rounded-lg " 
+          value={draft.launchSpeed}
+          onChange={(event) => handleLaunchSpeedChange(event.target.value)}
+          className="range range-xl accent-orange-500 w-full rounded-lg "
         />
       </label>
-      
-        
-        <label className="flex items-center block mb-4">
-        <span  className="w-50">Launch Wobble</span>
+
+      <label className="flex items-center block mb-4">
+        <span className="w-50">Launch Wobble</span>
         <input
           type="range"
           min="10"
           max="100"
-          value={launchWobble}
-          onChange={(e) => setLaunchWobble(Number(e.target.value))}
-          className="range range-xl accent-orange-500 w-full h-3" 
+          value={draft.launchWobble}
+          onChange={(event) => handleLaunchWobbleChange(event.target.value)}
+          className="range range-xl accent-orange-500 w-full h-3"
         />
       </label>
-      
     </div>
-    </>
   );
 }
