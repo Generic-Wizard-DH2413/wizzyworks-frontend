@@ -3,7 +3,7 @@ import { Sphere } from "@react-three/drei";
 export const t = {
   // Generic actions / buttons
   cancel:        { en: "Cancel",        sv: "Avbryt" },
-  finish:        { en: "Finish",        sv: "Färdig" },
+  finish:        { en: "Finished!",        sv: "Färdig!" },
   done:          { en: "Done",          sv: "Klar" },
   next:          { en: "Next →",          sv: "Nästa →" },
   
@@ -22,7 +22,7 @@ export const t = {
   },
   addAnother: {
     en: "Add another firework!",
-    sv: "Lägg till ett fyrverkeri till!",
+    sv: "Lägg till ett fyrverkeri!",
   },
 
   // TypeDesign view
@@ -76,7 +76,6 @@ export const t = {
   },
   
 
-
   // SettingsDesign view
   selectPrimaryColor: {
     en: "Select the primary color",
@@ -87,12 +86,12 @@ export const t = {
     sv: "Välj sekundärfärg",
   },
   fireworkSettingsHeader: {
-    en: "Firework Settings",
-    sv: "Fyrverkeriinställningar",
+    en: "More Firework Settings",
+    sv: "Flera Fyrverkeriinställningar",
   },
   sfxAmount: {
     en: "Special Effects Amount",
-    sv: "Mängd specialeffekt",
+    sv: "Mängd Specialeffekt",
   },
   launchSpeed: {
     en: "Launch Speed",
@@ -100,10 +99,10 @@ export const t = {
   },
   launchWobble: {
     en: "Launch Wobble",
-    sv: "Skakighet vid avfyrning",
+    sv: "Svängig Luftfärd",
   },
 
-  // Information / landing page
+  // Information view
   chooseLanguageHeader: {
     en: "Choose language",
     sv: "Välj språk",
@@ -120,7 +119,7 @@ export const t = {
     en: "Please increase the brightness and turn up the volume for full experience",
     sv: "Höj gärna ljusstyrkan och ljudvolymen för bästa upplevelse"
   },
-  //DrawDesign page
+  //DrawDesign view
   drawOptionalHeader: {
     en: "Optional: Draw your firework!",
     sv: "Valfritt: Rita ditt fyrverkeri!",
@@ -128,9 +127,9 @@ export const t = {
 
   clearDrawing: {
     en: "Clear drawing",
-    sv: "Rensa ritning",
+    sv: "Rensa målning",
   },
-  // Launch page
+  // Launch view
   launch: {
     en: "Launch!",
     sv: "Avfyra!",
