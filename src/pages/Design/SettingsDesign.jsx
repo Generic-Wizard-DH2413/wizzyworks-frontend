@@ -74,11 +74,13 @@ export default function SettingsDesign({
   };
 
   return (
-    <div className="p-4 touch-pan-y overflow-auto">
-      <div className="flex justify-between mb-4">
+    <div className="p-4 touch-pan-y overflow-auto text-xl ">
+      <div className="flex justify-between font-medium">
         <button onClick={onCancel}>
           {text("cancel")}</button>
-        <button onClick={onSettingsDone}>
+        <button className="bg-orange-500/80 hover:bg-orange-500 text-white font-medium  py-2 px-6 rounded-xl 
+                                 transition-all duration-200 hover:scale-105 active:scale-95 border border-orange-400/30" 
+                onClick={onSettingsDone}>
           {draft.type?.boolDraw ? text("next") : text("done")}
         </button>
       </div>
@@ -180,6 +182,17 @@ export default function SettingsDesign({
           className="range range-xl accent-orange-500 w-full h-3"
         />
       </label>
+
+      <div className="flex justify-between mb-4 font-medium">
+         <button onClick={onCancel}>
+          {" "}</button>
+        <button className="bg-orange-500/80 hover:bg-orange-500 text-white font-medium  py-2 px-6 rounded-xl 
+                                 transition-all duration-200 hover:scale-105 active:scale-95 border border-orange-400/30" 
+                onClick={onSettingsDone}>
+          {draft.type?.boolDraw ? text("next") : text("done")}
+        </button>
+      </div>
+
     </div>
   );
 }

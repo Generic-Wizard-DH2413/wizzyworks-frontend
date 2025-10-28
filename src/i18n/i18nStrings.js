@@ -100,6 +100,10 @@ export const t = {
   },
 
   // Information view
+  BuildingFireworks: {
+    en: "Build your own fireworks",
+    sv: "Bygg dina egna fyrverkerier"
+  },
   chooseLanguageHeader: {
     en: "Choose language",
     sv: "Välj språk",
@@ -113,7 +117,7 @@ export const t = {
     sv: "Svenska",
   },
   information:{
-    en: "Please increase the brightness and turn up the volume for full experience",
+    en: "Please increase the brightness and volume for full experience",
     sv: "Höj gärna ljusstyrkan och ljudvolymen för bästa upplevelse"
   },
   //DrawDesign view

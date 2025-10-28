@@ -17,8 +17,8 @@ export default function TypeDesign({ onCancel, onTypeDone }) {
 
   return (
     <div className="p-4">
-      <div className="flex justify-between mb-4">
-        <button onClick={onCancel}>{text("cancel")}</button>
+      <div className="flex justify-between font-medium">
+        <button className="active:opacity-70 text-xl" onClick={onCancel}>{text("cancel")}</button>
       </div>
       <h1 className="text-2xl font-extrabold mb-4">
         {text("selectTypeTitle")}

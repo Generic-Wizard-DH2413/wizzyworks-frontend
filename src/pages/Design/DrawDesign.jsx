@@ -198,10 +198,13 @@ export default function DrawDesign({
 
         <div className="flex flex-col space-y-2 px-4 py-4 pb-20">
     
-            <div className="flex justify-between mb-3">
+            <div className="flex justify-between mb-3 font-medium text-xl">
                 <button onClick={onCancel}>{text("cancel")}</button>
-                <button onClick={sendDrawing}>{text("done")}</button>
+                <button className="bg-orange-500/80 hover:bg-orange-500 text-white font-medium  py-2 px-6 rounded-xl 
+                                        transition-all duration-200 hover:scale-105 active:scale-95 border border-orange-400/30" onClick={sendDrawing}>{text("done")}</button>
             </div>
+            
+            
       
             <div className="text-center">
                 <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{text("drawOptionalHeader")}</h3>

@@ -2,6 +2,9 @@ import './Information.css';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { useI18nStore } from "@/store/useI18nStore";
 import { useText } from "@/i18n/useText";
+import seFlag from "@/assets/seFlag.png"
+import usFlag from "@/assets/usFlag.png"
+
 
 
 export default function Information() {
@@ -14,7 +17,7 @@ export default function Information() {
             <div className="space-y-4">
                 <h1 className="text-4xl md:text-5xl font-bold">
                     <span className="bg-gradient-to-r from-orange-400 via-orange-500 to-yellow-500 bg-clip-text text-transparent">
-                        Build your own firework
+                        {text("BuildingFireworks")}
                     </span>{' '}
                     <span className="text-yellow-400">🎆</span>
                 </h1>
@@ -29,7 +32,7 @@ export default function Information() {
             <nav className="fixed bottom-6 right-6">
                 <button 
                     onClick={() => navigateTo('/fireworkBox')}
-                    className="bg-orange-500 hover:bg-orange-600 text-white font-medium text-lg py-4 px-8 rounded-full 
+                    className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-xl py-4 px-8 rounded-full 
                              shadow-lg transform transition-all duration-200 hover:scale-105 active:scale-95 
                              border border-orange-400/30"
                 >
@@ -47,25 +50,33 @@ export default function Information() {
                     <button
                         onClick={() => setLang("en")}
                         className={[
-                        "px-4 py-2 rounded-lg border",
+                        "relative w-25 h-17 rounded-lg border-4 overflow-hidden",
                         lang === "en"
-                            ? "bg-white text-black border-white"
+                            ? "bg-orange-500  text-black border-orange-400/30"
                             : "bg-transparent text-white border-white/40",
                         ].join(" ")}
                     >
-                        {text("englishLabel")}
+                        <img
+                            src={usFlag}
+                            alt="English"
+                            className="absolute inset-0 w-full h-full object-cover"
+                        />
                     </button>
 
                     <button
                         onClick={() => setLang("sv")}
                         className={[
-                        "px-4 py-2 rounded-lg border",
-                        lang === "sv"
-                            ? "bg-white text-black border-white"
+                            "relative w-25 h-17 rounded-lg border-4 overflow-hidden",
+                            lang === "sv"
+                            ? "bg-orange-500 text-black border-orange-400/30"
                             : "bg-transparent text-white border-white/40",
                         ].join(" ")}
-                    >
-                        {text("swedishLabel")}
+                        >
+                        <img
+                            src={seFlag}
+                            alt="Svenska"
+                            className="absolute inset-0 w-full h-full object-cover"
+                        />
                     </button>
                     </div>
                 </div>

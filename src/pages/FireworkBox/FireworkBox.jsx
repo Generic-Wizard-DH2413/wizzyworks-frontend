@@ -67,16 +67,18 @@ export default function FireworkBox({ onFinishBox }) {
   return (
     <div className="min-h-screen p-6 md:p-10">
       {/* Top bar */}
-      <div className="flex items-center justify-between text-xl font-medium mb-10">
+      <div className="flex items-center justify-between text-xl font-medium mb-1">
         <button className="active:opacity-70" onClick={onBoxCancel}>
           {text("cancel")}
         </button>
         {fwDoneCount > 0 ? (
-          <button className="active:opacity-70" onClick={onFinish}>
+          <button className="bg-orange-500/80 hover:bg-orange-500 text-white font-medium  py-2 px-6 rounded-xl 
+                                 transition-all duration-200 hover:scale-105 active:scale-95 border border-orange-400/30"  onClick={onFinish}>
             {text("finish")}
           </button>
         ) : (
-          <button className="opacity-20" disabled>
+          <button className="  text-white font-medium  py-2 px-6 rounded-xl 
+                                 transition-all duration-200 hover:scale-105 active:scale-95 border border-orange-400/30 opacity-20" disabled>
             {text("finish")}
           </button>
         )}
@@ -170,7 +172,7 @@ export default function FireworkBox({ onFinishBox }) {
         <button
           onClick={onAddOne}
           disabled={remaining === 0}
-          className="bg-orange-500/80 hover:bg-orange-500 text-white font-medium text-base py-2 px-6 rounded-xl 
+          className="bg-orange-500/80 hover:bg-orange-500 text-white font-medium text-xl py-2 px-6 rounded-xl 
                                  transition-all duration-200 hover:scale-105 active:scale-95 border border-orange-400/30"
         >
           {text("addAnother")}
