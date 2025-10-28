@@ -29,7 +29,7 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
                 {shouldLaunch && !videoEnded && (
                     <video
                         ref={videoRef}
-                        src="/Firework_With_Sound.mp4"
+                        src="/Firework_Box.mp4"
                         className="w-full max-w-4xl border-0 outline-0 m-0 p-0"
                         playsInline
                         webkit-playsinline="true"
