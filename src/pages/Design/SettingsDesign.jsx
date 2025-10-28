@@ -24,30 +24,28 @@ export default function SettingsDesign({
 
   const colorItems = FIREWORK_COLOR_KEYS.map((color) => (
     <button
-      key={color}
-      onClick={() => onUpdateDraft({ color1: color })}
-      className={
-        draft.color1 === color
-          ? `${FIREWORK_COLOR_CLASSES[color]} ring-4 ring-zinc-200`
-          : FIREWORK_COLOR_CLASSES[color]
-      }
-    >
-      {" "}
-    </button>
+    key={color}
+    onClick={() => onUpdateDraft({ color1: color })}
+    className={
+      draft.color1 === color
+        ? "rounded-md h-8 ring-6 ring-zinc-200"
+        : "rounded-md h-8"
+    }
+    style={{ backgroundColor: color }}
+  />
   ));
 
   const colorItems2 = FIREWORK_COLOR_KEYS.map((color) => (
     <button
-      key={color}
-      onClick={() => onUpdateDraft({ color2: color })}
-      className={
-        draft.color2 === color
-          ? `${FIREWORK_COLOR_CLASSES[color]} ring-4 ring-zinc-200`
-          : FIREWORK_COLOR_CLASSES[color]
-      }
-    >
-      {" "}
-    </button>
+    key={color}
+    onClick={() => onUpdateDraft({ color2: color })}
+    className={
+      draft.color2 === color
+        ? "rounded-md h-8 ring-6 ring-zinc-200"
+        : "rounded-md h-8"
+    }
+    style={{ backgroundColor: color }}
+  />
   ));
 
   const primaryImg = useMemo(
