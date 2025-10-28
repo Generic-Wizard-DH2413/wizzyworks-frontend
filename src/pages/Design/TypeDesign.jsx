@@ -5,8 +5,11 @@ import {
   DEFAULT_COLOR_SECONDARY,
   buildFireworkImagePath,
 } from "@/utils/fireworkAssets";
+import { useText } from "@/i18n/useText"; 
+
 
 export default function TypeDesign({ onCancel, onTypeDone }) {
+  const text = useText();
   const draft = useFireworkStore((state) => state.draft);
   const selectedTypeIdx = draft?.type?.idx ?? null;
   const primaryColor = draft?.color1 ?? DEFAULT_COLOR_PRIMARY;
@@ -15,9 +18,11 @@ export default function TypeDesign({ onCancel, onTypeDone }) {
   return (
     <div className="p-4">
       <div className="flex justify-between mb-4">
-        <button onClick={onCancel}>Cancel</button>
+        <button onClick={onCancel}>{text("cancel")}</button>
       </div>
-      <h1 className="text-2xl font-extrabold mb-4">Select a firework type</h1>
+      <h1 className="text-2xl font-extrabold mb-4">
+        {text("selectTypeTitle")}
+      </h1>
 
       <div className="grid grid-cols-3 gap-4">
         {FIREWORK_TYPES.map((fw) => {
@@ -56,10 +61,10 @@ export default function TypeDesign({ onCancel, onTypeDone }) {
                 ><img src="src\assets\paint.png" className="absolute -bottom-0 -right-0 w-6 h-6"></img></div>):null}
               </div>
               <span className="mt-2 text-sm font-medium text-white">
-                {fw.name}
+                {text(fw.name)}
               </span>
               <span className="text-xs text-gray-400">
-                {fw.boolDraw ? "Paintable" : ""}
+                {fw.boolDraw ? text("paintable") : ""}
               </span>
               
             </button>

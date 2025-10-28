@@ -4,6 +4,8 @@ import {
     FIREWORK_COLOR_CLASSES,
     FIREWORK_COLOR_KEYS,
 } from "@/utils/fireworkAssets";
+import { useText } from "@/i18n/useText";
+
 
 // TODO Save canvas state when user navigates around (Store state in parent?)
 // Change to black background on canvas. Make it a square.
@@ -20,6 +22,7 @@ export default function DrawDesign({
     onDrawingChange,
     drawing
 }) {
+    const text = useText();
     const canvasRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [position, setPosition] = useState([]);
@@ -196,12 +199,12 @@ export default function DrawDesign({
         <div className="flex flex-col space-y-2 px-4 py-4 pb-20">
     
             <div className="flex justify-between mb-3">
-                <button onClick={onCancel}>Cancel</button>
-                <button onClick={sendDrawing}>Done</button>
+                <button onClick={onCancel}>{text("cancel")}</button>
+                <button onClick={sendDrawing}>{text("done")}</button>
             </div>
       
             <div className="text-center">
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">Optional: Draw your firework!</h3>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{text("drawOptionalHeader")}</h3>
             </div>
             
             <div className="flex justify-center">

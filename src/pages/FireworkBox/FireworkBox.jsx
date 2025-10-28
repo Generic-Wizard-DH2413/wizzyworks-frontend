@@ -2,11 +2,17 @@ import { useMemo } from "react";
 import { useFireworkStore } from "@/store/useFireworkStore";
 import { useAppNavigation } from "@/hooks/useAppNavigation";
 import { buildFireworkImagePath } from "@/utils/fireworkAssets";
+import { useText } from "@/i18n/useText"; 
+
 
 //TODO: add pics of types for alr set fw
 
 export default function FireworkBox({ onFinishBox }) {
-  const { slots, slotsAmount, beginDesignForSlot, clearSlot, resetSlots } =
+  
+    const text = useText(); 
+
+  
+    const { slots, slotsAmount, beginDesignForSlot, clearSlot, resetSlots } =
     useFireworkStore((state) => ({
       slots: state.slots,
       slotsAmount: state.slotsAmount,
@@ -63,25 +69,29 @@ export default function FireworkBox({ onFinishBox }) {
       {/* Top bar */}
       <div className="flex items-center justify-between text-xl font-medium mb-10">
         <button className="active:opacity-70" onClick={onBoxCancel}>
-          Cancel
+          {text("cancel")}
         </button>
         {fwDoneCount > 0 ? (
           <button className="active:opacity-70" onClick={onFinish}>
-            Finish
+            {text("finish")}
           </button>
         ) : (
           <button className="opacity-20" disabled>
-            Finish
+            {text("finish")}
           </button>
         )}
       </div>
 
       {/* Title + counters */}
       <h1 className="text-2xl md:text-3xl font-extrabold mb-2">
-        {slotsAmount} Pack Firework Box
+        {text("packTitle", { n: slotsAmount })}
+
       </h1>
       <p className="text-lg text-gray-300 mb-4">
-        {fwDoneCount} done · {remaining} left
+         {text("statusLine", {
+          done: fwDoneCount,
+          left: remaining,
+        })}
       </p>
 
       {/* Box */}
@@ -163,7 +173,7 @@ export default function FireworkBox({ onFinishBox }) {
           className="bg-orange-500/80 hover:bg-orange-500 text-white font-medium text-base py-2 px-6 rounded-xl 
                                  transition-all duration-200 hover:scale-105 active:scale-95 border border-orange-400/30"
         >
-          Add another firework!
+          {text("addAnother")}
         </button>
       </div>
     </div>

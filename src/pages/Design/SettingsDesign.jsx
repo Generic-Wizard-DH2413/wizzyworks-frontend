@@ -4,6 +4,8 @@ import {
   FIREWORK_COLOR_KEYS,
   buildFireworkImagePath,
 } from "@/utils/fireworkAssets";
+import { useText } from "@/i18n/useText";
+
 
 export default function SettingsDesign({
   draft,
@@ -11,6 +13,7 @@ export default function SettingsDesign({
   onSettingsDone,
   onUpdateDraft,
 }) {
+  const text = useText();
   const [showCol2, setShowCol2] = useState(false);
 
   useEffect(() => {
@@ -75,8 +78,11 @@ export default function SettingsDesign({
   return (
     <div className="p-4 touch-pan-y overflow-auto">
       <div className="flex justify-between mb-4">
-        <button onClick={onCancel}>Cancel</button>
-        <button onClick={onSettingsDone}>{draft.type?.boolDraw?("Next"):("Done")}</button>
+        <button onClick={onCancel}>
+          {text("cancel")}</button>
+        <button onClick={onSettingsDone}>
+          {draft.type?.boolDraw ? text("next") : text("done")}
+        </button>
       </div>
 
       {/* Firework Preview */}
@@ -99,7 +105,9 @@ export default function SettingsDesign({
         </div>
       </div>
 
-      <h1 className="text-xl font-bold mb-2">Select the primary color</h1>
+      <h1 className="text-xl font-bold mb-2">
+        {text("selectPrimaryColor")}
+      </h1>
 
       <label className="block mb-4">
         <div className="grid grid-cols-3 gap-4">{colorItems}</div>
@@ -108,7 +116,7 @@ export default function SettingsDesign({
       {draft.type?.boolCol2 ? (
         <label className="block mb-4">
           <h1 className="text-xl font-bold mb-2">
-            Select the secondary color
+            {text("selectSecondaryColor")}
           </h1>
           <div className=" flex items-center justify-center">
             <button
@@ -133,11 +141,13 @@ export default function SettingsDesign({
         </label>
       ) : null}
 
-      <h1 className="text-xl font-bold mb-2">Firework Settings</h1>
+      <h1 className="text-xl font-bold mb-2">
+        {text("fireworkSettingsHeader")}
+      </h1>
 
       {draft.type?.boolSfx ? (
         <label className="flex items-center block mb-4">
-          <span className="w-50">Special Effects Amount</span>
+          <span className="w-50">{text("sfxAmount")}</span>
           <input
             type="range"
             min="10"
@@ -150,7 +160,7 @@ export default function SettingsDesign({
       ) : null}
 
       <label className="flex items-center block mb-4">
-        <span className="w-50">Launch Speed</span>
+        <span className="w-50">{text("launchSpeed")}</span>
         <input
           type="range"
           min="10"
@@ -162,7 +172,7 @@ export default function SettingsDesign({
       </label>
 
       <label className="flex items-center block mb-4">
-        <span className="w-50">Launch Wobble</span>
+        <span className="w-50">{text("launchWobble")}</span>
         <input
           type="range"
           min="10"

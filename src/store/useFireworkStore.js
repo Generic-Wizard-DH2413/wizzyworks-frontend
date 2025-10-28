@@ -53,9 +53,9 @@ export const useFireworkStore = create((set, get) => ({
     set({
       editingSlotIdx: idx,
       draft: slot
-        ? { ...slot }
+        ? { ...slot } //edit  existing
         : {
-            ...createEmptyDraft(),
+            ...createEmptyDraft(), //add a new empty w default  settings
           },
     });
   },
