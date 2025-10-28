@@ -36,7 +36,7 @@ export const t = {
   },
   Sphere:{
     en: "Sphere",
-    sv: "Klotformad"
+    sv: "Sfär"
   },
   Willow:{
     en: "Willow",
@@ -44,7 +44,7 @@ export const t = {
   },
   Saturn:{
     en: "Saturn",
-    sv: "Saturnus Ring"
+    sv: "Saturnus"
   },
   Cluster:{
     en: "Cluster",
@@ -60,19 +60,16 @@ export const t = {
   },
   Chrysanth:{
     en: "Chrysanth",
-    sv: "Solstrålar"
+    sv: "Krysantemum"
   },
-  Tornado:{
-    en: "Tornado",
-    sv: "Virvelvind"
-  },
+  
   Tornado:{
     en: "Tornado",
     sv: "Tornado"
   },
   Swarm:{
     en: "Fire Flies",
-    sv: "Eld flugor"
+    sv: "Eldflugor"
   },
   
 
@@ -87,7 +84,7 @@ export const t = {
   },
   fireworkSettingsHeader: {
     en: "More Firework Settings",
-    sv: "Flera Fyrverkeriinställningar",
+    sv: "Flera Fyrverkeri-inställningar",
   },
   sfxAmount: {
     en: "Special Effects Amount",
@@ -99,7 +96,7 @@ export const t = {
   },
   launchWobble: {
     en: "Launch Wobble",
-    sv: "Svängig Luftfärd",
+    sv: "Luftfärds-Skakighet",
   },
 
   // Information view
@@ -134,4 +131,17 @@ export const t = {
     en: "Launch!",
     sv: "Avfyra!",
   },
+  infoTitle: {
+    en: "Important!",
+    sv: "Viktigt!"
+  },
+  infoText: {
+    en: "You can only launch in the launch area. Please place your phone down against the wall and only then press \"Launch!\".",
+    sv: "Ni kan endast avfyra i avfyrningsområdet. Var god ställ ner er mobil mot äggen och tryck på \"Avfyra!\" först då."
+  },
+  dontShowAgain: {
+    en: "Don't show this again",
+    sv: "Visa inte detta igen"
+  }
+  
 };

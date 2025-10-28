@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useText } from "@/i18n/useText";
+import { useI18nStore } from "@/store/useI18nStore";
 
 
 export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
@@ -8,6 +9,12 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
     const [isVisible, setIsVisible] = useState(true);
     const [showMarker, setShowMarker] = useState(false);
     const [videoEnded, setVideoEnded] = useState(false);
+    const [showInfoPopup, setShowInfoPopup] = useState(true)
+    const [infoAccepted, setInfoAccepted] = useState(false)
+    const { dontShowAgain, setDontShowAgain } = useI18nStore();
+    const [localDontShowAgain, setLocalDontShowAgain] = useState(dontShowAgain);
+
+
 
     const handlePlay = () => {
         setShowMarker(true);
@@ -21,10 +28,62 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
     const handleBackToHome = () => {
         window.location.reload();
     };
+    
+    const handleIntroOk = () => {
+        // hide popup and allow launching
+        setShowInfoPopup(false);
+        setInfoAccepted(true);
+        setDontShowAgain(localDontShowAgain);
+    };
+    const handleDontShowAgainChange = (e) => {
+        const checked = e.target.checked;
+        setLocalDontShowAgain(checked);
+        
+    };
 
     if (canLaunch) {
         return (
             <div className="relative min-h-screen">
+
+
+                {/* Intro popup overlay (shows ONLY if still visible) */}
+                {!dontShowAgain && showInfoPopup && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
+                        <div className="bg-zinc-900 text-white rounded-2xl shadow-2xl border border-zinc-700 max-w-sm w-full p-6 text-center">
+                            <h2 className="text-xl font-bold mb-3">
+                                {/* You could add an emoji or icon here if you want */}
+                                {text("infoTitle")}
+                            </h2>
+                            <p className="text-base text-zinc-300 mb-6">
+                                {/* localizable if you add keys */}
+                                {text("infoText")}
+                                
+                            </p>
+                            <button
+                                onClick={handleIntroOk}
+                                className="bg-orange-500 hover:bg-orange-600 text-white font-medium text-lg py-2 px-4 rounded-full 
+                                           shadow-xl transform transition-all duration-200 hover:scale-110 active:scale-95 
+                                           border-2 border-orange-400/30 w-full"
+                            >
+                                OK
+                            </button>
+                            <div className="flex items-center justify-center mb-6 gap-2">
+                                <input
+                                id="dontShowAgain"
+                                type="checkbox"
+                                
+
+                                onChange={(e) => handleDontShowAgainChange(e)}                                className="w-5 h-5 text-orange-500 bg-zinc-800 border-zinc-600 rounded focus:ring-orange-500"
+                                />
+                                <label htmlFor="dontShowAgain" className="text-sm text-zinc-300 select-none">
+                                {text("dontShowAgain") }
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+
                 {/* Video section - takes up full space */}
                 {shouldLaunch && !videoEnded && (
                     <video
@@ -47,7 +106,7 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
                 </div>)}
 
                 {/* Floating button at bottom */}
-                {isVisible && !videoEnded && (
+                {infoAccepted && isVisible && !videoEnded && (
                     <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-10">
                         <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-3 border border-zinc-700">
                             <button
