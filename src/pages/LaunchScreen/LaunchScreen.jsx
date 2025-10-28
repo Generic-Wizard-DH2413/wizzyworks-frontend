@@ -1,6 +1,9 @@
 import { useState, useRef, useEffect } from "react";
+import { useText } from "@/i18n/useText";
+
 
 export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
+    const text = useText();
     const videoRef = useRef(null);
     const [isVisible, setIsVisible] = useState(true);
     const [showMarker, setShowMarker] = useState(false);
@@ -57,7 +60,7 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
                                          shadow-2xl transform transition-all duration-200 hover:scale-110 active:scale-95 
                                          border-2 border-orange-400/30"
                             >
-                                Launch
+                                {text("launch")}
                             </button>
                         </div>
                     </div>

@@ -130,4 +130,9 @@ export const t = {
     en: "Clear drawing",
     sv: "Rensa ritning",
   },
+  // Launch page
+  launch: {
+    en: "Launch!",
+    sv: "Avfyra!",
+  },
 };
