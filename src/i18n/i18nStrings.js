@@ -146,6 +146,14 @@ export const t = {
   dontShowAgain: {
     en: "Don't show this again",
     sv: "Visa inte detta igen"
-  }
+  },
+  newFw: {
+    en: "New fireworks",
+    sv: "Nya fyrverkerier"
+  },
+  reuseFw: {
+    en: "Reuse them",
+    sv: "Återanvänd dem"
+  },
   
 };

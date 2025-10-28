@@ -1,6 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { useText } from "@/i18n/useText";
 import { useI18nStore } from "@/store/useI18nStore";
+import { useFireworkStore } from "@/store/useFireworkStore";
+import { useAppNavigation } from "@/hooks/useAppNavigation";
+
 
 
 export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
@@ -12,7 +15,9 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
     const [showInfoPopup, setShowInfoPopup] = useState(true)
     const [infoAccepted, setInfoAccepted] = useState(false)
     const { dontShowAgain, setDontShowAgain } = useI18nStore();
+    const { resetSlots } = useFireworkStore();
     const [localDontShowAgain, setLocalDontShowAgain] = useState(dontShowAgain);
+    const { navigateTo } = useAppNavigation();
 
 
 
@@ -25,8 +30,13 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
         setShowMarker(false);
     };
 
-    const handleBackToHome = () => {
-        window.location.reload();
+    const handleNewFw = () => {
+        resetSlots();          //wipe all slots
+        navigateTo("/fireworkBox"); //go back to design screen (keep lang settings) //window.location.reload();
+    };
+
+    const handleReuseFw = () => {
+        navigateTo("/fireworkBox");    
     };
     
     const handleIntroOk = () => {
@@ -127,18 +137,27 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
 
                 {/* Back to home button after video ends */}
                 {videoEnded && (
-                    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-10">
-                        <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-3 border border-zinc-700">
-                            <button
-                                onClick={handleBackToHome}
-                                className="bg-orange-500 hover:bg-orange-600 text-white font-medium text-xl py-2 px-4 rounded-full 
-                                         shadow-2xl transform transition-all duration-200 hover:scale-110 active:scale-95 
-                                         border-2 border-orange-400/30"
-                            >
-                                Back to home
-                            </button>
-                        </div>
+                <div className="fixed inset-0 z-10 flex items-center justify-center">
+                    <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-4 border border-zinc-700 flex flex-row items-center gap-4 font-lg text-xl shadow-xl">
+                    <button
+                        onClick={handleNewFw}
+                        className="bg-orange-500 hover:bg-orange-600 text-white font-medium text-xl leading-tight py-3 px-4 rounded-full 
+                                shadow-2xl transform transition-all duration-200 hover:scale-110 active:scale-95 
+                                border-2 border-orange-400/30 text-center"
+                    >
+                        {text("newFw")}
+                    </button>
+                    or
+                    <button
+                        onClick={handleReuseFw}
+                        className="bg-transparent hover:bg-orange-600 text-white font-medium text-xl leading-tight py-3 px-4 rounded-full 
+                                shadow-2xl transform transition-all duration-200 hover:scale-110 active:scale-95 
+                                border-2 border-orange-400/30 text-center"
+                    >
+                        {text("reuseFw")}
+                    </button>
                     </div>
+                </div>
                 )}
             </div>
         )

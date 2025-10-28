@@ -72,10 +72,13 @@ export default function FireworkBox({ onFinishBox }) {
           {text("cancel")}
         </button>
         {fwDoneCount > 0 ? (
-          <button className="bg-orange-500/80 hover:bg-orange-500 text-white font-medium  py-2 px-6 rounded-xl 
-                                 transition-all duration-200 hover:scale-105 active:scale-95 border border-orange-400/30"  onClick={onFinish}>
+          
+          <button className="bg-orange-500/80 hover:bg-orange-500 text-white font-medium  py-2 px-6 rounded-xl underline underline-offset-4
+                                 transition-all duration-200 hover:scale-105 active:scale-95 border border-orange-400/30 shadow-[0_0px_50px_rgba(255,140,0,0.5)]"  
+                  onClick={onFinish}>
             {text("finish")}
           </button>
+          
         ) : (
           <button className="  text-white font-medium  py-2 px-6 rounded-xl 
                                  transition-all duration-200 hover:scale-105 active:scale-95 border border-orange-400/30 opacity-20" disabled>

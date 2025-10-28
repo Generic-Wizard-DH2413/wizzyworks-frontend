@@ -1,4 +1,5 @@
 import { create } from "zustand";
+
 import {
   DEFAULT_COLOR_PRIMARY,
   DEFAULT_COLOR_SECONDARY,
@@ -15,7 +16,8 @@ const createEmptyDraft = () => ({
   drawing: null,
 });
 
-export const useFireworkStore = create((set, get) => ({
+export const useFireworkStore = create(
+  (set, get) => ({
   slotsAmount: 9,
   slots: Array(9).fill(null),
   editingSlotIdx: null,
@@ -125,4 +127,6 @@ export const useFireworkStore = create((set, get) => ({
       editingSlotIdx: null,
       draft: null,
     })),
-}));
+})
+  
+);
