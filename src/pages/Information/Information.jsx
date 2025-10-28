@@ -2,8 +2,8 @@ import './Information.css';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { useI18nStore } from "@/store/useI18nStore";
 import { useText } from "@/i18n/useText";
-import seFlag from "@/assets/seFlag.png"
-import usFlag from "@/assets/usFlag.png"
+import seFlag from "@/assets/seFlag2.png"
+import gbFlag from "@/assets/gbFlag3.png"
 
 
 
@@ -57,7 +57,7 @@ export default function Information() {
                         ].join(" ")}
                     >
                         <img
-                            src={usFlag}
+                            src={gbFlag}
                             alt="English"
                             className="absolute inset-0 w-full h-full object-cover"
                         />
