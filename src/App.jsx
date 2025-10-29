@@ -41,11 +41,16 @@ function App() {
   const [fireworkDataURL, setFireworkDataURL] = useState(null);
   const [fireworkDataShapeColor, setFireworkDataShapeColor] = useState("#FF00FF");
   const [fireworkDataShapeSecondColor, setFireworkDataShapeSecondColor] = useState("#FF00FF");
-  const [canLaunch, setCanLaunch] = useState(false);
-  const [shouldLaunch, setShouldLaunch] = useState(false);
+  //const [canLaunch, setCanLaunch] = useState(false);
+  //const [shouldLaunch, setShouldLaunch] = useState(false);
 
   /*@@@@@@@@@@@@@@@@@@@@@@@@ NEW START @@@@@@@@@@@@@@@@@@@@@@@@*/
   const slots = useFireworkStore((state) => state.slots);
+  const canLaunch = useFireworkStore((state) => state.canLaunch);
+  const shouldLaunch = useFireworkStore((state) => state.shouldLaunch);
+  const { setCanLaunch, setShouldLaunch } = useFireworkStore();
+  
+
 
 
 
@@ -240,7 +245,7 @@ function App() {
           />
           <Route path="/marker" element={<ArUco arUcoId={id} />} />
 
-          <Route path="/launch" element={<LaunchScreen canLaunch={canLaunch /*from on msg*/} shouldLaunch={shouldLaunch} arUcoId={id /*from on msg*/} />}
+          <Route path="/launch" element={<LaunchScreen arUcoId={id /*from on msg*/} />} //canLunch={canLaunch} shouldLaucnh={shouldLaunch}
           />
         </Routes>
       </div>

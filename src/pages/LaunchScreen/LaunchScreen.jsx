@@ -6,7 +6,7 @@ import { useAppNavigation } from "@/hooks/useAppNavigation";
 
 
 
-export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
+export default function LaunchScreen({arUcoId }) {
     const text = useText();
     const videoRef = useRef(null);
     const [isVisible, setIsVisible] = useState(true);
@@ -19,7 +19,11 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
     const [localDontShowAgain, setLocalDontShowAgain] = useState(dontShowAgain);
     const { navigateTo } = useAppNavigation();
     const [countdown, setCountdown] = useState(null);
-    const { slots } = useFireworkStore();
+    
+    const { slots } = useFireworkStore();    
+    const canLaunch = useFireworkStore((state) => state.canLaunch);
+    const shouldLaunch = useFireworkStore((state) => state.shouldLaunch);
+    const { setCanLaunch, setShouldLaunch } = useFireworkStore();
 
     useEffect(() => {
         if (countdown > 0) {
@@ -41,10 +45,14 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
 
     const handleNewFw = () => {
         resetSlots();          //wipe all slots
+        setCanLaunch(false);
+        setShouldLaunch(false);
         navigateTo("/fireworkBox"); //go back to design screen (keep lang settings) //window.location.reload();
     };
 
     const handleReuseFw = () => {
+        setCanLaunch(false);
+        setShouldLaunch(false);
         navigateTo("/fireworkBox");
     };
 
