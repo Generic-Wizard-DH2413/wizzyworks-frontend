@@ -22,8 +22,8 @@ export const useFireworkStore = create(
   slots: Array(9).fill(null),
   editingSlotIdx: null,
   draft: null,
-  shouldLaunch:true,
-  canLaunch: true,
+  shouldLaunch:false,
+  canLaunch: false,
   setShouldLaunch: (shouldLaunch) => set({ shouldLaunch }),
   setCanLaunch: (canLaunch) => set({ canLaunch }),
 
