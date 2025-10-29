@@ -218,7 +218,7 @@ export default function DrawDesign({
                         className="absolute bottom-0 left-0
                                  active:scale-90 pb-5 pl-5"
                     >
-                       <img src="../assets/trash.png" className="w-8 h-8"></img>
+                       <img src="trash.png" className="w-8 h-8"></img>
                 </button>
                     <canvas
                         ref={canvasRef}

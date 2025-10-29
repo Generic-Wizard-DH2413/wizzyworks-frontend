@@ -58,7 +58,7 @@ export default function TypeDesign({ onCancel, onTypeDone }) {
                 ) : null}
                 {fw.boolDraw ? (<div
                 className="z-10 h-6 w-6 "
-                ><img src="../../assets/paint.png" className="absolute -bottom-0 -right-0 w-6 h-6"></img></div>):null}
+                ><img src="paint.png" className="absolute -bottom-0 -right-0 w-6 h-6"></img></div>):null}
               </div>
               <span className="mt-2 text-sm font-medium text-white">
                 {text(fw.name)}
