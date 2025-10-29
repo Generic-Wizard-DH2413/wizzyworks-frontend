@@ -20,6 +20,7 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
     const { navigateTo } = useAppNavigation();
     const [countdown, setCountdown] = useState(null);
     const { slots } = useFireworkStore();
+    const [muted, setMuted] = useState(true);
 
     useEffect(() => {
         if (countdown > 0) {
@@ -29,6 +30,12 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
             setCountdown(null);
         }
     }, [countdown]);
+
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.play();
+        }
+    }, [shouldLaunch]);
 
     const handlePlay = () => {
         setShowMarker(true);
@@ -104,23 +111,25 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
 
 
                 {/* Video section - takes up full space */}
-                {shouldLaunch && !videoEnded && (
+                {/* {shouldLaunch && !videoEnded && ( */}
                     <video
+                        id="vid"
                         ref={videoRef}
                         src="/firebox.mp4"
                         className="w-full max-w-4xl border-0 outline-0 m-0 p-0"
                         playsInline
                         webkit-playsinline="true"
-                        muted={false}
+                        muted={true}
                         controls={false}
                         onPlay={() => {
+                            // setTimeout(() => setMuted(false), 100);
                             setCountdown(10);
                             setTimeout(() => { handleVideoEnd() }, 9000 + (slots.filter(Boolean).length * 3000))
                         }}
                         onEnded={handleVideoEnd}
-                        autoPlay={true}
+                        // autoPlay={true}
                     />
-                )}
+                {/* )} */}
                 {shouldLaunch && !videoEnded && countdown !== null && (
                     <div className="absolute top-10 left-10 text-white text-6xl font-bold drop-shadow-lg">
                         {countdown}
