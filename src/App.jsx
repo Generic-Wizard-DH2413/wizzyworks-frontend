@@ -240,7 +240,7 @@ function App() {
           />
           <Route path="/marker" element={<ArUco arUcoId={id} />} />
 
-          <Route path="/launch" element={<LaunchScreen canLaunch={canLaunch /*from on msg*/} shouldLaunch={shouldLaunch} arUcoId={id /*from on msg*/} />}
+          <Route path="/launch" element={<LaunchScreen canLaunch={true /*from on msg*/} shouldLaunch={true} arUcoId={id /*from on msg*/} />}
           />
         </Routes>
       </div>

@@ -18,8 +18,17 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
     const { resetSlots } = useFireworkStore();
     const [localDontShowAgain, setLocalDontShowAgain] = useState(dontShowAgain);
     const { navigateTo } = useAppNavigation();
+    const [countdown, setCountdown] = useState(null);
+    const { slots } = useFireworkStore();
 
-
+    useEffect(() => {
+        if (countdown > 0) {
+            const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+            return () => clearTimeout(timer);
+        } else if (countdown === 0) {
+            setCountdown(null);
+        }
+    }, [countdown]);
 
     const handlePlay = () => {
         setShowMarker(true);
@@ -36,9 +45,9 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
     };
 
     const handleReuseFw = () => {
-        navigateTo("/fireworkBox");    
+        navigateTo("/fireworkBox");
     };
-    
+
     const handleIntroOk = () => {
         // hide popup and allow launching
         setShowInfoPopup(false);
@@ -48,7 +57,7 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
     const handleDontShowAgainChange = (e) => {
         const checked = e.target.checked;
         setLocalDontShowAgain(checked);
-        
+
     };
 
     if (canLaunch) {
@@ -67,7 +76,7 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
                             <p className="text-base text-zinc-300 mb-6">
                                 {/* localizable if you add keys */}
                                 {text("infoText")}
-                                
+
                             </p>
                             <button
                                 onClick={handleIntroOk}
@@ -79,14 +88,14 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
                             </button>
                             <div className="flex items-center justify-center mb-6 gap-2">
                                 <input
-                                id="dontShowAgain"
-                                type="checkbox"
-                                
+                                    id="dontShowAgain"
+                                    type="checkbox"
 
-                                onChange={(e) => handleDontShowAgainChange(e)}                                className="w-5 h-5 text-orange-500 bg-zinc-800 border-zinc-600 rounded focus:ring-orange-500"
+
+                                    onChange={(e) => handleDontShowAgainChange(e)} className="w-5 h-5 text-orange-500 bg-zinc-800 border-zinc-600 rounded focus:ring-orange-500"
                                 />
                                 <label htmlFor="dontShowAgain" className="text-sm text-zinc-300 select-none">
-                                {text("dontShowAgain") }
+                                    {text("dontShowAgain")}
                                 </label>
                             </div>
                         </div>
@@ -98,15 +107,24 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
                 {shouldLaunch && !videoEnded && (
                     <video
                         ref={videoRef}
-                        src="/Firework_Box.mp4"
+                        src="/firebox.mp4"
                         className="w-full max-w-4xl border-0 outline-0 m-0 p-0"
                         playsInline
                         webkit-playsinline="true"
                         muted={false}
                         controls={false}
+                        onPlay={() => {
+                            setCountdown(10);
+                            setTimeout(() => { handleVideoEnd() }, 9000 + (slots.filter(Boolean).length * 3000))
+                        }}
                         onEnded={handleVideoEnd}
                         autoPlay={true}
                     />
+                )}
+                {shouldLaunch && !videoEnded && countdown !== null && (
+                    <div className="absolute top-10 left-10 text-white text-6xl font-bold drop-shadow-lg">
+                        {countdown}
+                    </div>
                 )}
                 {!shouldLaunch && showMarker && (<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl p-8 shadow-2xl border-4 border-orange-500/30 aspect-square" >
                     <img
@@ -137,27 +155,27 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
 
                 {/* Back to home button after video ends */}
                 {videoEnded && (
-                <div className="fixed inset-0 z-10 flex items-center justify-center">
-                    <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-4 border border-zinc-700 flex flex-row items-center gap-4 font-lg text-xl shadow-xl">
-                    <button
-                        onClick={handleNewFw}
-                        className="bg-orange-500 hover:bg-orange-600 text-white font-medium text-xl leading-tight py-3 px-4 rounded-full 
+                    <div className="fixed inset-0 z-10 flex items-center justify-center">
+                        <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-4 border border-zinc-700 flex flex-row items-center gap-4 font-lg text-xl shadow-xl">
+                            <button
+                                onClick={handleNewFw}
+                                className="bg-orange-500 hover:bg-orange-600 text-white font-medium text-xl leading-tight py-3 px-4 rounded-full 
                                 shadow-2xl transform transition-all duration-200 hover:scale-110 active:scale-95 
                                 border-2 border-orange-400/30 text-center"
-                    >
-                        {text("newFw")}
-                    </button>
-                    or
-                    <button
-                        onClick={handleReuseFw}
-                        className="bg-transparent hover:bg-orange-600 text-white font-medium text-xl leading-tight py-3 px-4 rounded-full 
+                            >
+                                {text("newFw")}
+                            </button>
+                            or
+                            <button
+                                onClick={handleReuseFw}
+                                className="bg-transparent hover:bg-orange-600 text-white font-medium text-xl leading-tight py-3 px-4 rounded-full 
                                 shadow-2xl transform transition-all duration-200 hover:scale-110 active:scale-95 
                                 border-2 border-orange-400/30 text-center"
-                    >
-                        {text("reuseFw")}
-                    </button>
+                            >
+                                {text("reuseFw")}
+                            </button>
+                        </div>
                     </div>
-                </div>
                 )}
             </div>
         )
