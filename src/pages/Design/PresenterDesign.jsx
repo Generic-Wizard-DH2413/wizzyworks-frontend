@@ -4,6 +4,9 @@ import SettingsDesign from "../Design/SettingsDesign";
 import DrawDesign from "../Design/DrawDesign";
 import { useAppNavigation } from "@/hooks/useAppNavigation";
 import { useFireworkStore } from "@/store/useFireworkStore";
+import {
+  FIREWORK_COLOR_KEYS,
+} from "@/utils/fireworkAssets";
 
 export default function PresenterDesign() {
   const {
@@ -49,7 +52,8 @@ export default function PresenterDesign() {
   const handleTypeDone = (typeObj) => {
     updateDraft({
       type: typeObj,
-      color2: typeObj.boolCol2 ? draft.color2 : null,
+      color1: FIREWORK_COLOR_KEYS[typeObj.idx-1],
+      color2: typeObj.boolCol2 ? FIREWORK_COLOR_KEYS[typeObj.idx%9] : null,
     });
     setStep("settings");
   };

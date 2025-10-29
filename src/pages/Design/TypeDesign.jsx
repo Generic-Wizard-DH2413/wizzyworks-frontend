@@ -3,6 +3,7 @@ import { useFireworkStore } from "@/store/useFireworkStore";
 import {
   DEFAULT_COLOR_PRIMARY,
   DEFAULT_COLOR_SECONDARY,
+  FIREWORK_COLOR_KEYS,
   buildFireworkImagePath,
 } from "@/utils/fireworkAssets";
 import { useText } from "@/i18n/useText"; 
@@ -27,9 +28,9 @@ export default function TypeDesign({ onCancel, onTypeDone }) {
       <div className="grid grid-cols-3 gap-4">
         {FIREWORK_TYPES.map((fw) => {
           const secondaryImg = fw.boolCol2
-            ? buildFireworkImagePath(fw.idx, secondaryColor, "secondary")
+            ? buildFireworkImagePath(fw.idx, FIREWORK_COLOR_KEYS[(fw.idx)%9], "secondary")
             : null;
-          const primaryImg = buildFireworkImagePath(fw.idx, primaryColor);
+          const primaryImg = buildFireworkImagePath(fw.idx, FIREWORK_COLOR_KEYS[fw.idx-1]);
           const isSelected = fw.idx === selectedTypeIdx;
 
           return (
