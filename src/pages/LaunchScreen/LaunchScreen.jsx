@@ -108,10 +108,11 @@ export default function LaunchScreen({ shouldLaunch, canLaunch, arUcoId }) {
                         autoPlay={true}
                     />
                 )}
-                {!shouldLaunch && showMarker && (<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl p-8 shadow-2xl border-4 border-orange-500/30 aspect-square" >
+                {!shouldLaunch && showMarker && (<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl p-8 shadow-2xl border-4 border-orange-500/30 aspect-square w-172 h-172" >
                     <img
                         src={`/4x4_1000-${arUcoId}.svg`}
                         alt={`ArUco marker ${arUcoId}`}
+                        className="w-full h-full object-contain"
                     />
                 </div>)}
 
