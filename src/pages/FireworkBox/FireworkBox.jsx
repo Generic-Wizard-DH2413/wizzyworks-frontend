@@ -137,7 +137,7 @@ export default function FireworkBox({ onFinishBox }) {
                 <button
                   onClick={() => onSlotClick(idx)}
                   className={[
-                    "relative w-full aspect-square rounded-full border-4 transition-transform active:scale-95",
+                    "relative w-full aspect-square rounded-full border-4 transition-transform active:scale-95 overflow-hidden",
                     filled
                       ? "border-orange-500/50"
                       : "border-zinc-500 bg-zinc-900",
@@ -149,7 +149,7 @@ export default function FireworkBox({ onFinishBox }) {
                     <img
                       src={primaryImg}
                       alt={slot.type?.name ?? "Firework"}
-                      className="absolute inset-0 w-full h-full rounded-full object-cover"
+                      className="absolute inset-0 w-full h-full rounded-full object-cover z-10"
                       loading="lazy"
                       draggable={false}
                     />
@@ -158,7 +158,7 @@ export default function FireworkBox({ onFinishBox }) {
                     <img
                       src={secondaryImg}
                       alt={slot.type?.name ?? "Firework"}
-                      className="relative inset-0 w-full h-full rounded-full object-cover"
+                      className="absolute inset-0 w-full h-full rounded-full object-cover pointer-events-none"
                       loading="lazy"
                       draggable={false}
                     />
