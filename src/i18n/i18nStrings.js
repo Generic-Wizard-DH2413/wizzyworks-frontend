@@ -140,7 +140,7 @@ export const t = {
     sv: "Viktigt!"
   },
   infoText: {
-    en: "You can only launch in the launch area. Please place your phone down against the wall and only then press \"Launch!\".",
+    en: "Please place your phone down against the wall within the launch area and only after that press \"Launch!\". Make sure that the WizzyWork camera can see the QR-code.",
     sv: "Ni kan endast avfyra i avfyrningsområdet. Var god ställ ner er mobil mot äggen och tryck på \"Avfyra!\" först då."
   },
   dontShowAgain: {

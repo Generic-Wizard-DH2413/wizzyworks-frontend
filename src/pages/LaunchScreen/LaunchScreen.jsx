@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useText } from "@/i18n/useText";
 import { useI18nStore } from "@/store/useI18nStore";
 import { useFireworkStore } from "@/store/useFireworkStore";
@@ -24,6 +24,10 @@ export default function LaunchScreen({arUcoId }) {
     const canLaunch = useFireworkStore((state) => state.canLaunch);
     const shouldLaunch = useFireworkStore((state) => state.shouldLaunch);
     const { setCanLaunch, setShouldLaunch } = useFireworkStore();
+
+    const [isMuted, setIsMuted] = useState(true)
+    const [showUnmute, setShowUnmute] = useState(true)
+
 
     useEffect(() => {
         if (countdown > 0) {
@@ -67,6 +71,41 @@ export default function LaunchScreen({arUcoId }) {
         setLocalDontShowAgain(checked);
 
     };
+
+    const handleUnmute = () => {
+        const v = videoRef.current;
+        if (!v) return;
+
+        //Turn sound on
+        v.muted = false; //unmute
+        //setIsMuted(false);
+        setShowUnmute(false); //hide button
+        //v.play() 
+    };
+
+    useEffect(() => { //called for every re-render AKA useState update
+        if (!shouldLaunch) return;             //only play video check if we can unmute or not without pausing the video
+        const v = videoRef.current;
+        if (!v) return;
+
+        // Try auto-unmute directly (after 0.5s)
+        const t = setTimeout(async () => {
+            const wasMuted = v.muted; //current status (muted=true)
+            try {
+            v.muted = false;                   //try unmuting
+            await v.play();                    //v.play() returns a promise. Await will pause until promise either resolves or rejects and give error which catch catches
+            //setIsMuted(false);               //success -> dont mute
+            setShowUnmute(false);              //success -> hide the button
+            } catch {
+            v.muted = wasMuted;                // fail -> keep it muted (revert back to muted=true)
+            //setIsMuted(true);                //fail -> mute
+            setShowUnmute(true);               // keep button so user can manually unmute
+            v.play()                           //REQUIRED!!!
+            }
+        }, 10); //call directly (after 0.01s)
+
+        return () => clearTimeout(t);
+        }, [shouldLaunch]);
 
     if (canLaunch) {
         return (
@@ -118,22 +157,41 @@ export default function LaunchScreen({arUcoId }) {
                         src="/firebox.mp4"
                         className="w-full max-w-4xl border-0 outline-0 m-0 p-0"
                         playsInline
-                        webkit-playsinline="true"
-                        muted={false}
+                        //webkit-playsinline="true"
+                        muted={true}
                         controls={false}
                         onPlay={() => {
-                            setCountdown(10);
+                            setCountdown(10);                            
                             setTimeout(() => { handleVideoEnd() }, 9000 + (slots.filter(Boolean).length * 3000))
                         }}
                         onEnded={handleVideoEnd}
                         autoPlay={true}
                     />
                 )}
+
+
                 {shouldLaunch && !videoEnded && countdown !== null && (
                     <div className="absolute top-10 left-10 text-white text-6xl font-bold drop-shadow-lg">
                         {countdown}
                     </div>
                 )}
+
+
+                 {/* Corner audio toggle (only shown when we know auto-unmute failed) */}
+                {shouldLaunch && !videoEnded && showUnmute && (
+                    <button
+                    type="button"
+                    onClick={handleUnmute}
+                    className="absolute top-10 right-10 text-white
+                    bg-orange-500 hover:bg-orange-600 font-medium text-xl leading-tight py-3 px-4 rounded-full 
+                                shadow-2xl transform transition-all duration-200 hover:scale-110 active:scale-95 
+                                border-2 border-orange-400/30 text-center"
+                    aria-label={isMuted ? "Unmute video" : "Mute video"}
+                    >
+                    {isMuted ? "🔊 Unmute" : "🔇 Mute"}
+                    </button>
+                )}
+
                 {!shouldLaunch && showMarker && (<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl p-8 shadow-2xl border-4 border-orange-500/30 aspect-square w-full" >
                     <img
                         src={`/4x4_1000-${arUcoId}.svg`}
