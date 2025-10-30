@@ -14,13 +14,23 @@ export default function Information() {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-[80vh] text-center space-y-6 px-4 py-8 pb-20">
+            
+             <div className="space-y-2">
+                <p className="text-xs uppercase tracking-[0.35em] text-orange-200/70">
+                Generic wizards presents
+                </p>
+                <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-orange-900 via-amber-400 to-yellow-100 bg-clip-text text-transparent drop-shadow-sm leading-tight">
+                WIZZYWORKS
+                </h1>
+            </div>
+            
             <div className="space-y-4">
-                <h1 className="text-4xl md:text-5xl font-bold">
+                <h2 className="text-4xl md:text-5xl font-bold">
                     <span className="bg-gradient-to-r from-orange-400 via-orange-500 to-yellow-500 bg-clip-text text-transparent">
                         {text("BuildingFireworks")}
                     </span>{' '}
                     <span className="text-yellow-400">🎆</span>
-                </h1>
+                </h2>
                 <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-6 border border-zinc-700">
                     <h3 className="text-lg md:text-xl text-gray-200">
                         {/*Please increase the <span className="text-orange-400 font-semibold">brightness</span> and turn up the <span className="text-orange-400 font-semibold">volume</span> for full experience*/}

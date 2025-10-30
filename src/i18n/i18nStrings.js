@@ -101,8 +101,8 @@ export const t = {
 
   // Information view
   BuildingFireworks: {
-    en: "Build your own fireworks",
-    sv: "Bygg dina egna fyrverkerier"
+    en: "Build your dream fireworks",
+    sv: "Bygg dina dröm fyrverkerier"
   },
   chooseLanguageHeader: {
     en: "Choose language",
