@@ -92,14 +92,14 @@ export default function SettingsDesign({
             <img
               src={secondaryImg}
               alt=""
-              className="z-0 top-0 left-0 absolute"
+              className="z-1 top-0 left-0 absolute"
             />
           ) : null}
           {primaryImg ? (
             <img
               src={primaryImg}
               alt={`Preview of type ${draft.type?.idx}`}
-              className="object-contain h-full top-0 left-0 w-full z-1 relative"
+              className="object-contain h-full top-0 left-0 w-full z-0 relative"
             />
           ) : null}
         </div>

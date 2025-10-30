@@ -47,14 +47,14 @@ export default function TypeDesign({ onCancel, onTypeDone }) {
                   <img
                     src={secondaryImg}
                     alt=""
-                    className="absolute inset-0 object-contain max-h-full max-w-full"
+                    className="absolute z-1 inset-0 object-contain max-h-full max-w-full"
                   />
                 ) : null}
                 {primaryImg ? (
                   <img
                     src={primaryImg}
                     alt={fw.name}
-                    className="relative object-contain max-h-full max-w-full"
+                    className="relative z-0 object-contain max-h-full max-w-full"
                   />
                 ) : null}
                 {fw.boolDraw ? (<div

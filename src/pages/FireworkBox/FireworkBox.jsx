@@ -149,7 +149,7 @@ export default function FireworkBox({ onFinishBox }) {
                     <img
                       src={primaryImg}
                       alt={slot.type?.name ?? "Firework"}
-                      className="absolute inset-0 w-full h-full rounded-full object-cover z-10"
+                      className="absolute inset-0 w-full h-full rounded-full object-cover z-0"
                       loading="lazy"
                       draggable={false}
                     />
@@ -158,7 +158,7 @@ export default function FireworkBox({ onFinishBox }) {
                     <img
                       src={secondaryImg}
                       alt={slot.type?.name ?? "Firework"}
-                      className="absolute inset-0 w-full h-full rounded-full object-cover pointer-events-none"
+                      className="absolute inset-0 w-full h-full rounded-full object-cover pointer-events-none z-1"
                       loading="lazy"
                       draggable={false}
                     />
