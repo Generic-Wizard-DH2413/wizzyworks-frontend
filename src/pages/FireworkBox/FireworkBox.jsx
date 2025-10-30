@@ -172,7 +172,10 @@ export default function FireworkBox({ onFinishBox }) {
 
       {/* Add button + remaining */}
       <div className="flex justify-center mt-12">
-        <button
+
+        {remaining > 0 ? (
+          
+          <button
           onClick={onAddOne}
           disabled={remaining === 0}
           className="bg-orange-500/80 hover:bg-orange-500 text-white font-medium text-xl py-2 px-6 rounded-xl 
@@ -180,6 +183,15 @@ export default function FireworkBox({ onFinishBox }) {
         >
           {text("addAnother")}
         </button>
+          
+        ) : (
+          <button
+          disabled={true}
+          className="bg-zinc-800 text-zinc-500 font-medium text-xl py-2 px-6 rounded-xl "
+        >
+          {text("addAnother")}
+        </button>
+        )}
       </div>
     </div>
   );
