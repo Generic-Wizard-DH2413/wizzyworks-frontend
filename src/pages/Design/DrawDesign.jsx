@@ -196,7 +196,7 @@ export default function DrawDesign({
 
     return (
 
-        <div className="flex flex-col space-y-2 px-4 py-4 pb-20">
+        <div className="flex flex-col space-y-2 px-4 py-4 pb-20 overflow-hidden touch-none">
     
             <div className="flex justify-between mb-3 font-medium text-xl">
                 <button onClick={onCancel}>{text("cancel")}</button>
@@ -211,7 +211,7 @@ export default function DrawDesign({
             </div>
             
             <div className="flex justify-center">
-                <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-4 border border-zinc-700">
+                <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-4 border border-zinc-700 touch-none">
                 <button 
                         onMouseDown={(e) => e.preventDefault()}
                         onClick={clearCanvas}
@@ -222,7 +222,7 @@ export default function DrawDesign({
                 </button>
                     <canvas
                         ref={canvasRef}
-                        className="rounded-xl bg-black border border-zinc-600 shadow-lg"
+                        className="rounded-xl bg-black border border-zinc-600 shadow-lg touch-none"
                         // mouse
                         onMouseDown={startDrawing}
                         onMouseMove={draw}
