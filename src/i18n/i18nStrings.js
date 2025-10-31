@@ -156,4 +156,67 @@ export const t = {
     sv: "Återanvänd dem"
   },
   
+  // Error handling
+  connectionError: {
+    en: "Connection Error",
+    sv: "Anslutningsfel"
+  },
+  tryAgain: {
+    en: "Try Again",
+    sv: "Försök igen"
+  },
+  back: {
+    en: "Back",
+    sv: "Tillbaka"
+  },
+  waitingForDevice: {
+    en: "Waiting for launch",
+    sv: "Väntar på avfyrning"
+  },
+  connecting: {
+    en: "Connecting...",
+    sv: "Ansluter..."
+  },
+  placePhoneInstruction: {
+    en: "Place the phone in the launch area and press Launch",
+    sv: "Placera telefonen i avfyrningsområdet och tryck på Avfyra"
+  },
+  deviceDetected: {
+    en: "Server connected, waiting for launch system...",
+    sv: "Server ansluten, väntar på avfyrningssystem..."
+  },
+  establishingConnection: {
+    en: "Establishing connection to launch system",
+    sv: "Upprättar anslutning till avfyrningssystemet"
+  },
+  
+  // WebSocket error messages
+  wsErrorConnectionTimeout: {
+    en: "Connection timeout. Please try again.",
+    sv: "Anslutningen tog för lång tid. Försök igen."
+  },
+  wsErrorNoResponse: {
+    en: "No response from launch system. Please try again.",
+    sv: "Inget svar från avfyrningssystemet. Försök igen."
+  },
+  wsErrorSendConnection: {
+    en: "Failed to send connection message. Please try again.",
+    sv: "Kunde inte skicka anslutningsmeddelande. Försök igen."
+  },
+  wsErrorSendFirework: {
+    en: "Failed to send firework data. Please try again.",
+    sv: "Kunde inte skicka fyrverkeridata. Försök igen."
+  },
+  wsErrorProcessResponse: {
+    en: "Error processing server response. Please try again.",
+    sv: "Fel vid bearbetning av serversvar. Försök igen."
+  },
+  wsErrorNetwork: {
+    en: "Connection error. Please check your network and try again.",
+    sv: "Anslutningsfel. Kontrollera ditt nätverk och försök igen."
+  },
+  wsErrorClosedUnexpectedly: {
+    en: "Connection closed unexpectedly. Please try again.",
+    sv: "Anslutningen stängdes oväntat. Försök igen."
+  },
 };

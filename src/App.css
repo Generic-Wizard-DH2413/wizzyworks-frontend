@@ -7,7 +7,7 @@ html, body {
   /* touch-action: none; */
   width: 100%;
   min-height: 100%; /*allows growth/scroll, From GPT*/
-  background-color: white;
+  background-color: #18181b; /* zinc-900 to match app background */
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }

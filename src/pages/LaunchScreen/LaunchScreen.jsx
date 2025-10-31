@@ -23,7 +23,10 @@ export default function LaunchScreen({arUcoId }) {
     const { slots } = useFireworkStore();    
     const canLaunch = useFireworkStore((state) => state.canLaunch);
     const shouldLaunch = useFireworkStore((state) => state.shouldLaunch);
-    const { setCanLaunch, setShouldLaunch } = useFireworkStore();
+    const wsError = useFireworkStore((state) => state.wsError);
+    const wsConnected = useFireworkStore((state) => state.wsConnected);
+    const sendFireworkData = useFireworkStore((state) => state.sendFireworkData);
+    const { setCanLaunch, setShouldLaunch, resetLaunchState } = useFireworkStore();
 
     const [isMuted, setIsMuted] = useState(true)
     const [showUnmute, setShowUnmute] = useState(true)
@@ -49,15 +52,18 @@ export default function LaunchScreen({arUcoId }) {
 
     const handleNewFw = () => {
         resetSlots();          //wipe all slots
-        setCanLaunch(false);
-        setShouldLaunch(false);
+        resetLaunchState();    //reset launch state
         navigateTo("/fireworkBox"); //go back to design screen (keep lang settings) //window.location.reload();
     };
 
     const handleReuseFw = () => {
-        setCanLaunch(false);
-        setShouldLaunch(false);
+        resetLaunchState();    //reset launch state
         navigateTo("/fireworkBox");
+    };
+
+    const handleTryAgain = () => {
+        resetLaunchState();    //reset error and launch state
+        sendFireworkData();    //retry sending the same data
     };
 
     const handleIntroOk = () => {
@@ -133,7 +139,7 @@ export default function LaunchScreen({arUcoId }) {
                             >
                                 OK
                             </button>
-                            <div className="flex items-center justify-center mb-6 gap-2">
+                            <div className="flex items-center justify-center mb-4 gap-2 pt-6">
                                 <input
                                     id="dontShowAgain"
                                     type="checkbox"
@@ -200,17 +206,20 @@ export default function LaunchScreen({arUcoId }) {
                     />
                 </div>)}
 
-                {/* Floating button at bottom */}
+                {/* Floating button centered vertically */}
                 {infoAccepted && isVisible && !videoEnded && (
-                    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-10">
-                        <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-3 border border-zinc-700">
+                    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                        <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-6 border border-zinc-700 text-center">
+                            <p className="text-lg text-white mb-4">
+                                {text("placePhoneInstruction")}
+                            </p>
                             <button
                                 onClick={() => {
                                     handlePlay();
                                     setIsVisible(false);
                                     // Something else to time?
                                 }}
-                                className="bg-orange-500 hover:bg-orange-600 text-white font-medium text-xl py-2 px-4 rounded-full 
+                                className="bg-orange-500 hover:bg-orange-600 text-white font-medium text-6xl py-4 px-8 rounded-full 
                                          shadow-2xl transform transition-all duration-200 hover:scale-110 active:scale-95 
                                          border-2 border-orange-400/30"
                             >
@@ -223,21 +232,20 @@ export default function LaunchScreen({arUcoId }) {
                 {/* Back to home button after video ends */}
                 {videoEnded && (
                     <div className="fixed inset-0 z-10 flex items-center justify-center">
-                        <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-4 border border-zinc-700 flex flex-row items-center gap-4 font-lg text-xl shadow-xl">
+                        <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-4 border border-zinc-700 flex flex-col items-center gap-4 font-lg text-xl shadow-xl w-full m-6">
                             <button
                                 onClick={handleNewFw}
                                 className="bg-orange-500 hover:bg-orange-600 text-white font-medium text-xl leading-tight py-3 px-4 rounded-full 
                                 shadow-2xl transform transition-all duration-200 hover:scale-110 active:scale-95 
-                                border-2 border-orange-400/30 text-center"
+                                border-2 border-orange-400/30 text-center w-full"
                             >
                                 {text("newFw")}
                             </button>
-                            or
                             <button
                                 onClick={handleReuseFw}
                                 className="bg-transparent hover:bg-orange-600 text-white font-medium text-xl leading-tight py-3 px-4 rounded-full 
                                 shadow-2xl transform transition-all duration-200 hover:scale-110 active:scale-95 
-                                border-2 border-orange-400/30 text-center"
+                                border-2 border-orange-400/30 text-center w-full"
                             >
                                 {text("reuseFw")}
                             </button>
@@ -250,13 +258,62 @@ export default function LaunchScreen({arUcoId }) {
     else {
         return (
             <div className="flex flex-col items-center justify-center min-h-[80vh] text-center space-y-6  px-4 py-8 pb-20">
-                <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-8 border border-zinc-700">
-                    <h1 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                        📱 Place the phone in the launch area
-                    </h1>
-                    <div className="flex justify-center">
-                        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-orange-500"></div>
-                    </div>
+                <div className="bg-zinc-800/50 backdrop-blur-sm rounded-2xl p-8 border border-zinc-700 max-w-md w-full">
+                    {wsError ? (
+                        // Error state
+                        <>
+                            <div className="mb-4 text-6xl">⚠️</div>
+                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                                {text("connectionError")}
+                            </h1>
+                            <p className="text-lg text-zinc-300 mb-6">
+                                {wsError}
+                            </p>
+                            <div className="flex flex-col gap-3">
+                                <button
+                                    onClick={handleTryAgain}
+                                    className="bg-orange-500 hover:bg-orange-600 text-white font-medium text-xl py-3 px-6 rounded-full 
+                                             shadow-2xl transform transition-all duration-200 hover:scale-110 active:scale-95 
+                                             border-2 border-orange-400/30 w-full"
+                                >
+                                    {text("tryAgain")}
+                                </button>
+                                <button
+                                    onClick={handleReuseFw}
+                                    className="bg-zinc-700 hover:bg-zinc-600 text-white font-medium text-xl py-3 px-6 rounded-full 
+                                             shadow-xl transform transition-all duration-200 hover:scale-105 active:scale-95 
+                                             border-2 border-zinc-600/30 w-full"
+                                >
+                                    {text("back")}
+                                </button>
+                            </div>
+                        </>
+                    ) : (
+                        // Loading state
+                        <>
+                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                                📱 {wsConnected ? text("waitingForDevice") : text("connecting")}
+                            </h1>
+                            <p className="text-lg text-zinc-300 mb-6">
+                                {wsConnected 
+                                    ? text("deviceDetected")
+                                    : text("establishingConnection")}
+                            </p>
+                            <div className="flex justify-center gap-2 mb-6">
+                                <div className="w-3 h-3 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                                <div className="w-3 h-3 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                                <div className="w-3 h-3 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                            </div>
+                            <button
+                                onClick={handleTryAgain}
+                                className="bg-zinc-700 hover:bg-zinc-600 text-white font-medium text-lg py-2 px-6 rounded-full 
+                                         shadow-xl transform transition-all duration-200 hover:scale-105 active:scale-95 
+                                         border-2 border-zinc-600/30"
+                            >
+                                {text("cancel")}
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
         )
