@@ -5,7 +5,7 @@ export const FIREWORK_TYPES = [
     godotName: "sphere",
     boolDraw: true,
     boolCol2: false,
-    boolSfx: true,
+    boolSfx: false,
   },
   {
     idx: 2,
@@ -13,7 +13,7 @@ export const FIREWORK_TYPES = [
     godotName: "willow",
     boolDraw: false,
     boolCol2: false,
-    boolSfx: true,
+    boolSfx: false,
   },
   {
     idx: 3,
@@ -53,7 +53,7 @@ export const FIREWORK_TYPES = [
     godotName: "chrysanthemum",
     boolDraw: false,
     boolCol2: false,
-    boolSfx: true,
+    boolSfx: false,
   },
   {
     idx: 8,
@@ -61,7 +61,7 @@ export const FIREWORK_TYPES = [
     godotName: "tornado",
     boolDraw: false,
     boolCol2: false,
-    boolSfx: true,
+    boolSfx: false,
   },
     {
     idx: 9,
@@ -69,7 +69,7 @@ export const FIREWORK_TYPES = [
     godotName: "fish",
     boolDraw: false,
     boolCol2: true,
-    boolSfx: true,
+    boolSfx: false,
   },
 ];
 
