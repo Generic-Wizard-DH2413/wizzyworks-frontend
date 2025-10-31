@@ -183,7 +183,7 @@ export default function SettingsDesign({
         />
       </label>
 
-      <div className="flex justify-between mb-4 font-medium">
+      {/* <div className="flex justify-between mb-4 font-medium">
          <button onClick={onCancel}>
           {" "}</button>
         <button className="bg-orange-500/80 hover:bg-orange-500 text-white font-medium  py-2 px-6 rounded-xl 
@@ -191,7 +191,7 @@ export default function SettingsDesign({
                 onClick={onSettingsDone}>
           {draft.type?.boolDraw ? text("next") : text("done")}
         </button>
-      </div>
+      </div> */}
 
     </div>
   );
