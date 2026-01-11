@@ -4,7 +4,7 @@ This is the frontend webapp of the WizzyWorks virtual firework experience from t
 
 It is intended for this system to run alongside other components for the WizzyWorks project, as shown in the diagram below. The webapp is designed to run on a web browser on mobile phones, where the user can interact with the other parts of the experience.
 
-This React-based web application is built with Vite and Tailwind CSS.
+This React-based web application is built with Vite, React and Tailwind CSS.
 
 ![Visuals Frontend](visuals_frontend.png)
 
