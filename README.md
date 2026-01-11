@@ -1,8 +1,12 @@
 # WizzyWorks Webapp
 
-This is the frontend webapp of the WizzyWorks virtual firework experience from the course DH2413 Advanced Graphics and Interaction in KTH, 2025. The webapp is designed to run on a web browser on mobile phones, where the user can interact with the other parts of the experience.
+This is the frontend webapp of the WizzyWorks virtual firework experience from the course DH2413 Advanced Graphics and Interaction in KTH, 2025. 
+
+It is intended for this system to run alongside other components for the WizzyWorks project, as shown in the diagram below. The webapp is designed to run on a web browser on mobile phones, where the user can interact with the other parts of the experience.
 
 This React-based web application is built with Vite and Tailwind CSS.
+
+![Visuals Frontend](visuals_frontend.png)
 
 ## Prerequisites
 
