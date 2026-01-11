@@ -1,12 +1,53 @@
-# React + Vite
+# WizzyWorks Webapp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend webapp of the WizzyWorks virtual firework experience from the course DH2413 Advanced Graphics and Interaction in KTH, 2025. The webapp is designed to run on a web browser on mobile phones, where the user can interact with the other parts of the experience.
 
-Currently, two official plugins are available:
+This React-based web application is built with Vite and Tailwind CSS.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js (version 18 or higher)
+- npm
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Setup
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd wizzyworks-frontend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+## Running the Project
+
+- Start the development server:
+  ```bash
+  npm run dev
+  ```
+  The app will be available at `http://localhost:5173`.
+
+  To access from mobile devices on the same local network, run:
+  ```bash
+  npm run dev -- --host
+  ```
+  Then, find your computer's IP address (e.g., via `ipconfig` on Windows or `ifconfig` on macOS/Linux) and access `http://<IP>:5173` from your phone.
+
+- Build for production:
+  ```bash
+  npm run build
+  ```
+
+- Preview the production build:
+  ```bash
+  npm run preview
+  ```
+
+  To access from mobile devices on the same local network, run:
+  ```bash
+  npm run preview -- --host
+  ```
+  Then, find your computer's IP address and access `http://<IP>:4173` from your phone.
